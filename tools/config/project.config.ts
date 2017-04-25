@@ -1,7 +1,7 @@
 import { join } from 'path';
-
+import { argv } from 'yargs';
 import { SeedConfig } from './seed.config';
-// import { ExtendPackages } from './seed.config.interfaces';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -13,12 +13,12 @@ export class ProjectConfig extends SeedConfig {
 
   constructor() {
     super();
-    // this.APP_TITLE = 'Put name of your app here';
+    this.APP_TITLE = 'UX-Data-Cube';
+    this.ENABLE_SCSS = argv['scss'] || true;
     // this.GOOGLE_ANALYTICS_ID = 'Your site's ID';
 
     /* Enable typeless compiler runs (faster) between typed compiler runs. */
     // this.TYPED_COMPILE_INTERVAL = 5;
-
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
@@ -43,13 +43,28 @@ export class ProjectConfig extends SeedConfig {
     ];
 
     // Add packages (e.g. ng2-translate)
-    // let additionalPackages: ExtendPackages[] = [{
-    //   name: 'ng2-translate',
-    //   // Path to the package's bundle
-    //   path: 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
-    // }];
+     let additionalPackages: ExtendPackages[] = [];
+
+    // ANGULARFIRE 2
+    additionalPackages.push({
+      name: 'angularfire2',
+      path: `${this.NPM_BASE}angularfire2/bundles/angularfire2.umd.js`,
+      packageMeta: {
+        main: 'angularfire2.umd.js',
+        defaultExtension: 'js'
+      }
+    });
+    // Firebase
+    additionalPackages.push({
+      name: 'firebase',
+      path: `${this.NPM_BASE}firebase/`,
+      packageMeta: {
+        main: 'firebase-browser.js',
+        defaultExtension: 'js'
+      }
+    });
     //
-    // this.addPackagesBundles(additionalPackages);
+    this.addPackagesBundles(additionalPackages);
 
     /* Add proxy middleware */
     // this.PROXY_MIDDLEWARE = [

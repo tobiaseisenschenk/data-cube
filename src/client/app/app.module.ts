@@ -8,10 +8,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
+import { AngularFireModule, AuthMethods, AuthProviders } from 'angularfire2';
+import { LoginModule } from './login/login.module';
 
+const firebaseConfig = {
+  apiKey: 'AIzaSyBJT02unR3eVODlTyYyZCn3vaKeVCZD2vw',
+  authDomain: 'data-cube.firebaseapp.com',
+  databaseURL: 'https://data-cube.firebaseio.com',
+  projectId: 'data-cube',
+  storageBucket: 'data-cube.appspot.com',
+  messagingSenderId: '825001931253'
+};
+const firebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+};
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, SharedModule.forRoot()],
+  imports: [BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+    HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,
