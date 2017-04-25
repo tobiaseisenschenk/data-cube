@@ -28,6 +28,7 @@ export class ProjectConfig extends SeedConfig {
 
     // Add `local` third-party libraries to be injected/bundled.
     this.APP_ASSETS = [
+      {src: `${this.ASSETS_SRC}/sass/main.scss`, inject: true}
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
@@ -63,7 +64,15 @@ export class ProjectConfig extends SeedConfig {
         defaultExtension: 'js'
       }
     });
-    //
+    // ANGULAR2-MATERIAL
+    additionalPackages.push({
+      name: '@angular/material',
+      path: `${this.NPM_BASE}/@angular/material/bundles/material.umd.js`,
+      packageMeta: {
+        main: 'index.js',
+        defaultExtension: 'js'
+      }
+    });
     this.addPackagesBundles(additionalPackages);
 
     /* Add proxy middleware */

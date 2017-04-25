@@ -10,6 +10,7 @@ import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { AngularFireModule, AuthMethods, AuthProviders } from 'angularfire2';
 import { LoginModule } from './login/login.module';
+import { MaterialRootModule } from '@angular/material';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBJT02unR3eVODlTyYyZCn3vaKeVCZD2vw',
@@ -26,7 +27,7 @@ const firebaseAuthConfig = {
 
 @NgModule({
   imports: [BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
-    HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot()],
+    HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot(), MaterialRootModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

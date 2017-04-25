@@ -1,0 +1,15 @@
+@import 'variables';
+@import 'components';
+@import 'utils';
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i);
+
+// Set Color Palette for Data-Cube App
+@import '../../../../node_modules/@angular/material/core/theming/all-theme';
+@include mat-core();
+
+$data-cube-primary: mat-palette($mat-light-blue);
+$data-cube-accent: mat-palette($mat-cyan);
+$data-cube-warn: mat-palette($mat-red);
+$data-cube-theme: mat-light-theme($data-cube-primary, $data-cube-accent, $data-cube-warn);
+
+@include angular-material-theme($data-cube-theme);
