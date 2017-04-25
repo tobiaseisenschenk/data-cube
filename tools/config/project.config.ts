@@ -45,21 +45,21 @@ export class ProjectConfig extends SeedConfig {
     // Add packages (e.g. ng2-translate)
      let additionalPackages: ExtendPackages[] = [];
 
+    // Firebase
+    additionalPackages.push({
+      name: 'firebase',
+      path: `${this.NPM_BASE}firebase/`,
+      packageMeta: {
+        main: 'firebase.js',
+        defaultExtension: 'js'
+      }
+    });
     // ANGULARFIRE 2
     additionalPackages.push({
       name: 'angularfire2',
       path: `${this.NPM_BASE}angularfire2/bundles/angularfire2.umd.js`,
       packageMeta: {
         main: 'angularfire2.umd.js',
-        defaultExtension: 'js'
-      }
-    });
-    // Firebase
-    additionalPackages.push({
-      name: 'firebase',
-      path: `${this.NPM_BASE}firebase/`,
-      packageMeta: {
-        main: 'firebase-browser.js',
         defaultExtension: 'js'
       }
     });
