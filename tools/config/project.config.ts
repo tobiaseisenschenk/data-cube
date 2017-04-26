@@ -64,6 +64,15 @@ export class ProjectConfig extends SeedConfig {
         defaultExtension: 'js'
       }
     });
+    // HAMMERJS
+    additionalPackages.push({
+      name: 'hammerjs',
+      path: `${this.NPM_BASE}/hammerjs/hammer.js`,
+      packageMeta: {
+        main: 'hammer.js',
+        defaultExtension: 'js'
+      }
+    });
     // ANGULAR2-MATERIAL
     additionalPackages.push({
       name: '@angular/material',

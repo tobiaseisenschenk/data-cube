@@ -11,6 +11,11 @@ import { SharedModule } from './shared/shared.module';
 import { AngularFireModule, AuthMethods, AuthProviders } from 'angularfire2';
 import { LoginModule } from './login/login.module';
 import { MaterialRootModule } from '@angular/material';
+import { LOG_LOGGER_PROVIDERS } from 'angular2-logger/core';
+import 'hammerjs';
+import { AuthenticationService } from './shared/services/authentication.service';
+import { RouterModule } from '@angular/router';
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBJT02unR3eVODlTyYyZCn3vaKeVCZD2vw',
@@ -27,12 +32,14 @@ const firebaseAuthConfig = {
 
 @NgModule({
   imports: [BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
-    HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot(), MaterialRootModule],
+    HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot(), MaterialRootModule,
+    RouterModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
-  }],
+  },
+    LOG_LOGGER_PROVIDERS, AuthenticationService],
   bootstrap: [AppComponent]
 
 })

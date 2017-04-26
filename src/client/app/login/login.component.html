@@ -1,8 +1,14 @@
 
 <md-card>
-  <div> {{ (af.auth | async)?.uid }} </div>
-  <input [(ngModel)]="email" placeholder="email">
-  <input [(ngModel)]="password" placeholder="password">
-  <button (click)="login()">Login</button>
-  <button (click)="register()">Register</button>
+  <span>{{currentUser?.auth?.email}}</span>
+  <md-input-container>
+    <input mdInput [(ngModel)]="email" placeholder="email">
+  </md-input-container>
+  <md-input-container>
+    <input mdInput [(ngModel)]="password" placeholder="password">
+  </md-input-container>
+  <button md-button (click)="login()">Login</button>
+  <button md-button (click)="register()">Register</button>
+  <button md-button (click)="logout()">Logout</button>
+
 </md-card>

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { Component, OnInit } from '@angular/core';
+import { Logger } from 'angular2-logger/core';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 /**
  * This class represents the lazy loaded LoginComponent.
@@ -10,21 +11,30 @@ import { AngularFire } from 'angularfire2';
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   public email :string = '';
   public password :string = '';
+  public currentUser :any;
+  private _subscriptions :any;
 
-  constructor(public af: AngularFire) {
-    this.af.auth.subscribe(auth => console.log(auth));
+  constructor(private _logger :Logger, private _authenticationService :AuthenticationService) {}
+
+  ngOnInit() {
+    this._subscriptions = this._authenticationService.currentUser.subscribe((newUser) => {
+      this.currentUser = newUser;
+    });
   }
 
   login() {
-    this.af.auth.login({ email: this.email, password: this.password });
+    this._authenticationService.login(this.email, this.password);
   }
 
   register() {
-    let creds: any = { email: this.email, password: this.password };
-    this.af.auth.createUser(creds);
+    this._authenticationService.register(this.email, this.password);
+  }
+
+  logout() {
+    this._authenticationService.logout();
   }
 
 
