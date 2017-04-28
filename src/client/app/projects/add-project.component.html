@@ -1,18 +1,66 @@
-<form id="add-project-form" [formGroup]="addProjectForm" (ngSubmit)="onSubmit(addProjectForm)" class="component-content">
-  <md-input-container>
-    <input mdInput [formControl]="budgetInput" placeholder="Budget" [mdAutocomplete]="budgetAuto">
+<form id="add-project-form"
+      [formGroup]="addProjectForm"
+      (ngSubmit)="onSubmit(addProjectForm)"
+      class="component-content content-vertical-centered">
+  <md-input-container class="min-width-15rem margin-1rem">
+    <input mdInput
+           [formControl]="devMethodInput"
+           placeholder="Development Methodology"
+           [mdAutocomplete]="devMethodAuto">
     <md-hint class="color-text-error"
-             *ngIf="budgetInput.dirty && budgetInput.invalid">
+             *ngIf="devMethodInput.dirty && devMethodInput.invalid">
       This field can not be blank
     </md-hint>
   </md-input-container>
-  <md-autocomplete #budgetAuto="mdAutocomplete">
-    <md-option *ngFor="let option of filteredOptions | async" [value]="option">
-      {{ option }}
+  <md-autocomplete #devMethodAuto="mdAutocomplete" [displayWith]="displayNameProp">
+    <md-option *ngFor="let option of devMethods | genericStringFilter:devMethodInput.value" [value]="option">
+      {{ option.name }}
     </md-option>
   </md-autocomplete>
 
-  <md-select placeholder="Market Diversity">
+  <md-select [formControl]="marketDiversityInput" placeholder="Market Diversity" class="min-width-15rem margin-1rem">
     <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
   </md-select>
+
+  <md-select [formControl]="budgetInput" placeholder="Budget" class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <md-input-container class="min-width-15rem margin-1rem">
+    <input mdInput
+           [formControl]="domainInput"
+           placeholder="Domain"
+           [mdAutocomplete]="domainAuto">
+    <md-hint class="color-text-error"
+             *ngIf="domainInput.dirty && domainInput.invalid">
+      This field can not be blank
+    </md-hint>
+  </md-input-container>
+  <md-autocomplete #domainAuto="mdAutocomplete" [displayWith]="displayNameProp">
+    <md-option *ngFor="let option of domains | genericStringFilter:domainInput.value" [value]="option">
+      {{ option.name }}
+    </md-option>
+  </md-autocomplete>
+
+  <md-select [formControl]="devProcessMaturityInput"
+             placeholder="Dev. Process Maturity"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of devProcessMaturityOptions" [value]="option.id">{{ option.name }}</md-option>
+  </md-select>
+
+  <md-input-container class="min-width-15rem margin-1rem">
+    <input mdInput
+           [formControl]="marketDescrInput"
+           placeholder="Market Description"
+           [mdAutocomplete]="marketDescrAuto">
+    <md-hint class="color-text-error"
+             *ngIf="domainInput.dirty && domainInput.invalid">
+      This field can not be blank
+    </md-hint>
+  </md-input-container>
+  <md-autocomplete #marketDescrAuto="mdAutocomplete" [displayWith]="displayNameProp">
+    <md-option *ngFor="let option of marketDescr | genericStringFilter:marketDescrInput.value" [value]="option">
+      {{ option.name }}
+    </md-option>
+  </md-autocomplete>
 </form>

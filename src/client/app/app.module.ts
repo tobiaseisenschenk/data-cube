@@ -16,6 +16,7 @@ import 'hammerjs';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { RouterModule } from '@angular/router';
 import { AddProjectModule } from './projects/add-project.module';
+import { PipesModule } from './shared/pipes/pipes.module';
 
 
 const firebaseConfig = {
@@ -34,7 +35,7 @@ const firebaseAuthConfig = {
 @NgModule({
   imports: [AddProjectModule, BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot(), MaterialRootModule,
-    RouterModule],
+    PipesModule, RouterModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

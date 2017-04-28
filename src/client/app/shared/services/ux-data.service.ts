@@ -8,9 +8,15 @@ import { Logger } from 'angular2-logger/core';
 export class UXDataService {
 
   public countries :FirebaseObjectObservable<any>;
+  public dev_methods :FirebaseObjectObservable<any>;
+  public domains :FirebaseObjectObservable<any>;
+  public market_descr :FirebaseObjectObservable<any>;
 
-  constructor(public af: AngularFire, private _logger :Logger) {
-    this.countries = this.af.database.object('/countries');
+  constructor(private _af: AngularFire, private _logger :Logger) {
+    this.countries = this._af.database.object('/countries');
+    this.dev_methods = this._af.database.object('/dev_methods');
+    this.domains = this._af.database.object('/domains');
+    this.market_descr = this._af.database.object('/market_descr');
   }
 
 
