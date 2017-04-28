@@ -1,6 +1,5 @@
 
 <md-card>
-  <span>{{currentUser?.auth?.email}}</span>
   <md-input-container>
     <input mdInput [(ngModel)]="email" placeholder="email">
   </md-input-container>
@@ -10,5 +9,4 @@
   <button md-button (click)="login()">Login</button>
   <button md-button (click)="register()">Register</button>
   <button md-button (click)="logout()">Logout</button>
-
 </md-card>

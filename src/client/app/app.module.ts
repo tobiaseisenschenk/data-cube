@@ -15,6 +15,7 @@ import { LOG_LOGGER_PROVIDERS } from 'angular2-logger/core';
 import 'hammerjs';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { RouterModule } from '@angular/router';
+import { AddProjectModule } from './projects/add-project.module';
 
 
 const firebaseConfig = {
@@ -31,7 +32,7 @@ const firebaseAuthConfig = {
 };
 
 @NgModule({
-  imports: [BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+  imports: [AddProjectModule, BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot(), MaterialRootModule,
     RouterModule],
   declarations: [AppComponent],

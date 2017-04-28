@@ -1,0 +1,18 @@
+<form id="add-project-form" [formGroup]="addProjectForm" (ngSubmit)="onSubmit(addProjectForm)" class="component-content">
+  <md-input-container>
+    <input mdInput [formControl]="budgetInput" placeholder="Budget" [mdAutocomplete]="budgetAuto">
+    <md-hint class="color-text-error"
+             *ngIf="budgetInput.dirty && budgetInput.invalid">
+      This field can not be blank
+    </md-hint>
+  </md-input-container>
+  <md-autocomplete #budgetAuto="mdAutocomplete">
+    <md-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{ option }}
+    </md-option>
+  </md-autocomplete>
+
+  <md-select placeholder="Market Diversity">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+</form>

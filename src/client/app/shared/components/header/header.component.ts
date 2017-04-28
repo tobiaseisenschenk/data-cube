@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 
 /**
  * This class represents the lazy loaded HeaderComponent.
@@ -8,8 +9,18 @@ import { Component } from '@angular/core';
   selector: 'header-component',
   templateUrl: 'header.component.html'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
+  public currentUser :any;
+  private _subscriptions :any;
 
-  constructor() {}
+  constructor(private _authenticationService :AuthenticationService) {}
 
+  ngOnInit() {
+    this._subscriptions = this._authenticationService.currentUser.subscribe((newUser) => {
+      this.currentUser = newUser;
+    });
+  }
+  ngOnDestroy() {
+    this._subscriptions.unsubscribe();
+  }
 }

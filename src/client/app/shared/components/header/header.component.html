@@ -1,4 +1,11 @@
 <md-toolbar color="primary">
   <span>UX Data-Cube</span>
-  <a [routerLink]="['/login']" class="margin-left-auto no-text-decoration"><span>Login</span></a>
+  <a [routerLink]="['/add-project']"
+     class="margin-left-auto no-text-decoration padding-right-1rem color-text-white"><span>
+    Add Project
+  </span></a>
+  <a [routerLink]="['/login']"
+     class="no-text-decoration padding-right-1rem color-text-white"><span>
+    {{currentUser?.auth.email}}
+  </span></a>
 </md-toolbar>

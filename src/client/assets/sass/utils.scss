@@ -1,3 +1,5 @@
+@import 'variables';
+
 //******************************** Alignment **********************************************
 .display-flex {
   display: flex;
@@ -5,6 +7,10 @@
 
 .wrap {
   flex-wrap: wrap;
+}
+
+.component-content {
+  padding: 3rem 3rem 0 3rem;
 }
 
 .vertical-align-center {
@@ -399,4 +405,36 @@
 
 .no-text-decoration {
   text-decoration: none;
+}
+
+.color-text-white {
+  color: $color-white;
+}
+
+.color-text-primary {
+  color: $color-primary;
+}
+
+.color-text-primary-extra-light {
+  color: $color-primary-extra-light;
+}
+
+.color-text-primary-very-light {
+  color: $color-primary-very-light;
+}
+
+.color-text-primary-light {
+  color: $color-primary-light;
+}
+
+.color-text-primary-dark {
+  color: $color-primary-dark;
+}
+
+.color-text-primary-very-dark {
+  color: $color-primary-very-dark;
+}
+
+.color-text-error {
+  color: $color-text-error;
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UXDataService } from '../shared/services/ux-data.service';
+import { Logger } from 'angular2-logger/core';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -10,41 +12,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
-  newName: string = '';
-  errorMessage: string;
-  names: any[] = [];
-
-  /**
-   * Creates an instance of the HomeComponent with the injected
-   * NameListService.
-   *
-   * @param {NameListService} nameListService - The injected NameListService.
-   */
-  constructor() {}
-
-  /**
-   * Get the names OnInit
-   */
+  public countries :any;
+  constructor(private _uXDataService :UXDataService, private _logger :Logger) {}
   ngOnInit() {
-    this.getNames();
+    this.subscribeCountries();
   }
 
-  /**
-   * Handle the nameListService observable
-   */
-  getNames() {
-  }
-
-  /**
-   * Pushes a new name onto the names array
-   * @return {boolean} false to prevent default form submit behavior to refresh the page.
-   */
-  addName(): boolean {
-    // TODO: implement nameListService.post
-    this.names.push(this.newName);
-    this.newName = '';
-    return false;
+  subscribeCountries() {
+    this._uXDataService.countries.subscribe((data) => {
+      this._logger.debug('[HomeComponent] new countries', data);
+      this.countries = data;
+    });
   }
 
 }
