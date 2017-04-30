@@ -151,7 +151,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
       }
       if (!descrExists) {
         this._logger.debug('[AddProjectComponent] adding new market description...');
-        let newDescr = { 'id': this.marketDescr.length, 'name': this.marketDescrInput.value };
+        let newDescr = { 'id': this.marketDescr.length + 1, 'name': this.marketDescrInput.value };
         this.selectedDescriptions.push(newDescr);
         this._uxDataService.addMarketDescr(newDescr);
         this.marketDescrInput.reset();
@@ -195,7 +195,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
       }
       if (!lanExists) {
         this._logger.debug('[AddProjectComponent] adding new language...');
-        let newLanguage = { 'id': this.languages.length, 'name': this.languageInput.value };
+        let newLanguage = { 'id': this.languages.length + 1, 'name': this.languageInput.value };
         this.selectedLanguages.push(newLanguage);
         this._uxDataService.addLanguage(newLanguage);
         this.languageInput.reset();
@@ -239,7 +239,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
       }
       if (!countryExists) {
         this._logger.debug('[AddProjectComponent] we discovered a new country ;-)');
-        let newCountry = { 'id': this.countries.length, 'name': this.countryInput.value };
+        let newCountry = { 'id': this.countries.length + 1, 'name': this.countryInput.value };
         this.selectedCountries.push(newCountry);
         this._uxDataService.addCountry(newCountry);
         this.countryInput.reset();
@@ -279,6 +279,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     newProjectObj.user_avg_age = this.userAgeInput.value;
     newProjectObj.user_expertise = this.userExpertiseInput.value;
     newProjectObj.user_diversity = this.userDiversityInput.value;
+    newProjectObj.date_shared = new Date();
     newProjectObj.dev_process_maturity = this.devProcessMaturityInput.value;
     newProjectObj.market_descr = [];
     this.selectedDescriptions.forEach((descrObj) => {
@@ -308,7 +309,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
         }
       });
       if (!domainExists) {
-        let newDomainObj = { 'id': this.domains.length, 'name': this.domainInput.value };
+        let newDomainObj = { 'id': this.domains.length + 1, 'name': this.domainInput.value };
         this._uxDataService.addDomain(newDomainObj);
         return this.domains.length;
       }
@@ -365,7 +366,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
   // in order to compute the correct 'consecutive' id for the new project
   private subscribeProjects() {
     this.projectsSubscription = this._uxDataService.projects.subscribe((projects :any) => {
-      this._newProjectId = projects.length;
+      this._newProjectId = projects.length + 1;
     });
   }
 }

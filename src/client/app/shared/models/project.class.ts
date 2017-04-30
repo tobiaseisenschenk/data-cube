@@ -87,6 +87,14 @@ export class Project {
     this._user_diversity = value;
   }
 
+  get date_shared(): Date {
+    return this._date_shared;
+  }
+
+  set date_shared(value: Date) {
+    this._date_shared = value;
+  }
+
   get dev_process_maturity(): number {
     return this._dev_process_maturity;
   }
@@ -126,6 +134,14 @@ export class Project {
   set user_location(value: Array<number>) {
     this._user_location = value;
   }
+
+  get domainName(): string {
+    return this._domainName;
+  }
+
+  set domainName(value: string) {
+    this._domainName = value;
+  }
   // mandatory
   _owned_by :string;
   private _id :number;
@@ -138,6 +154,7 @@ export class Project {
   private _user_avg_age :string;
   private _user_expertise :string;
   private _user_diversity :string;
+  private _date_shared :Date;
 
   // optional
   private _dev_process_maturity :number;
@@ -145,6 +162,9 @@ export class Project {
   private _market_diversity :string;
   private _user_languages :Array<number>;
   private _user_location :Array<number>;
+
+  // front-end only
+  private _domainName :string;
 
   // TODO provide default values for parameters which should be optional
   constructor(obj :any) {
@@ -161,6 +181,7 @@ export class Project {
     this._user_avg_age = obj.user_avg_age ? obj.user_avg_age : undefined;
     this._user_expertise = obj.user_expertise ? obj.user_expertise : undefined;
     this._user_diversity = obj.user_diversity ? obj.user_diversity : undefined;
+    this._date_shared = obj.date_shared ? obj.date_shared : undefined;
     this._dev_process_maturity = obj.dev_process_maturity ? obj.dev_process_maturity : undefined;
     this._market_descr = obj.market_descr ? obj.market_descr : undefined;
     this._market_diversity = obj.market_diversity ? obj.market_diversity : undefined;
@@ -182,6 +203,7 @@ export class Project {
       user_avg_age: this._user_avg_age,
       user_expertise: this._user_expertise,
       user_diversity: this._user_diversity,
+      date_shared: this._date_shared.toISOString(),
       dev_process_maturity: this._dev_process_maturity ? this._dev_process_maturity : undefined,
       market_descr: this._market_descr ? this._market_descr : [],
       market_diversity: this._market_diversity ? this._market_diversity : '',
