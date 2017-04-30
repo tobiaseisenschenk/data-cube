@@ -1,4 +1,12 @@
 export class Project {
+  get id(): number {
+    return this._id;
+  }
+
+  set id(value: number) {
+    this._id = value;
+  }
+
   get owned_by(): string {
     return this._owned_by;
   }
@@ -15,11 +23,11 @@ export class Project {
     this._budget = value;
   }
 
-  get dev_method(): Array<number> {
+  get dev_method(): number {
     return this._dev_method;
   }
 
-  set dev_method(value: Array<number>) {
+  set dev_method(value: number) {
     this._dev_method = value;
   }
 
@@ -120,8 +128,9 @@ export class Project {
   }
   // mandatory
   _owned_by :string;
+  private _id :number;
   private _budget :string;
-  private _dev_method :Array<number>;
+  private _dev_method :number;
   private _domain :number;
   private _product_complexity :string;
   private _team_size :string;
@@ -137,11 +146,32 @@ export class Project {
   private _user_languages :Array<number>;
   private _user_location :Array<number>;
 
-  constructor() {}
+  // TODO provide default values for parameters which should be optional
+  constructor(obj :any) {
+    // must be provided at construction
+    this._owned_by = obj.owned_by;
+    this._id = obj.id;
+    // optional parameters
+    this._budget = obj.budget ? obj.budget : undefined;
+    this._dev_method = obj.dev_method ? obj.dev_method : undefined;
+    this._domain = obj.domain ? obj.domain : undefined;
+    this._product_complexity = obj.product_complexity ? obj.product_complexity : undefined;
+    this._team_size = obj.team_size ? obj.team_size : undefined;
+    this._time = obj.time ? obj.time : undefined;
+    this._user_avg_age = obj.user_avg_age ? obj.user_avg_age : undefined;
+    this._user_expertise = obj.user_expertise ? obj.user_expertise : undefined;
+    this._user_diversity = obj.user_diversity ? obj.user_diversity : undefined;
+    this._dev_process_maturity = obj.dev_process_maturity ? obj.dev_process_maturity : undefined;
+    this._market_descr = obj.market_descr ? obj.market_descr : undefined;
+    this._market_diversity = obj.market_diversity ? obj.market_diversity : undefined;
+    this._user_languages = obj.user_languages ? obj.user_languages : undefined;
+    this._user_location = obj.user_location ? obj.user_location : undefined;
+  }
 
   public toJson(): any {
 
     let projectJson: any = {
+      id: this._id,
       owned_by: this._owned_by,
       budget: this._budget,
       dev_method: this._dev_method,

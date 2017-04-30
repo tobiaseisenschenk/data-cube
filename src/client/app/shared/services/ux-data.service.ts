@@ -3,6 +3,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import 'rxjs/add/operator/toPromise';
 import { Logger } from 'angular2-logger/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Project } from '../models/project.class';
 
 
 @Injectable()
@@ -24,9 +25,9 @@ export class UXDataService {
     this.languages = this._af.database.list('/languages');
     this.projects = this._af.database.list('/projects');
   }
-  public addProject(project :any) {
+  public addProject(project :Project) {
     this._logger.debug('[UXDataService] adding project: ', project);
-    this.projects.push(project);
+    this.projects.push(project.toJson());
   }
 
   public addDomain(domain :any) {

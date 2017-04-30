@@ -15,14 +15,5 @@ export class HomeComponent implements OnInit {
   public countries :any;
   constructor(private _uXDataService :UXDataService, private _logger :Logger) {}
   ngOnInit() {
-    this.subscribeCountries();
   }
-
-  subscribeCountries() {
-    this._uXDataService.countries.subscribe((data) => {
-      this._logger.debug('[HomeComponent] new countries', data);
-      this.countries = data;
-    });
-  }
-
 }

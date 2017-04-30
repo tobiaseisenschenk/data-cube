@@ -4,6 +4,10 @@
      class="margin-left-auto no-text-decoration padding-right-1rem color-text-white"><span>
     Add Project
   </span></a>
+  <a [routerLink]="['/my-contributions']"
+     class="no-text-decoration padding-right-1rem color-text-white"><span>
+    My Contributions
+  </span></a>
   <a [routerLink]="['/login']"
      class="no-text-decoration padding-right-1rem color-text-white"><span>
     {{currentUser?.auth.email}}

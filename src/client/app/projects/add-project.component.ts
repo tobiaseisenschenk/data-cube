@@ -7,7 +7,7 @@ import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
 
 /**
- * This class represents the lazy loaded LoginComponent.
+ * This class represents the lazy loaded AddProjectComponent.
  */
 @Component({
   moduleId: module.id,
@@ -43,7 +43,8 @@ export class AddProjectComponent implements OnInit, OnDestroy {
   public selectedLanguages :Array<any>;
   public countries :any;
   public selectedCountries :Array<any>;
-  private currentUser :any;
+  private _currentUser :any;
+  private _newProjectId :number;
   // Subscriptions
   private devMethodsSubscription :any;
   private domainsSubscription :any;
@@ -51,6 +52,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
   private userSubscription :any;
   private languagesSubscription :any;
   private countriesSubscription :any;
+  private projectsSubscription :any;
 
   constructor(private _logger :Logger,
               private _authenticationService :AuthenticationService,
@@ -64,6 +66,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     this.subscribeCurrentUser();
     this.subscribeLanguages();
     this.subscribeCountries();
+    this.subscribeProjects();
     this.addProjectForm = this._formbuilder.group({
       'devMethodInput': ['', Validators.compose([Validators.required, this.devMethodValidator])],
       'marketDiversityInput': ['', Validators.compose([Validators.required])],
@@ -118,6 +121,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     this.marketDescrSubscription.unsubscribe();
     this.languagesSubscription.unsubscribe();
     this.countriesSubscription.unsubscribe();
+    this.projectsSubscription.unsubscribe();
   }
   /* UI Functions */
   displayNameProp(obj: any): string {
@@ -265,8 +269,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     this.checkMarketDescrInput();
     this.checkLanguageInput();
     this.checkCountryInput();
-    let newProjectObj = new Project();
-    newProjectObj.owned_by = this.currentUser.auth.uid;
+    let newProjectObj = new Project({ 'owned_by': this._currentUser.auth.uid, 'id': this._newProjectId });
     newProjectObj.budget = this.budgetInput.value;
     newProjectObj.dev_method = this.devMethodInput.value.id;
     newProjectObj.domain = this.checkDomainInput();
@@ -344,7 +347,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
   private subscribeCurrentUser() {
     this.userSubscription = this._authenticationService.currentUser.subscribe((user :any) => {
       this._logger.debug('[AddProjectComponent] received current user: ', user);
-      this.currentUser = user;
+      this._currentUser = user;
     });
   }
   private subscribeLanguages() {
@@ -357,6 +360,12 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     this.countriesSubscription = this._uxDataService.countries.subscribe((countries :any) => {
       this._logger.debug('[AddProjectComponent] received countries: ', countries);
       this.countries = countries;
+    });
+  }
+  // in order to compute the correct 'consecutive' id for the new project
+  private subscribeProjects() {
+    this.projectsSubscription = this._uxDataService.projects.subscribe((projects :any) => {
+      this._newProjectId = projects.length;
     });
   }
 }

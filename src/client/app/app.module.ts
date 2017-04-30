@@ -17,6 +17,7 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { RouterModule } from '@angular/router';
 import { AddProjectModule } from './projects/add-project.module';
 import { PipesModule } from './shared/pipes/pipes.module';
+import { MyContributionsModule } from './my-contributions/my-contributions.module';
 
 
 const firebaseConfig = {
@@ -35,7 +36,7 @@ const firebaseAuthConfig = {
 @NgModule({
   imports: [AddProjectModule, BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule, SharedModule.forRoot(), MaterialRootModule,
-    PipesModule, RouterModule],
+    MyContributionsModule, PipesModule, RouterModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

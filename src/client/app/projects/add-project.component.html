@@ -194,8 +194,8 @@
 
   <!-- Buttons -->
   <div class="content-horizontal-center margin-top-1rem margin-bottom-2rem">
-    <button md-raised-button type="reset" color="warn">Cancel</button>
-    <button md-raised-button type="button"
+    <button md-raised-button type="reset" (click)="addProjectForm.reset()" color="warn">Cancel</button>
+    <button md-raised-button type="button" [disabled]="addProjectForm.invalid"
             color="primary"
             class="margin-left-2rem"
             (click)="onSubmit(addProjectForm)">
