@@ -7,7 +7,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   moduleId: module.id,
   selector: 'header-component',
-  templateUrl: 'header.component.html'
+  templateUrl: 'header.component.html',
+  styleUrls: ['header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public currentUser :any;

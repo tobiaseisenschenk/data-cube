@@ -5,11 +5,18 @@
   display: flex;
 }
 
+.display-inline-flex {
+  display: inline-flex !important;
+}
+
 .wrap {
   flex-wrap: wrap;
 }
 
 .component-content {
+  // offset for header
+  margin-top: 4rem;
+  // component padding
   padding: 3rem 3rem 0 3rem;
 }
 
@@ -125,6 +132,10 @@
 
 .transition-500ms {
   transition: all .5s ease-out;
+}
+
+.box-shadow-light-below {
+  box-shadow: 0 0.01rem 2rem $color-primary-very-dark;
 }
 
 .no-text-overflow {
@@ -441,4 +452,9 @@
 
 .color-text-error {
   color: $color-text-error;
+}
+
+// custom material icon sub-class
+.material-icons.orange600 {
+  color: #FB8C00;
 }
