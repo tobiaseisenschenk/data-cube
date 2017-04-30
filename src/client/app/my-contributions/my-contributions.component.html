@@ -1,18 +1,46 @@
-<div class="component-content display-flex wrap">
-  <md-card *ngFor="let project of myProjects" class="width-30rem margin-1rem">
-    <md-card-title><h3>Domain: {{ project.domainName }}</h3></md-card-title>
-    <md-card-subtitle><h4>Added on: {{ project.date_shared | date:'MM/dd/yy' }}</h4></md-card-subtitle>
+<div class="component-content">
+  <!-- List of Projects -->
+  <div *ngIf="!selectedProject" class="display-flex wrap">
+    <md-card *ngFor="let project of myProjects" class="width-30rem margin-1rem">
+      <md-card-title><h3>Domain: {{ project.domainName }}</h3></md-card-title>
+      <md-card-subtitle><h4>Added on: {{ project.date_shared | date:'MM/dd/yy' }}</h4></md-card-subtitle>
+      <md-card-content>
+        Product Complexity: {{ project.product_complexity }}
+      </md-card-content>
+      <md-card-actions>
+        <button md-raised-button color="accent" (click)="selectProject(project)">
+          <i class="material-icons md-18">chevron_right</i>
+          See Details
+        </button>
+        <button md-raised-button color="primary">
+          <i class="material-icons md-18">add</i>
+          Add Evaluation
+        </button>
+      </md-card-actions>
+    </md-card>
+  </div>
+
+  <!-- Detail View for Selected Project -->
+  <md-card *ngIf="!!selectedProject">
+    <md-card-title><h3>Domain: {{ selectedProject.domainName }}</h3></md-card-title>
+    <md-card-subtitle><h4>Added on: {{ selectedProject.date_shared | date:'MM/dd/yy' }}</h4></md-card-subtitle>
     <md-card-content>
-      Product Complexity: {{ project.product_complexity }}
+      <md-list>
+        <md-list-item>Budget: {{ selectedProject.budget }}</md-list-item>
+        <md-list-item>Team Size:{{ selectedProject.team_size }}</md-list-item>
+        <md-list-item>Time in Months: {{ selectedProject.time }}</md-list-item>
+        <md-list-item>Average User Age: {{ selectedProject.user_avg_age }}</md-list-item>
+        <md-list-item>Estimated User Expertise: {{ selectedProject.user_expertise }}</md-list-item>
+        <md-list-item>Market described as: {{ selectedProject.market_descr }}</md-list-item>
+        <md-list-item>User Languages:
+          {{ allLanguages | getNamePipe:selectedProject.user_languages }}
+        </md-list-item>
+      </md-list>
     </md-card-content>
     <md-card-actions>
-      <button md-raised-button color="accent">
-        <i class="material-icons md-18">chevron_right</i>
-        See Details
-      </button>
-      <button md-raised-button color="primary">
-        <i class="material-icons md-18">add</i>
-        Add Evaluation
+      <button md-raised-button color="accent" (click)="selectProject(selectedProject)">
+        <i class="material-icons md-18">chevron_left</i>
+        Back to Overview
       </button>
       <button md-raised-button color="warn">
         <i class="material-icons md-18">delete_forever</i>

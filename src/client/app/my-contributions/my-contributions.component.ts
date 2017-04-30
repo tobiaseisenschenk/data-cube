@@ -23,9 +23,12 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
   // Data Collections
   public myProjects :Array<Project>;
   public domains :any;
+  public selectedProject :Project;
+  public allLanguages: Array<any>;
 
   // Subscriptions
   private myProjectsSubscription :any;
+  private languageSubscription :any;
 
   constructor(private _logger :Logger,
               private _authenticationService :AuthenticationService,
@@ -33,16 +36,24 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscribeMyProjects();
+    this.subscribeLanguages();
   }
   ngOnDestroy() {
     this.myProjectsSubscription.unsubscribe();
+    this.languageSubscription.unsubscribe();
   }
   /* UI Functions */
-
+  selectProject(project :Project) {
+    if (this.selectedProject === project) {
+      this.selectedProject = undefined;
+    } else {
+      this.selectedProject = project;
+    }
+  }
   /* Helper Functions / Data Modification */
 
   /* Subscriptions */
-  subscribeMyProjects() {
+  private subscribeMyProjects() {
     this.myProjectsSubscription = Observable.combineLatest(
       this._uxDataService.projects,
       this._authenticationService.currentUser,
@@ -66,6 +77,11 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
         this._logger.debug('[MyContributionsComponent] myProjects set', this.myProjects);
         this.domains = res[2];
       }
+    });
+  }
+  private subscribeLanguages() {
+    this._uxDataService.languages.subscribe((lang :any) => {
+      this.allLanguages = lang;
     });
   }
 }
