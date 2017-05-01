@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
-import { forEach } from '@angular/router/src/utils/collection';
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { ConfirmDeleteDialogComponent } from '../shared/components/dialogs/confirmDeleteDialog.component';
 
 /**
  * This class represents the lazy loaded MyContributionsComponent.
@@ -19,6 +20,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class MyContributionsComponent implements OnInit, OnDestroy {
 
   // Input Fields
+  public dialogRef :MdDialogRef<ConfirmDeleteDialogComponent>;
 
   // Data Collections
   public myProjects :Array<Project>;
@@ -37,7 +39,7 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
   private countriesSubscription :any;
   private devMethodsSubscription :any;
 
-  constructor(private _logger :Logger,
+  constructor(public confirmDeleteDialog :MdDialog, private _logger :Logger,
               private _authenticationService :AuthenticationService,
               private _uxDataService :UXDataService) {}
 
@@ -70,7 +72,23 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
       this.selectedProject = project;
     }
   }
+  openConfirmDeleteDialog() {
+    this.dialogRef = this.confirmDeleteDialog.open(ConfirmDeleteDialogComponent);
+    this.dialogRef.componentInstance.headline = 'Deleting Project';
+    this.dialogRef.componentInstance.body =
+      `Are you sure you want to delete this project including all its assiciated evaluations?`;
+    this.dialogRef.componentInstance.confirmButtonLabel = 'Delete Project';
+    this.dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this._logger.debug('[MyContributionsComponent] deleting project...')
+        this.deleteProject();
+      }
+    });
+  }
   /* Helper Functions / Data Modification */
+  private deleteProject() {
+    // call service here
+  }
 
   /* Subscriptions */
   private subscribeMyProjects() {
