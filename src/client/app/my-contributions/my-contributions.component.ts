@@ -22,13 +22,20 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
 
   // Data Collections
   public myProjects :Array<Project>;
-  public domains :any;
   public selectedProject :Project;
+  public allDomains :Array<any>;
+  public allMarketDescr :Array<any>;
+  public allCountries :Array<any>;
   public allLanguages: Array<any>;
+  public allDevMethods :Array<any>;
+  public devProcessMaturityOptions :any;
 
   // Subscriptions
   private myProjectsSubscription :any;
   private languageSubscription :any;
+  private marketDescrSubscription :any;
+  private countriesSubscription :any;
+  private devMethodsSubscription :any;
 
   constructor(private _logger :Logger,
               private _authenticationService :AuthenticationService,
@@ -37,10 +44,23 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribeMyProjects();
     this.subscribeLanguages();
+    this.subscribeCountries();
+    this.subscribeMarketDescr();
+    this.subscribeDevMethods();
+    this.devProcessMaturityOptions = [
+      {'id': 1, 'name': 'Initial'},
+      {'id': 2, 'name': 'Repeatable'},
+      {'id': 3, 'name': 'Defined'},
+      {'id': 4, 'name': 'Capable'},
+      {'id': 5, 'name': 'Efficient'}
+    ];
   }
   ngOnDestroy() {
     this.myProjectsSubscription.unsubscribe();
     this.languageSubscription.unsubscribe();
+    this.marketDescrSubscription.unsubscribe();
+    this.countriesSubscription.unsubscribe();
+    this.devMethodsSubscription.unsubscribe();
   }
   /* UI Functions */
   selectProject(project :Project) {
@@ -75,13 +95,31 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
             return proj;
           });
         this._logger.debug('[MyContributionsComponent] myProjects set', this.myProjects);
-        this.domains = res[2];
+        this.allDomains = res[2];
       }
     });
   }
   private subscribeLanguages() {
-    this._uxDataService.languages.subscribe((lang :any) => {
+    this.languageSubscription = this._uxDataService.languages.subscribe((lang :any) => {
       this.allLanguages = lang;
+    });
+  }
+  private subscribeMarketDescr() {
+    this.marketDescrSubscription = this._uxDataService.market_descr.subscribe((marketDescr :any) => {
+      this._logger.debug('[MyContributionsComponent] received market descriptions: ', marketDescr);
+      this.allMarketDescr = marketDescr;
+    });
+  }
+  private subscribeCountries() {
+    this.countriesSubscription = this._uxDataService.countries.subscribe((countries :any) => {
+      this._logger.debug('[MyContributionsComponent] received countries: ', countries);
+      this.allCountries = countries;
+    });
+  }
+  private subscribeDevMethods() {
+    this.devMethodsSubscription = this._uxDataService.dev_methods.subscribe((dev_methods :any) => {
+      this._logger.debug('[MyContributionsComponent] received dev_methods: ', dev_methods);
+      this.allDevMethods = dev_methods;
     });
   }
 }

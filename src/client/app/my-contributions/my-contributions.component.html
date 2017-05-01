@@ -24,25 +24,113 @@
   <md-card *ngIf="!!selectedProject">
     <md-card-title><h3>Domain: {{ selectedProject.domainName }}</h3></md-card-title>
     <md-card-subtitle><h4>Added on: {{ selectedProject.date_shared | date:'MM/dd/yy' }}</h4></md-card-subtitle>
-    <md-card-content>
-      <md-list>
-        <md-list-item>Budget: {{ selectedProject.budget }}</md-list-item>
-        <md-list-item>Team Size:{{ selectedProject.team_size }}</md-list-item>
-        <md-list-item>Time in Months: {{ selectedProject.time }}</md-list-item>
-        <md-list-item>Average User Age: {{ selectedProject.user_avg_age }}</md-list-item>
-        <md-list-item>Estimated User Expertise: {{ selectedProject.user_expertise }}</md-list-item>
-        <md-list-item>Market described as: {{ selectedProject.market_descr }}</md-list-item>
-        <md-list-item>User Languages:
-          {{ allLanguages | getNamePipe:selectedProject.user_languages }}
-        </md-list-item>
-      </md-list>
+    <md-card-content class="display-flex wrap">
+      <md-card class="width-30rem margin-1rem margin-top-1rem">
+        <md-card-subtitle><h4>Project</h4></md-card-subtitle>
+        <table class="full-width">
+          <tr>
+            <td>Budget:</td>
+            <td><span class="color-text-primary-very-dark">{{ selectedProject.budget }}</span></td>
+          </tr>
+          <tr>
+            <td>Development Methodology:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ allDevMethods | getNamePipe:[selectedProject.dev_method] }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Development Process Maturity:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ devProcessMaturityOptions[selectedProject.dev_process_maturity].name }}
+            </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Team Size:</td>
+            <td><span class="color-text-primary-very-dark">{{ selectedProject.team_size }}</span></td>
+          </tr>
+          <tr>
+            <td>Time in Months:</td>
+            <td><span class="color-text-primary-very-dark">{{ selectedProject.time }}</span></td>
+          </tr>
+        </table>
+      </md-card>
+      <md-card class="width-30rem margin-1rem">
+        <md-card-subtitle><h4>Market</h4></md-card-subtitle>
+        <table class="full-width">
+          <tr>
+            <td>Domain:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ selectedProject.domainName }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Market described as:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ allMarketDescr | getNamePipe:selectedProject.market_descr }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Product Complexity:</td>
+            <td><span class="color-text-primary-very-dark">{{ selectedProject.product_complexity }}</span></td>
+          </tr>
+          <tr>
+            <td>User Countries:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ allCountries | getNamePipe:selectedProject.user_location }}
+              </span>
+            </td>
+          </tr>
+        </table>
+      </md-card>
+      <md-card class="width-30rem margin-1rem">
+        <md-card-subtitle><h4>User</h4></md-card-subtitle>
+        <table class="full-width">
+          <tr>
+            <td>Estimated User Expertise:</td>
+            <td><span class="color-text-primary-very-dark">{{ selectedProject.user_expertise }}</span></td>
+          </tr>
+          <tr>
+            <td>User Languages:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ allLanguages | getNamePipe:selectedProject.user_languages }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>User Diversity:</td>
+            <td>
+              <span class="color-text-primary-very-dark">
+              {{ selectedProject.user_diversity }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Average User Age:</td>
+            <td><span class="color-text-primary-very-dark">{{ selectedProject.user_avg_age }}</span></td>
+          </tr>
+        </table>
+      </md-card>
     </md-card-content>
-    <md-card-actions>
+    <md-card-actions class="display-flex">
       <button md-raised-button color="accent" (click)="selectProject(selectedProject)">
         <i class="material-icons md-18">chevron_left</i>
         Back to Overview
       </button>
-      <button md-raised-button color="warn">
+      <button md-raised-button color="primary">
+        <i class="material-icons md-18">add</i>
+        Add Evaluation
+      </button>
+      <button md-button color="warn" class="margin-left-auto">
         <i class="material-icons md-18">delete_forever</i>
         Delete
       </button>
