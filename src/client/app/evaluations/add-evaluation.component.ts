@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
-import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { AbstractControl, FormBuilder , FormGroup, Validators } from '@angular/forms';
 import { UXDataService } from '../shared/services/ux-data.service';
 import { Evaluation } from '../shared/models/evaluation.class';
 
@@ -66,9 +65,9 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
       'userKnowledgeInput': ['', Validators.compose([Validators.required])],
       'taskKnowledgeInput': ['', Validators.compose([Validators.required])],
       'evalMethodInput': ['', Validators.compose([])],
-      'seqInput': ['', Validators.compose([Validators.required])],
-      'subEffectivenessInput': ['', Validators.compose([Validators.required])],
-      'susInput': ['', Validators.compose([Validators.required])],
+      'seqInput': ['', Validators.compose([])],
+      'subEffectivenessInput': ['', Validators.compose([])],
+      'susInput': ['', Validators.compose([])],
       'testMotivationInput': ['', Validators.compose([Validators.required])],
     });
 
@@ -147,8 +146,28 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     });
   }
   /* Helper Functions / Data Modification */
-  onSubmit(addEvaluationForm :FormGroup) {
-    let projectId = this._uxDataService.projectIdSelectedForEvaluation.getValue();
+  onSubmit() {
+    this.checkEvalMethodInput();
+    let newEvaluation = new Evaluation({ 'id': this._evaluationId, 'owned_by': this._currentUser.auth.uid });
+    newEvaluation.date_shared = new Date();
+    newEvaluation.project_id = this._uxDataService.projectIdSelectedForEvaluation.getValue();
+    newEvaluation.eval_exp = this.evalExpInput.value;
+    newEvaluation.num_eval = this.numEvalInput.value;
+    newEvaluation.eval_collab = this.evalCollabInput.value;
+    newEvaluation.domain_knowledge = this.domainKnowledgeInput.value;
+    newEvaluation.interaction_knowledge = this.interactionKnowledgeInput.value;
+    newEvaluation.product_knowledge = this.productKnowledgeInput.value;
+    newEvaluation.task_knowledge = this.taskKnowledgeInput.value;
+    newEvaluation.user_knowledge = this.userKnowledgeInput.value;
+    newEvaluation.eval_method = [];
+    this.selectedEvalMethods.forEach((evalMethod :any) => {
+      newEvaluation.eval_method.push(evalMethod.id);
+    });
+    newEvaluation.seq = this.seqInput.value;
+    newEvaluation.sub_effectiveness = this.subEffectivenessInput.value;
+    newEvaluation.sus = this.susInput.value;
+    newEvaluation.test_motivation = this.testMotivationInput.value;
+    this._uxDataService.addEvaluation(newEvaluation);
   }
 
   /* Subscriptions */

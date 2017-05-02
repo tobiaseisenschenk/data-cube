@@ -18,7 +18,7 @@ export class UXDataService {
   public languages :FirebaseListObservable<any>;
   public projects :FirebaseListObservable<any>;
   public evaluations :FirebaseListObservable<any>;
-  public projectIdSelectedForEvaluation :BehaviorSubject<number> = new BehaviorSubject(2);
+  public projectIdSelectedForEvaluation :BehaviorSubject<number> = new BehaviorSubject(null);
   public evaluationMethods :FirebaseListObservable<any>;
 
 
@@ -91,6 +91,18 @@ export class UXDataService {
       this.loading.next(false);
     }, (error :Error) => {
       this._logger.debug('[UXDataService] error adding evaluation method!', error);
+      this.loading.next(false);
+    });
+  }
+  public addEvaluation(evaluation :Evaluation) {
+    this.loading.next(true);
+    this._logger.debug('[UXDataService] adding evaluation: ', evaluation);
+    return this.evaluations.push(evaluation.toJson()).then((success :any) => {
+      this._logger.debug('[UXDataService] adding evaluation successful!');
+      this.loading.next(false);
+      this.projectIdSelectedForEvaluation.next(null);
+    }, (error :Error) => {
+      this._logger.debug('[UXDataService] error adding evaluation!', error);
       this.loading.next(false);
     });
   }

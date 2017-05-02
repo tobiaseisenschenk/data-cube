@@ -1,6 +1,141 @@
 export class Evaluation {
 
-  // Internal Attributes
+  get id(): number {
+    return this._id;
+  }
+
+  set id(value: number) {
+    this._id = value;
+  }
+
+  get owned_by(): string {
+    return this._owned_by;
+  }
+
+  set owned_by(value: string) {
+    this._owned_by = value;
+  }
+
+  get project_id(): number {
+    return this._project_id;
+  }
+
+  set project_id(value: number) {
+    this._project_id = value;
+  }
+
+  get num_eval(): number {
+    return this._num_eval;
+  }
+
+  set num_eval(value: number) {
+    this._num_eval = value;
+  }
+
+  get domain_knowledge(): string {
+    return this._domain_knowledge;
+  }
+
+  set domain_knowledge(value: string) {
+    this._domain_knowledge = value;
+  }
+
+  get interaction_knowledge(): string {
+    return this._interaction_knowledge;
+  }
+
+  set interaction_knowledge(value: string) {
+    this._interaction_knowledge = value;
+  }
+
+  get product_knowledge(): string {
+    return this._product_knowledge;
+  }
+
+  set product_knowledge(value: string) {
+    this._product_knowledge = value;
+  }
+
+  get task_knowledge(): string {
+    return this._task_knowledge;
+  }
+
+  set task_knowledge(value: string) {
+    this._task_knowledge = value;
+  }
+
+  get user_knowledge(): string {
+    return this._user_knowledge;
+  }
+
+  set user_knowledge(value: string) {
+    this._user_knowledge = value;
+  }
+
+  get eval_method(): Array<number> {
+    return this._eval_method;
+  }
+
+  set eval_method(value: Array<number>) {
+    this._eval_method = value;
+  }
+
+  get seq(): number {
+    return this._seq;
+  }
+
+  set seq(value: number) {
+    this._seq = value;
+  }
+
+  get sub_effectiveness(): string {
+    return this._sub_effectiveness;
+  }
+
+  set sub_effectiveness(value: string) {
+    this._sub_effectiveness = value;
+  }
+
+  get sus(): number {
+    return this._sus;
+  }
+
+  set sus(value: number) {
+    this._sus = value;
+  }
+
+  get test_motivation(): string {
+    return this._test_motivation;
+  }
+
+  set test_motivation(value: string) {
+    this._test_motivation = value;
+  }
+
+  get date_shared(): Date {
+    return this._date_shared;
+  }
+
+  set date_shared(value: Date) {
+    this._date_shared = value;
+  }
+
+  get eval_exp(): number {
+    return this._eval_exp;
+  }
+
+  set eval_exp(value: number) {
+    this._eval_exp = value;
+  }
+
+  get eval_collab(): string {
+    return this._eval_collab;
+  }
+
+  set eval_collab(value: string) {
+    this._eval_collab = value;
+  }
+
   private _id :number;
   private _owned_by: string;
   private _date_shared :Date;
@@ -42,7 +177,7 @@ export class Evaluation {
   }
 
   public toJson(): any {
-    let evaluationJson: any = {
+    return {
       'id': this._id,
       'owned_by': this._owned_by,
       'date_shared': this._date_shared.toISOString(),
@@ -61,6 +196,5 @@ export class Evaluation {
       'sus': this._sus,
       'test_motivation': this._test_motivation
     };
-    return evaluationJson;
   }
 }
