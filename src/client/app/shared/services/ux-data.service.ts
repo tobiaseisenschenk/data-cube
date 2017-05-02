@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import { Logger } from 'angular2-logger/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Project } from '../models/project.class';
+import { Evaluation } from '../models/evaluation.class';
 
 
 @Injectable()
@@ -16,6 +17,10 @@ export class UXDataService {
   public market_descr :FirebaseListObservable<any>;
   public languages :FirebaseListObservable<any>;
   public projects :FirebaseListObservable<any>;
+  public evaluations :FirebaseListObservable<any>;
+  public projectIdSelectedForEvaluation :BehaviorSubject<number> = new BehaviorSubject(2);
+  public evaluationMethods :FirebaseListObservable<any>;
+
 
   constructor(private _af: AngularFire, private _logger :Logger) {
     this.countries = this._af.database.list('/countries');
@@ -24,6 +29,8 @@ export class UXDataService {
     this.market_descr = this._af.database.list('/market_descr');
     this.languages = this._af.database.list('/languages');
     this.projects = this._af.database.list('/projects');
+    this.evaluations = this._af.database.list('/evaluations');
+    this.evaluationMethods = this._af.database.list('/eval_methods');
   }
   public addProject(project :Project) {
     this._logger.debug('[UXDataService] adding project: ', project);
@@ -73,6 +80,17 @@ export class UXDataService {
       this.loading.next(false);
     }, (error :Error) => {
       this._logger.debug('[UXDataService] error adding country!', error);
+      this.loading.next(false);
+    });
+  }
+  public addEvalMethod(method :any) {
+    this.loading.next(true);
+    this._logger.debug('[UXDataService] adding evaluation method: ', method);
+    return this.countries.push(method).then((success :any) => {
+      this._logger.debug('[UXDataService] adding evaluation method successful!');
+      this.loading.next(false);
+    }, (error :Error) => {
+      this._logger.debug('[UXDataService] error adding evaluation method!', error);
       this.loading.next(false);
     });
   }

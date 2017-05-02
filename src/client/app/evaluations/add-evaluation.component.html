@@ -1,3 +1,127 @@
-<div class="component-content">
-  <h3>hello</h3>
-</div>
+<form class="component-content content-vertical-centered" [formGroup]="addEvaluationForm">
+  <!-- Evaluator Experience -->
+  <md-select [formControl]="evalExpInput"
+             placeholder="Years of Evaluator Experience"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let age of numberArray" [value]="age">{{ age }}</md-option>
+  </md-select>
+
+  <!-- Number of Evaluators -->
+  <md-select [formControl]="numEvalInput" placeholder="Number of Evaluators" class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of numberArray | slice:1" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Evaluator Collaboration -->
+  <md-select [formControl]="evalCollabInput"
+             placeholder="Evaluator Collaboration"
+             class="min-width-15rem margin-1rem"
+             *ngIf="numEvalInput.value > 1">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Evaluator's Domain Knowledge -->
+  <md-select [formControl]="domainKnowledgeInput" placeholder="Domain Knowledge" class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Evaluator's Interaction Knowledge -->
+  <md-select [formControl]="interactionKnowledgeInput"
+             placeholder="Interaction Knowledge"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Evaluator's Product Knowledge -->
+  <md-select [formControl]="productKnowledgeInput"
+             placeholder="Product Knowledge"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Evaluator's User Knowledge -->
+  <md-select [formControl]="userKnowledgeInput"
+             placeholder="User Knowledge"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Evaluator's Task Knowledge -->
+  <md-select [formControl]="taskKnowledgeInput"
+             placeholder="Task Knowledge"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <hr class="half-width color-text-primary-very-dark margin-top-2rem margin-bottom-2rem">
+
+  <!-- Evaluation Methods -->
+  <md-input-container class="min-width-15rem margin-1rem">
+    <input mdInput
+           [formControl]="evalMethodInput"
+           placeholder="Evaluation Methods"
+           [mdAutocomplete]="evalMethodAuto"
+           (keyup.enter)="checkEvalMethodInput()">
+  </md-input-container>
+  <md-autocomplete #evalMethodAuto="mdAutocomplete">
+    <md-option *ngFor="let option of allEvalMethods | genericStringFilter:evalMethodInput.value"
+               [value]="option"
+               (onSelect)="selectEvalMethod(option); evalMethodInput.reset()">
+      {{ option.name }}
+    </md-option>
+  </md-autocomplete>
+  <md-chip-list class="margin-bottom-2rem">
+    <md-chip *ngFor="let method of selectedEvalMethods"
+             (click)="deselectEvalMethod(method)"
+             class="display-inline-flex align-items-center pointer">
+      <span>{{ method.name }}</span><i class="material-icons md-18">clear</i>
+    </md-chip>
+  </md-chip-list>
+
+  <!-- Single Ease Question Average -->
+  <span class="color-text-primary-very-dark">Average result of the Single Ease Question (SEQ)</span>
+  <div>
+    <span class="color-text-primary-very-dark">very difficult</span>
+    <md-slider
+      color="primary"
+      [max]="7"
+      [min]="0"
+      [step]="0.1"
+      [thumb-label]="true"
+      [formControl]="seqInput">
+    </md-slider>
+    <span class="color-text-primary-very-dark">very easy</span>
+  </div>
+
+
+  <!-- Subjective Effectiveness for completing tasks -->
+  <md-select [formControl]="subEffectivenessInput"
+             placeholder="Subjective Effectiveness"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Average SUS Score -->
+  <md-select [formControl]="subEffectivenessInput"
+             placeholder="Average SUS Score"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of susValues" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Average SUS Score -->
+  <md-select [formControl]="testMotivationInput"
+             placeholder="Motivation for Test"
+             class="min-width-15rem margin-1rem">
+    <md-option *ngFor="let option of testMotivations" [value]="option">{{ option }}</md-option>
+  </md-select>
+
+  <!-- Buttons -->
+  <div class="content-horizontal-center margin-top-1rem margin-bottom-2rem">
+    <button md-raised-button type="reset" (click)="addEvaluationForm.reset()" color="warn">Cancel</button>
+    <button md-raised-button type="button" [disabled]="addEvaluationForm.invalid"
+            color="primary"
+            class="margin-left-2rem"
+            (click)="onSubmit(addEvaluationForm)">
+      Submit Evaluation Data
+    </button>
+  </div>
+</form>

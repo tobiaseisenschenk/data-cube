@@ -19,6 +19,7 @@ import { AddProjectModule } from './projects/add-project.module';
 import { PipesModule } from './shared/pipes/pipes.module';
 import { MyContributionsModule } from './my-contributions/my-contributions.module';
 import { DialogModule } from './shared/components/dialogs/dialog.module';
+import { AddEvaluationModule } from './evaluations/add-evaluation.module';
 
 
 const firebaseConfig = {
@@ -35,7 +36,8 @@ const firebaseAuthConfig = {
 };
 
 @NgModule({
-  imports: [AddProjectModule, BrowserModule, AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+  imports: [AddProjectModule, AddEvaluationModule, BrowserModule,
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     DialogModule, MdDialogModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule,
     SharedModule.forRoot(), MaterialRootModule, MyContributionsModule, PipesModule, RouterModule],
   declarations: [AppComponent],

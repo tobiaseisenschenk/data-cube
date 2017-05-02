@@ -1,6 +1,7 @@
 export class Evaluation {
 
   // Internal Attributes
+  private _id :number;
   private _owned_by: string;
   private _date_shared :Date;
   private _project_id :number;
@@ -21,6 +22,7 @@ export class Evaluation {
   private _test_motivation :string;
 
   constructor(obj :any) {
+    this._id = obj.id;
     this._owned_by = obj.owned_by;
     this._date_shared = obj.date_shared ? obj.date_shared : undefined;
     this._project_id = obj.project_id ? obj.project_id : undefined;
@@ -41,6 +43,7 @@ export class Evaluation {
 
   public toJson(): any {
     let evaluationJson: any = {
+      'id': this._id,
       'owned_by': this._owned_by,
       'date_shared': this._date_shared.toISOString(),
       'project_id': this._project_id,

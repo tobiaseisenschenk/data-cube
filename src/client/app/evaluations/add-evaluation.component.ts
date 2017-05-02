@@ -18,14 +18,34 @@ import { Evaluation } from '../shared/models/evaluation.class';
 export class AddEvaluationComponent implements OnInit, OnDestroy {
   public addEvaluationForm :FormGroup;
   // Input Fields
-  public devMethodInput :AbstractControl;
+  public evalExpInput :AbstractControl;
+  public evalCollabInput :AbstractControl;
+  public numEvalInput :AbstractControl;
+  public domainKnowledgeInput :AbstractControl;
+  public interactionKnowledgeInput :AbstractControl;
+  public productKnowledgeInput :AbstractControl;
+  public userKnowledgeInput :AbstractControl;
+  public taskKnowledgeInput :AbstractControl;
+  public evalMethodInput :AbstractControl;
+  public seqInput :AbstractControl;
+  public subEffectivenessInput :AbstractControl;
+  public susInput :AbstractControl;
+  public testMotivationInput :AbstractControl;
 
   // Data Collections
+  public numberArray :Array<number>;
   public degreeOptions :any;
+  public allEvalMethods :Array<any>;
+  public selectedEvalMethods :Array<any>;
+  public susValues :Array<number>;
+  public testMotivations :Array<string>;
 
+  private _evaluationId :number;
   private _currentUser :any;
   // Subscriptions
-
+  private userSubscription :any;
+  private evaluationSubscription :any;
+  private evalMethodsSubscription :any;
 
   constructor(private _logger :Logger,
               private _authenticationService :AuthenticationService,
@@ -33,31 +53,120 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
               private _formbuilder: FormBuilder) {}
 
   ngOnInit() {
+    this.subscribeCurrentUser();
+    this.subscribeEvaluations();
+    this.subscribeEvalMethods();
     this.addEvaluationForm = this._formbuilder.group({
-      'devMethodInput': ['', Validators.compose([Validators.required])],
-
+      'evalExpInput': ['', Validators.compose([Validators.required])],
+      'evalCollabInput': ['', Validators.compose([])],
+      'numEvalInput': ['', Validators.compose([Validators.required])],
+      'domainKnowledgeInput': ['', Validators.compose([Validators.required])],
+      'interactionKnowledgeInput': ['', Validators.compose([Validators.required])],
+      'productKnowledgeInput': ['', Validators.compose([Validators.required])],
+      'userKnowledgeInput': ['', Validators.compose([Validators.required])],
+      'taskKnowledgeInput': ['', Validators.compose([Validators.required])],
+      'evalMethodInput': ['', Validators.compose([])],
+      'seqInput': ['', Validators.compose([Validators.required])],
+      'subEffectivenessInput': ['', Validators.compose([Validators.required])],
+      'susInput': ['', Validators.compose([Validators.required])],
+      'testMotivationInput': ['', Validators.compose([Validators.required])],
     });
 
-    this.devMethodInput = this.addEvaluationForm.controls['devMethodInput'];
+    this.evalExpInput = this.addEvaluationForm.controls['evalExpInput'];
+    this.evalCollabInput = this.addEvaluationForm.controls['evalCollabInput'];
+    this.numEvalInput = this.addEvaluationForm.controls['numEvalInput'];
+    this.domainKnowledgeInput = this.addEvaluationForm.controls['domainKnowledgeInput'];
+    this.interactionKnowledgeInput = this.addEvaluationForm.controls['interactionKnowledgeInput'];
+    this.productKnowledgeInput = this.addEvaluationForm.controls['productKnowledgeInput'];
+    this.userKnowledgeInput = this.addEvaluationForm.controls['userKnowledgeInput'];
+    this.taskKnowledgeInput = this.addEvaluationForm.controls['taskKnowledgeInput'];
+    this.evalMethodInput = this.addEvaluationForm.controls['evalMethodInput'];
+    this.seqInput = this.addEvaluationForm.controls['seqInput'];
+    this.subEffectivenessInput = this.addEvaluationForm.controls['subEffectivenessInput'];
+    this.susInput = this.addEvaluationForm.controls['susInput'];
+    this.testMotivationInput = this.addEvaluationForm.controls['testMotivationInput'];
 
-
+    this.numberArray = Array.from(Array(60).keys());
     this.degreeOptions = [
       'Low',
       'Medium',
       'High'
     ];
-
+    this.selectedEvalMethods = [];
+    this.susValues = Array.from(Array(101).keys()).slice(1);
+    this.testMotivations = ['Formative', 'Summative', 'Comparative', 'Informative'];
   }
   ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+    this.evaluationSubscription.unsubscribe();
+    this.evalMethodsSubscription.unsubscribe();
   }
   /* UI Functions */
-
+  checkEvalMethodInput() {
+    let methodExists :boolean = false;
+    if (typeof this.evalMethodInput.value === 'string') {
+      this.selectedEvalMethods.forEach((method :any) => {
+        if (method.name.includes(this.evalMethodInput.value)) {
+          methodExists = true;
+          this.evalMethodInput.reset();
+        }
+      });
+      if (!methodExists) {
+        this.allEvalMethods.forEach((method :any) => {
+          if (method.name.includes(this.evalMethodInput.value)) {
+            this._logger.debug('[AddEvaluationComponent] language already exists!');
+            this.selectedEvalMethods.push(method);
+            methodExists = true;
+            this.evalMethodInput.reset();
+          }
+        });
+      }
+      if (!methodExists) {
+        this._logger.debug('[AddEvaluationComponent] adding new evaluation method...');
+        let newMethod = { 'id': this.allEvalMethods.length + 1, 'name': this.evalMethodInput.value };
+        this.selectedEvalMethods.push(newMethod);
+        this._uxDataService.addEvalMethod(newMethod);
+        this.evalMethodInput.reset();
+      }
+    }
+  }
+  selectEvalMethod(evalMethod :any) {
+    if (!evalMethod) return;
+    let methodExists :boolean = false;
+    this.selectedEvalMethods.forEach(method => {
+      if (method.name.includes(evalMethod.name)) methodExists = true;
+    });
+    if (!methodExists) {
+      this.selectedEvalMethods.push(evalMethod);
+    }
+  }
+  deselectEvalMethod(evalMethod :any) {
+    if (!evalMethod) return;
+    this.selectedEvalMethods = this.selectedEvalMethods.filter((Obj :any) => {
+      return evalMethod.id !== Obj.id;
+    });
+  }
   /* Helper Functions / Data Modification */
   onSubmit(addEvaluationForm :FormGroup) {
-
+    let projectId = this._uxDataService.projectIdSelectedForEvaluation.getValue();
   }
-  // check if domain already exists, return its id and add to db
 
   /* Subscriptions */
-
+  private subscribeCurrentUser() {
+    this.userSubscription = this._authenticationService.currentUser.subscribe((user :any) => {
+      this._logger.debug('[AddEvaluationComponent] received current user: ', user);
+      this._currentUser = user;
+    });
+  }
+  private subscribeEvaluations() {
+    this.evaluationSubscription = this._uxDataService.evaluations.subscribe((evaluations :any) => {
+      this._evaluationId = evaluations.length + 1;
+    });
+  }
+  private subscribeEvalMethods() {
+    this.evalMethodsSubscription = this._uxDataService.evaluationMethods.subscribe((methods :any) => {
+      this._logger.debug('[AddEvaluationComponent] received evaluation methods: ', methods);
+      this.allEvalMethods = methods;
+    });
+  }
 }
