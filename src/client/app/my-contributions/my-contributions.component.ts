@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { Observable } from 'rxjs/Observable';
@@ -48,7 +48,7 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
 
   constructor(public confirmDeleteDialog :MdDialog, private _logger :Logger,
               private _authenticationService :AuthenticationService,
-              private _uxDataService :UXDataService, private _router :Router) {}
+              private _uxDataService :UXDataService, private _router :Router, private _cdRef :ChangeDetectorRef) {}
 
   ngOnInit() {
     this.subscribeMyProjects();
@@ -89,16 +89,26 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     this._uxDataService.projectIdSelectedForEvaluation.next(project.id);
     this._router.navigateByUrl('//add-evaluation');
   }
-  openConfirmDeleteDialog() {
+  openConfirmDeleteDialog(obj :Object) {
+    if (!(obj instanceof Project) && !(obj instanceof Evaluation)) return;
     this.dialogRef = this.confirmDeleteDialog.open(ConfirmDeleteDialogComponent);
-    this.dialogRef.componentInstance.headline = 'Deleting Project';
-    this.dialogRef.componentInstance.body =
-      `Are you sure you want to delete this project including all its assiciated evaluations?`;
-    this.dialogRef.componentInstance.confirmButtonLabel = 'Delete Project';
+    if (obj instanceof Project) {
+      this.dialogRef.componentInstance.headline = 'Deleting Project';
+      this.dialogRef.componentInstance.body =
+        `Are you sure you want to delete this project including all its assiciated evaluations?`;
+      this.dialogRef.componentInstance.confirmButtonLabel = 'Delete Project';
+    }
+    if (obj instanceof Evaluation) {
+      this.dialogRef.componentInstance.headline = 'Deleting Evaluation';
+      this.dialogRef.componentInstance.body =
+        `Are you sure you want to delete this evaluation?`;
+      this.dialogRef.componentInstance.confirmButtonLabel = 'Delete Evaluation';
+    }
     this.dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') {
-        this._logger.debug('[MyContributionsComponent] deleting project...')
-        this.deleteProject();
+        this._logger.debug('[MyContributionsComponent] deleting instance...');
+        if (obj instanceof Project) this.deleteProject(obj);
+        if (obj instanceof Evaluation) this.deleteEvaluation(obj);
       }
     });
   }
@@ -110,8 +120,11 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     }
   }
   /* Helper Functions / Data Modification */
-  private deleteProject() {
+  private deleteProject(probject :Project) {
     // call service here
+  }
+  private deleteEvaluation(evaluation :Evaluation) {
+    this._uxDataService.deleteEvaluation(evaluation);
   }
 
   /* Subscriptions */
@@ -165,9 +178,16 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     });
   }
   private subscribeEvaluations() {
-    this.evaluationsSubscription = this._uxDataService.evaluations.subscribe((evaluations :any) => {
-      this._logger.debug('[MyContributionsComponent] received evaluations: ', evaluations);
-      this.myEvaluations = evaluations;
+    this.evaluationsSubscription = this._uxDataService.evaluations.subscribe((snapshots :any) => {
+      this._logger.debug('[MyContributionsComponent] received evaluations');
+      let myEvalArray :Array<Evaluation> = [];
+      snapshots.forEach((snapshot :any) => {
+        let evaluationObj :Evaluation = new Evaluation(snapshot.val());
+        evaluationObj.firebaseRef = snapshot.key;
+        myEvalArray.push(evaluationObj);
+      });
+      // if myEvaluations is filled in the loop above, angular does not detect the changes
+      this.myEvaluations = myEvalArray;
     });
   }
   private subscribeEvalMethods() {

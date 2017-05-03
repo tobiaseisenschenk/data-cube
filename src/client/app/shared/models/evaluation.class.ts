@@ -8,6 +8,14 @@ export class Evaluation {
     this._id = value;
   }
 
+  get firebaseRef(): string {
+    return this._firebaseRef;
+  }
+
+  set firebaseRef(value: string) {
+    this._firebaseRef = value;
+  }
+
   get owned_by(): string {
     return this._owned_by;
   }
@@ -137,6 +145,7 @@ export class Evaluation {
   }
   // Internal Attributes
   private _id :number;
+  private _firebaseRef :string;
   private _owned_by: string;
   private _date_shared :Date;
   private _project_id :number;
@@ -159,6 +168,7 @@ export class Evaluation {
   constructor(obj :any) {
     this._id = obj.id;
     this._owned_by = obj.owned_by;
+    this._firebaseRef = obj.firebaseRef ? obj.firebaseRef : undefined;
     this._date_shared = obj.date_shared ? obj.date_shared : undefined;
     this._project_id = obj.project_id ? obj.project_id : undefined;
     this._eval_exp = obj.eval_exp ? obj.eval_exp : undefined;

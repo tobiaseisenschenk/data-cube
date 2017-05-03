@@ -12,7 +12,7 @@
           </md-list-item>
           <md-list-item>
             <i class="material-icons md-18 margin-right-halfrem color-text-inactive">assignment_turned_in</i>
-            <span>Number of Evaluations: {{(myEvaluations | evaluationsByIdFilter:[project.id])?.length }}</span>
+            <span>Number of Evaluations: {{ (myEvaluations | evaluationsByIdFilter:[project.id])?.length }}</span>
           </md-list-item>
         </md-list>
       </md-card-content>
@@ -306,7 +306,7 @@
         <i class="material-icons md-18">chevron_left</i>
         Back to Overview
       </button>
-      <button md-button color="warn" class="margin-left-auto" (click)="openConfirmDeleteDialog()">
+      <button md-button color="warn" class="margin-left-auto" (click)="openConfirmDeleteDialog(selectedEvaluation)">
         <i class="material-icons md-18">delete_forever</i>
         Delete Evaluation
       </button>

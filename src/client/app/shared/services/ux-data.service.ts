@@ -30,7 +30,7 @@ export class UXDataService {
     this.market_descr = this._af.database.list('/market_descr');
     this.languages = this._af.database.list('/languages');
     this.projects = this._af.database.list('/projects');
-    this.evaluations = this._af.database.list('/evaluations');
+    this.evaluations = this._af.database.list('/evaluations', { preserveSnapshot: true });
     this.evaluationMethods = this._af.database.list('/eval_methods');
   }
   public addProject(project :Project) {
@@ -108,6 +108,9 @@ export class UXDataService {
       this._logger.debug('[UXDataService] error adding evaluation!', error);
       this.loading.next(false);
     });
+  }
+  public deleteEvaluation(evaluation :Evaluation) {
+    this.evaluations.remove(evaluation.firebaseRef).then((success) => console.log(success));
   }
 }
 
