@@ -7,6 +7,14 @@ export class Project {
     this._id = value;
   }
 
+  get firebaseRef(): string {
+    return this._firebaseRef;
+  }
+
+  set firebaseRef(value: string) {
+    this._firebaseRef = value;
+  }
+
   get owned_by(): string {
     return this._owned_by;
   }
@@ -145,6 +153,7 @@ export class Project {
   // mandatory
   _owned_by :string;
   private _id :number;
+  private _firebaseRef :string;
   private _budget :string;
   private _dev_method :number;
   private _domain :number;
@@ -172,6 +181,7 @@ export class Project {
     this._owned_by = obj.owned_by;
     this._id = obj.id;
     // optional parameters
+    this._firebaseRef = obj.firebaseRef ? obj.firebaseRef : undefined;
     this._budget = obj.budget ? obj.budget : undefined;
     this._dev_method = obj.dev_method ? obj.dev_method : undefined;
     this._domain = obj.domain ? obj.domain : undefined;
@@ -190,8 +200,7 @@ export class Project {
   }
 
   public toJson(): any {
-
-    let projectJson: any = {
+    return {
       id: this._id,
       owned_by: this._owned_by,
       budget: this._budget,
@@ -210,6 +219,5 @@ export class Project {
       user_languages: this._user_languages ? this._user_languages : [],
       user_location: this._user_location ? this._user_location : []
     };
-    return projectJson;
   }
 }

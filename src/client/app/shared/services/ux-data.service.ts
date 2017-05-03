@@ -29,7 +29,7 @@ export class UXDataService {
     this.domains = this._af.database.list('/domains');
     this.market_descr = this._af.database.list('/market_descr');
     this.languages = this._af.database.list('/languages');
-    this.projects = this._af.database.list('/projects');
+    this.projects = this._af.database.list('/projects', { preserveSnapshot: true });
     this.evaluations = this._af.database.list('/evaluations', { preserveSnapshot: true });
     this.evaluationMethods = this._af.database.list('/eval_methods');
   }
@@ -38,7 +38,9 @@ export class UXDataService {
     this.projects.push(project.toJson());
     this._router.navigateByUrl('/my-contributions');
   }
-
+  public deleteProject(project :Project) {
+    this.projects.remove(project.firebaseRef);
+  }
   public addDomain(domain :any) {
     this.loading.next(true);
     this._logger.debug('[UXDataService] adding domain: ', domain);
@@ -110,7 +112,7 @@ export class UXDataService {
     });
   }
   public deleteEvaluation(evaluation :Evaluation) {
-    this.evaluations.remove(evaluation.firebaseRef).then((success) => console.log(success));
+    this.evaluations.remove(evaluation.firebaseRef);
   }
 }
 

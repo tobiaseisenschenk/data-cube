@@ -120,8 +120,13 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     }
   }
   /* Helper Functions / Data Modification */
-  private deleteProject(probject :Project) {
-    // call service here
+  private deleteProject(project :Project) {
+    this.myEvaluations.forEach((evaluation :Evaluation) => {
+      if (evaluation.project_id === project.id) {
+        this.deleteEvaluation(evaluation);
+      }
+    });
+    this._uxDataService.deleteProject(project);
   }
   private deleteEvaluation(evaluation :Evaluation) {
     this._uxDataService.deleteEvaluation(evaluation);
@@ -135,9 +140,13 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
       this._uxDataService.domains
     ).subscribe((res :any) => {
       if (!!res[0] && !!res[1] && !!res[2]) {
-        this._logger.debug('[MyContributionsComponent] filtering projects...', res[0], res[1], res[2]);
+        //this._logger.debug('[MyContributionsComponent] filtering projects...', res[0], res[1], res[2]);
         this.myProjects = res[0]
-          .map((proj :any) => new Project(proj))
+          .map((snapshot :any) => {
+            let projectObj = new Project(snapshot.val());
+            projectObj.firebaseRef = snapshot.key;
+            return projectObj;
+          })
           .filter((projectObj :Project) => {
             return projectObj.owned_by === res[1].auth.uid;
           })
