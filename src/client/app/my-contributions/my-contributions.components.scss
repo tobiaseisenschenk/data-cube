@@ -1,0 +1,27 @@
+@import "../../../client/assets/sass/variables.scss";
+
+.hover-effect {
+  transition: all .5s;
+  cursor: pointer;
+  > td {
+    padding: 0.2rem;
+  }
+  &:hover {
+    transition: all .5s;
+
+    background-color: $color-material-light-grey;
+    .td-first {
+       border-radius: 0.2rem 0 0 0.2rem;
+     }
+    .td-last {
+      border-radius: 0 0.2rem 0.2rem 0;
+    }
+  }
+}
+
+.table-head {
+  > td {
+    padding: 0.2rem;
+    text-decoration: underline;
+  }
+}

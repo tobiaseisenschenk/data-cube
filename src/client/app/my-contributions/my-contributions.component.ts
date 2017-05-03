@@ -17,7 +17,7 @@ import { Evaluation } from '../shared/models/evaluation.class';
   moduleId: module.id,
   selector: 'my-contributions-component',
   templateUrl: 'my-contributions.component.html',
-  //styleUrls: ['my-contributions.components.css']
+  styleUrls: ['my-contributions.components.css']
 })
 export class MyContributionsComponent implements OnInit, OnDestroy {
 

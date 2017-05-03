@@ -11,6 +11,10 @@ body {
   color: $color-text-default;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 span {
   font-size: $font-size-base;
 }

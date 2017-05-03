@@ -5,7 +5,16 @@
       <md-card-title><h3>Domain: {{ project.domainName }}</h3></md-card-title>
       <md-card-subtitle><h4>Added on: {{ project.date_shared | date }}</h4></md-card-subtitle>
       <md-card-content>
-        <span>Product Complexity: {{ project.product_complexity }}</span>
+        <md-list>
+          <md-list-item>
+            <i class="material-icons md-18 margin-right-halfrem color-text-inactive">extension</i>
+            <span>Product Complexity: {{ project.product_complexity }}</span>
+          </md-list-item>
+          <md-list-item>
+            <i class="material-icons md-18 margin-right-halfrem color-text-inactive">assignment_turned_in</i>
+            <span>Number of Evaluations: {{(myEvaluations | evaluationsByIdFilter:[project.id])?.length }}</span>
+          </md-list-item>
+        </md-list>
       </md-card-content>
       <md-card-actions>
         <button md-raised-button color="accent" (click)="selectProject(project)">
@@ -23,7 +32,7 @@
   <!-- Detail View for Selected Project -->
   <md-card *ngIf="!!selectedProject">
     <md-card-title><h3>Domain: {{ selectedProject.domainName }}</h3></md-card-title>
-    <md-card-subtitle><h4>Added on: {{ selectedProject.date_shared | date:'MM/dd/yy' }}</h4></md-card-subtitle>
+    <md-card-subtitle><h4>Added on: {{ selectedProject.date_shared | date }}</h4></md-card-subtitle>
     <md-card-content class="display-flex wrap">
       <md-card class="width-30rem margin-1rem margin-top-1rem">
         <md-card-subtitle><h4>Project</h4></md-card-subtitle>
@@ -123,16 +132,17 @@
       <md-card class="width-30rem margin-1rem">
         <md-card-subtitle><h4>Evaluations</h4></md-card-subtitle>
         <table class="full-width">
-          <thead>
-            <td style="text-decoration: underline">Date</td>
-            <td style="text-decoration: underline">Test Motivation</td>
-            <td style="text-decoration: underline">Evaluation Method</td>
+          <thead class="table-head">
+            <td>Date</td>
+            <td>Test Motivation</td>
+            <td>Evaluation Method</td>
           </thead>
           <tbody>
-            <tr *ngFor="let evaluation of myEvaluations | evaluationsByIdFilter:[selectedProject.id]">
-              <td class="table-vertical-align-top">{{ evaluation.date_shared | date }}</td>
+            <tr *ngFor="let evaluation of myEvaluations | evaluationsByIdFilter:[selectedProject.id]"
+                class="hover-effect">
+              <td class="table-vertical-align-top td-first">{{ evaluation.date_shared | date }}</td>
               <td class="table-vertical-align-top">{{ evaluation.test_motivation }}</td>
-              <td class="max-width-9rem">{{ allEvalMethods | getNamePipe:evaluation.eval_method }}</td>
+              <td class="max-width-9rem td-last">{{ allEvalMethods | getNamePipe:evaluation.eval_method }}</td>
             </tr>
           </tbody>
         </table>
