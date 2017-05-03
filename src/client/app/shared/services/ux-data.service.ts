@@ -90,7 +90,7 @@ export class UXDataService {
   public addEvalMethod(method :any) {
     this.loading.next(true);
     this._logger.debug('[UXDataService] adding evaluation method: ', method);
-    return this.countries.push(method).then((success :any) => {
+    return this.evaluationMethods.push(method).then((success :any) => {
       this._logger.debug('[UXDataService] adding evaluation method successful!');
       this.loading.next(false);
     }, (error :Error) => {

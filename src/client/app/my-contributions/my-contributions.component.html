@@ -258,7 +258,7 @@
               </span>
               </td>
             </tr>
-            <tr>
+            <tr *ngIf="!!selectedEvaluation.seq">
               <td>
                 <span>Single Ease Question (SEQ)</span>
               </td>
@@ -268,7 +268,7 @@
               </span>
               </td>
             </tr>
-            <tr>
+            <tr *ngIf="!!selectedEvaluation.sub_effectiveness">
               <td>
                 <span>Subjective Effectiveness</span>
               </td>
@@ -278,7 +278,7 @@
               </span>
               </td>
             </tr>
-            <tr *ngIf="selectedEvaluation.sus">
+            <tr *ngIf="!!selectedEvaluation.sus">
               <td>
                 <span>System Usability Scale (SUS)</span>
               </td>
