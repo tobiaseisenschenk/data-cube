@@ -1,6 +1,6 @@
 <div class="component-content">
   <!-- List of Projects -->
-  <div *ngIf="!selectedProject" class="display-flex wrap">
+  <div *ngIf="!selectedProject && !selectedEvaluation" class="display-flex wrap">
     <md-card *ngFor="let project of myProjects" class="width-30rem margin-1rem">
       <md-card-title><h3>Domain: {{ project.domainName }}</h3></md-card-title>
       <md-card-subtitle><h4>Added on: {{ project.date_shared | date }}</h4></md-card-subtitle>
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Detail View for Selected Project -->
-  <md-card *ngIf="!!selectedProject">
+  <md-card *ngIf="!!selectedProject && !selectedEvaluation">
     <md-card-title><h3>Domain: {{ selectedProject.domainName }}</h3></md-card-title>
     <md-card-subtitle><h4>Added on: {{ selectedProject.date_shared | date }}</h4></md-card-subtitle>
     <md-card-content class="display-flex wrap">
@@ -129,7 +129,7 @@
           </tr>
         </table>
       </md-card>
-      <md-card class="width-30rem margin-1rem">
+      <md-card class="width-30rem margin-1rem margin-bottom-1rem">
         <md-card-subtitle><h4>Evaluations</h4></md-card-subtitle>
         <table class="full-width">
           <thead class="table-head">
@@ -139,7 +139,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let evaluation of myEvaluations | evaluationsByIdFilter:[selectedProject.id]"
-                class="hover-effect">
+                class="hover-effect"
+                (click)="selectEvaluation(evaluation)">
               <td class="table-vertical-align-top td-first">{{ evaluation.date_shared | date }}</td>
               <td class="table-vertical-align-top">{{ evaluation.test_motivation }}</td>
               <td class="max-width-9rem td-last">{{ allEvalMethods | getNamePipe:evaluation.eval_method }}</td>
@@ -159,7 +160,155 @@
       </button>
       <button md-button color="warn" class="margin-left-auto" (click)="openConfirmDeleteDialog()">
         <i class="material-icons md-18">delete_forever</i>
-        Delete
+        Delete Project
+      </button>
+    </md-card-actions>
+  </md-card>
+
+  <!-- Detail View for Selected Evaluation -->
+  <md-card *ngIf="!!selectedEvaluation">
+    <md-card-title>
+      <h3>
+        Project Domain: {{ selectedProject.domainName }}
+        <i class="material-icons header-icon color-text-primary">chevron_right</i>
+        {{ allEvalMethods | getNamePipe:selectedEvaluation.eval_method }}
+      </h3>
+    </md-card-title>
+    <md-card-subtitle><h4>{{ selectedEvaluation.date_shared | date }}</h4></md-card-subtitle>
+    <md-card-content class="display-flex wrap">
+      <md-card class="width-30rem margin-1rem margin-top-1rem">
+        <md-card-subtitle><h4>Evaluator</h4></md-card-subtitle>
+        <table class="full-width">
+          <tr>
+            <td>
+              <span>Experience</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.eval_exp }} years</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Number of Evaluators</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.num_eval }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="selectedEvaluation.num_eval > 1">
+            <td>
+              <span>Collaboration</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.eval_collab }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Domain Knowledge</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.domain_knowledge }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Interaction Knowledge</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.interaction_knowledge }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Product Knowledge</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.product_knowledge }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Task Knowledge</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.task_knowledge }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>User Knowledge</span>
+            </td>
+            <td>
+              <span class="color-text-primary-very-dark">{{ selectedEvaluation.user_knowledge }}</span>
+            </td>
+          </tr>
+        </table>
+      </md-card>
+      <md-card class="width-30rem margin-1rem margin-bottom-1rem">
+        <md-card-subtitle><h4>Benchmarks</h4></md-card-subtitle>
+          <table class="full-width">
+            <tr>
+              <td class="table-vertical-align-top">
+                <span>Evaluation Method</span>
+              </td>
+              <td>
+              <span class="color-text-primary-very-dark">
+                {{ allEvalMethods | getNamePipe:selectedEvaluation.eval_method }}
+              </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>Single Ease Question (SEQ)</span>
+              </td>
+              <td>
+              <span class="color-text-primary-very-dark table-vertical-align-top">
+                {{ selectedEvaluation.seq }} out of 7
+              </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>Subjective Effectiveness</span>
+              </td>
+              <td>
+              <span class="color-text-primary-very-dark">
+                {{ selectedEvaluation.sub_effectiveness }}
+              </span>
+              </td>
+            </tr>
+            <tr *ngIf="selectedEvaluation.sus">
+              <td>
+                <span>System Usability Scale (SUS)</span>
+              </td>
+              <td>
+              <span class="color-text-primary-very-dark table-vertical-align-top">
+                {{ selectedEvaluation.sus }}
+              </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span>Test Motivation</span>
+              </td>
+              <td>
+              <span class="color-text-primary-very-dark">
+                {{ selectedEvaluation.test_motivation }}
+              </span>
+              </td>
+            </tr>
+          </table>
+      </md-card>
+    </md-card-content>
+    <md-card-actions class="display-flex">
+      <button md-raised-button color="accent" (click)="selectEvaluation(selectedEvaluation)">
+        <i class="material-icons md-18">chevron_left</i>
+        Back to Overview
+      </button>
+      <button md-button color="warn" class="margin-left-auto" (click)="openConfirmDeleteDialog()">
+        <i class="material-icons md-18">delete_forever</i>
+        Delete Evaluation
       </button>
     </md-card-actions>
   </md-card>

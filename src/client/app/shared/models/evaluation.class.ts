@@ -135,7 +135,7 @@ export class Evaluation {
   set eval_collab(value: string) {
     this._eval_collab = value;
   }
-
+  // Internal Attributes
   private _id :number;
   private _owned_by: string;
   private _date_shared :Date;

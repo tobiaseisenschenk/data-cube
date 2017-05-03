@@ -14,7 +14,9 @@ body {
 table {
   border-collapse: collapse;
 }
-
+td {
+  padding: 0.2rem;
+}
 span {
   font-size: $font-size-base;
 }

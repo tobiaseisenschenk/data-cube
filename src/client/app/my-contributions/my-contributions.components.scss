@@ -3,12 +3,8 @@
 .hover-effect {
   transition: all .5s;
   cursor: pointer;
-  > td {
-    padding: 0.2rem;
-  }
   &:hover {
     transition: all .5s;
-
     background-color: $color-material-light-grey;
     .td-first {
        border-radius: 0.2rem 0 0 0.2rem;
@@ -21,7 +17,11 @@
 
 .table-head {
   > td {
-    padding: 0.2rem;
     text-decoration: underline;
   }
+}
+
+.header-icon {
+  font-size: 2rem;
+  vertical-align: middle;
 }

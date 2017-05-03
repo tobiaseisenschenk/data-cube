@@ -35,6 +35,7 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
   public allEvalMethods :Array<any>;
   public devProcessMaturityOptions :any;
   public myEvaluations :Array<Evaluation>;
+  public selectedEvaluation :Evaluation;
 
   // Subscriptions
   private myProjectsSubscription :any;
@@ -73,6 +74,8 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     this.devMethodsSubscription.unsubscribe();
     this.evaluationsSubscription.unsubscribe();
     this.evalMethodsSubscription.unsubscribe();
+    this.selectedEvaluation = undefined;
+    this.selectedProject = undefined;
   }
   /* UI Functions */
   selectProject(project :Project) {
@@ -98,6 +101,13 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
         this.deleteProject();
       }
     });
+  }
+  selectEvaluation(evaluation :Evaluation) {
+    if (this.selectedEvaluation === evaluation) {
+      this.selectedEvaluation = undefined;
+    } else {
+      this.selectedEvaluation = evaluation;
+    }
   }
   /* Helper Functions / Data Modification */
   private deleteProject() {
