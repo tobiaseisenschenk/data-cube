@@ -3,16 +3,16 @@
   <div *ngIf="!selectedProject" class="display-flex wrap">
     <md-card *ngFor="let project of myProjects" class="width-30rem margin-1rem">
       <md-card-title><h3>Domain: {{ project.domainName }}</h3></md-card-title>
-      <md-card-subtitle><h4>Added on: {{ project.date_shared | date:'MM/dd/yy' }}</h4></md-card-subtitle>
+      <md-card-subtitle><h4>Added on: {{ project.date_shared | date }}</h4></md-card-subtitle>
       <md-card-content>
-        Product Complexity: {{ project.product_complexity }}
+        <span>Product Complexity: {{ project.product_complexity }}</span>
       </md-card-content>
       <md-card-actions>
         <button md-raised-button color="accent" (click)="selectProject(project)">
           <i class="material-icons md-18">chevron_right</i>
           See Details
         </button>
-        <button md-raised-button color="primary">
+        <button md-raised-button color="primary" (click)="addEvaluation(project)">
           <i class="material-icons md-18">add</i>
           Add Evaluation
         </button>
@@ -120,13 +120,30 @@
           </tr>
         </table>
       </md-card>
+      <md-card class="width-30rem margin-1rem">
+        <md-card-subtitle><h4>Evaluations</h4></md-card-subtitle>
+        <table class="full-width">
+          <thead>
+            <td style="text-decoration: underline">Date</td>
+            <td style="text-decoration: underline">Test Motivation</td>
+            <td style="text-decoration: underline">Evaluation Method</td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let evaluation of myEvaluations | evaluationsByIdFilter:[selectedProject.id]">
+              <td class="table-vertical-align-top">{{ evaluation.date_shared | date }}</td>
+              <td class="table-vertical-align-top">{{ evaluation.test_motivation }}</td>
+              <td class="max-width-9rem">{{ allEvalMethods | getNamePipe:evaluation.eval_method }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-card>
     </md-card-content>
     <md-card-actions class="display-flex">
       <button md-raised-button color="accent" (click)="selectProject(selectedProject)">
         <i class="material-icons md-18">chevron_left</i>
         Back to Overview
       </button>
-      <button md-raised-button color="primary">
+      <button md-raised-button color="primary" (click)="addEvaluation(selectedProject)">
         <i class="material-icons md-18">add</i>
         Add Evaluation
       </button>

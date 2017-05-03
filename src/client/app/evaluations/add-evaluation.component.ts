@@ -31,14 +31,19 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
   public susInput :AbstractControl;
   public testMotivationInput :AbstractControl;
 
-  // Data Collections
+  // Data Collections - public
   public numberArray :Array<number>;
   public degreeOptions :any;
   public allEvalMethods :Array<any>;
   public selectedEvalMethods :Array<any>;
   public susValues :Array<number>;
   public testMotivations :Array<string>;
-
+  // Loading information
+  public loading :boolean;
+  private _userIsLoading :boolean;
+  private _methodsIsLoading :boolean;
+  private _evaluationsIsLoading :boolean;
+  // Data Collections - private
   private _evaluationId :number;
   private _currentUser :any;
   // Subscriptions
@@ -46,12 +51,14 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
   private evaluationSubscription :any;
   private evalMethodsSubscription :any;
 
+
   constructor(private _logger :Logger,
               private _authenticationService :AuthenticationService,
               private _uxDataService :UXDataService,
               private _formbuilder: FormBuilder) {}
 
   ngOnInit() {
+    this.loading = this._userIsLoading && this._methodsIsLoading && this._evaluationsIsLoading;
     this.subscribeCurrentUser();
     this.subscribeEvaluations();
     this.subscribeEvalMethods();
@@ -99,8 +106,12 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
     this.evaluationSubscription.unsubscribe();
     this.evalMethodsSubscription.unsubscribe();
+    this._uxDataService.projectIdSelectedForEvaluation.next(null);
   }
   /* UI Functions */
+  isProjectSelected() :boolean {
+    return typeof this._uxDataService.projectIdSelectedForEvaluation.getValue() === 'number';
+  }
   checkEvalMethodInput() {
     let methodExists :boolean = false;
     if (typeof this.evalMethodInput.value === 'string') {
@@ -163,29 +174,34 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     this.selectedEvalMethods.forEach((evalMethod :any) => {
       newEvaluation.eval_method.push(evalMethod.id);
     });
-    newEvaluation.seq = this.seqInput.value;
+    if (!!this.seqInput.value) newEvaluation.seq = this.seqInput.value.toFixed(2);
     newEvaluation.sub_effectiveness = this.subEffectivenessInput.value;
     newEvaluation.sus = this.susInput.value;
     newEvaluation.test_motivation = this.testMotivationInput.value;
     this._uxDataService.addEvaluation(newEvaluation);
   }
-
   /* Subscriptions */
   private subscribeCurrentUser() {
+    this._userIsLoading = true;
     this.userSubscription = this._authenticationService.currentUser.subscribe((user :any) => {
       this._logger.debug('[AddEvaluationComponent] received current user: ', user);
       this._currentUser = user;
+      this._userIsLoading = false;
     });
   }
   private subscribeEvaluations() {
+    this._evaluationsIsLoading = true;
     this.evaluationSubscription = this._uxDataService.evaluations.subscribe((evaluations :any) => {
       this._evaluationId = evaluations.length + 1;
+      this._evaluationsIsLoading = false;
     });
   }
   private subscribeEvalMethods() {
+    this._methodsIsLoading = true;
     this.evalMethodsSubscription = this._uxDataService.evaluationMethods.subscribe((methods :any) => {
       this._logger.debug('[AddEvaluationComponent] received evaluation methods: ', methods);
       this.allEvalMethods = methods;
+      this._methodsIsLoading = false;
     });
   }
 }

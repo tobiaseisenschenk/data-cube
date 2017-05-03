@@ -90,6 +90,11 @@
   align-self: center;
 }
 
+// For tables
+.table-vertical-align-top {
+  vertical-align: text-top;
+}
+
 //******************************** General **********************************************
 
 
@@ -418,8 +423,20 @@
   text-align: right;
 }
 
-.font-weight {
+.font-weight-bold {
   font-weight: bold;
+}
+
+.font-weight-lighter {
+  font-weight: lighter;
+}
+
+.font-weight-300 {
+  font-weight: 300;
+}
+
+.font-weight-500 {
+  font-weight: 500;
 }
 
 .no-text-decoration {
@@ -456,6 +473,10 @@
 
 .color-text-error {
   color: $color-text-error;
+}
+
+.color-text-inactive {
+  color: $color-text-inactive;
 }
 
 // custom material icon sub-class

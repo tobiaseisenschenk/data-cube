@@ -7,6 +7,8 @@ import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ConfirmDeleteDialogComponent } from '../shared/components/dialogs/confirmDeleteDialog.component';
+import { Router } from '@angular/router';
+import { Evaluation } from '../shared/models/evaluation.class';
 
 /**
  * This class represents the lazy loaded MyContributionsComponent.
@@ -30,7 +32,9 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
   public allCountries :Array<any>;
   public allLanguages: Array<any>;
   public allDevMethods :Array<any>;
+  public allEvalMethods :Array<any>;
   public devProcessMaturityOptions :any;
+  public myEvaluations :Array<Evaluation>;
 
   // Subscriptions
   private myProjectsSubscription :any;
@@ -38,10 +42,12 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
   private marketDescrSubscription :any;
   private countriesSubscription :any;
   private devMethodsSubscription :any;
+  private evaluationsSubscription :any;
+  private evalMethodsSubscription :any;
 
   constructor(public confirmDeleteDialog :MdDialog, private _logger :Logger,
               private _authenticationService :AuthenticationService,
-              private _uxDataService :UXDataService) {}
+              private _uxDataService :UXDataService, private _router :Router) {}
 
   ngOnInit() {
     this.subscribeMyProjects();
@@ -49,6 +55,8 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     this.subscribeCountries();
     this.subscribeMarketDescr();
     this.subscribeDevMethods();
+    this.subscribeEvaluations();
+    this.subscribeEvalMethods();
     this.devProcessMaturityOptions = [
       {'id': 1, 'name': 'Initial'},
       {'id': 2, 'name': 'Repeatable'},
@@ -63,6 +71,8 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     this.marketDescrSubscription.unsubscribe();
     this.countriesSubscription.unsubscribe();
     this.devMethodsSubscription.unsubscribe();
+    this.evaluationsSubscription.unsubscribe();
+    this.evalMethodsSubscription.unsubscribe();
   }
   /* UI Functions */
   selectProject(project :Project) {
@@ -71,6 +81,10 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     } else {
       this.selectedProject = project;
     }
+  }
+  addEvaluation(project :Project) {
+    this._uxDataService.projectIdSelectedForEvaluation.next(project.id);
+    this._router.navigateByUrl('//add-evaluation');
   }
   openConfirmDeleteDialog() {
     this.dialogRef = this.confirmDeleteDialog.open(ConfirmDeleteDialogComponent);
@@ -138,6 +152,18 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     this.devMethodsSubscription = this._uxDataService.dev_methods.subscribe((dev_methods :any) => {
       this._logger.debug('[MyContributionsComponent] received dev_methods: ', dev_methods);
       this.allDevMethods = dev_methods;
+    });
+  }
+  private subscribeEvaluations() {
+    this.evaluationsSubscription = this._uxDataService.evaluations.subscribe((evaluations :any) => {
+      this._logger.debug('[MyContributionsComponent] received evaluations: ', evaluations);
+      this.myEvaluations = evaluations;
+    });
+  }
+  private subscribeEvalMethods() {
+    this.evalMethodsSubscription = this._uxDataService.evaluationMethods.subscribe((methods :any) => {
+      this._logger.debug('[MyContributionsComponent] received evaluations methods: ', methods);
+      this.allEvalMethods = methods;
     });
   }
 }

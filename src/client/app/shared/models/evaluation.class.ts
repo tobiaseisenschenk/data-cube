@@ -184,16 +184,16 @@ export class Evaluation {
       'project_id': this._project_id,
       'eval_exp': this._eval_exp,
       'num_eval': this._num_eval,
-      'eval_collab': this._eval_collab,
+      'eval_collab': this._eval_collab ? this._eval_collab : null,
       'domain_knowledge': this._domain_knowledge,
       'interaction_knowledge': this._interaction_knowledge,
       'product_knowledge': this._product_knowledge,
       'task_knowledge': this._task_knowledge,
       'user_knowledge': this._user_knowledge,
       'eval_method': this._eval_method,
-      'seq': this._seq,
-      'sub_effectiveness': this._sub_effectiveness,
-      'sus': this._sus,
+      'seq': this._seq ? this._seq : null,
+      'sub_effectiveness': this._sub_effectiveness ? this._sub_effectiveness : null,
+      'sus': this._sus ? this._sus : null,
       'test_motivation': this._test_motivation
     };
   }

@@ -204,7 +204,7 @@ export class Project {
       user_expertise: this._user_expertise,
       user_diversity: this._user_diversity,
       date_shared: this._date_shared.toISOString(),
-      dev_process_maturity: this._dev_process_maturity ? this._dev_process_maturity : undefined,
+      dev_process_maturity: this._dev_process_maturity ? this._dev_process_maturity : null,
       market_descr: this._market_descr ? this._market_descr : [],
       market_diversity: this._market_diversity ? this._market_diversity : '',
       user_languages: this._user_languages ? this._user_languages : [],

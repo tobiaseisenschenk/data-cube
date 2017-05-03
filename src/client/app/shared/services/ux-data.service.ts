@@ -5,6 +5,7 @@ import { Logger } from 'angular2-logger/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Project } from '../models/project.class';
 import { Evaluation } from '../models/evaluation.class';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -22,7 +23,7 @@ export class UXDataService {
   public evaluationMethods :FirebaseListObservable<any>;
 
 
-  constructor(private _af: AngularFire, private _logger :Logger) {
+  constructor(private _af: AngularFire, private _logger :Logger, private _router :Router) {
     this.countries = this._af.database.list('/countries');
     this.dev_methods = this._af.database.object('/dev_methods');
     this.domains = this._af.database.list('/domains');
@@ -35,6 +36,7 @@ export class UXDataService {
   public addProject(project :Project) {
     this._logger.debug('[UXDataService] adding project: ', project);
     this.projects.push(project.toJson());
+    this._router.navigateByUrl('/my-contributions');
   }
 
   public addDomain(domain :any) {
@@ -101,6 +103,7 @@ export class UXDataService {
       this._logger.debug('[UXDataService] adding evaluation successful!');
       this.loading.next(false);
       this.projectIdSelectedForEvaluation.next(null);
+      this._router.navigateByUrl('/my-contributions');
     }, (error :Error) => {
       this._logger.debug('[UXDataService] error adding evaluation!', error);
       this.loading.next(false);
