@@ -191,8 +191,13 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
   }
   private subscribeEvaluations() {
     this._evaluationsIsLoading = true;
-    this.evaluationSubscription = this._uxDataService.evaluations.subscribe((evaluations :any) => {
-      this._evaluationId = evaluations.length + 1;
+    this.evaluationSubscription = this._uxDataService.evaluations.subscribe((snapshots :any) => {
+      /* 1. Get the value (actual evaluation in JSON form) from the snapshot
+         2. Get the evaluations id property
+         3. Use Math.max.apply to iterate through the array of Ids and find a maximum value
+         4. Add 1 for the next higher Id to use
+      */
+      this._evaluationId = Math.max.apply(Math, snapshots.map((snapshot :any) => snapshot.val().id)) + 1;
       this._evaluationsIsLoading = false;
     });
   }

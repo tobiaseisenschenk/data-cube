@@ -365,8 +365,13 @@ export class AddProjectComponent implements OnInit, OnDestroy {
   }
   // in order to compute the correct 'consecutive' id for the new project
   private subscribeProjects() {
-    this.projectsSubscription = this._uxDataService.projects.subscribe((projects :any) => {
-      this._newProjectId = projects.length + 1;
+    this.projectsSubscription = this._uxDataService.projects.subscribe((snapshots :any) => {
+      /* 1. Get the value (actual evaluation in JSON form) from the snapshot
+       2. Get the evaluations id property
+       3. Use Math.max.apply to iterate through the array of Ids and find a maximum value
+       4. Add 1 for the next higher Id to use
+       */
+      this._newProjectId = Math.max.apply(Math, snapshots.map((snapshot :any) => snapshot.val().id)) + 1;
     });
   }
 }
