@@ -13,6 +13,7 @@ import { LoginModule } from './login/login.module';
 import { MaterialRootModule, MdDialogModule } from '@angular/material';
 import { LOG_LOGGER_PROVIDERS } from 'angular2-logger/core';
 import 'hammerjs';
+import 'chartjs';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { RouterModule } from '@angular/router';
 import { AddProjectModule } from './projects/add-project.module';
@@ -20,6 +21,8 @@ import { PipesModule } from './shared/pipes/pipes.module';
 import { MyContributionsModule } from './my-contributions/my-contributions.module';
 import { DialogModule } from './shared/components/dialogs/dialog.module';
 import { AddEvaluationModule } from './evaluations/add-evaluation.module';
+import { ChartsModule } from 'ng2-charts';
+import { VisualizationsModule } from './visualizations/visualizations.module';
 
 
 const firebaseConfig = {
@@ -37,9 +40,9 @@ const firebaseAuthConfig = {
 
 @NgModule({
   imports: [AddProjectModule, AddEvaluationModule, BrowserModule,
-    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig), ChartsModule,
     DialogModule, MdDialogModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule,
-    SharedModule.forRoot(), MaterialRootModule, MyContributionsModule, PipesModule, RouterModule],
+    SharedModule.forRoot(), MaterialRootModule, MyContributionsModule, PipesModule, RouterModule, VisualizationsModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

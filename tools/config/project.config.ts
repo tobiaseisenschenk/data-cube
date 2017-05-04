@@ -82,6 +82,24 @@ export class ProjectConfig extends SeedConfig {
         defaultExtension: 'js'
       }
     });
+    // Chart.js
+    additionalPackages.push({
+      name: 'chartjs',
+      path: `${this.NPM_BASE}chart.js/dist/Chart.bundle.js`,
+      packageMeta: {
+        main: 'Chart.js',
+        defaultExtension: 'js'
+      }
+    });
+    // NG2-Charts
+    additionalPackages.push({
+      name: 'ng2-charts',
+      path: `${this.NPM_BASE}/ng2-charts/bundles/ng2-charts.umd.js`,
+      packageMeta: {
+        main: 'ng2-charts.js',
+        defaultExtension: 'js'
+      }
+    });
     this.addPackagesBundles(additionalPackages);
 
     /* Add proxy middleware */

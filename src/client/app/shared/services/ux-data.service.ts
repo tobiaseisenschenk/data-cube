@@ -39,7 +39,9 @@ export class UXDataService {
     this._router.navigateByUrl('/my-contributions');
   }
   public deleteProject(project :Project) {
-    this.projects.remove(project.firebaseRef);
+    this.projects.remove(project.firebaseRef).then(() => {
+      this._router.navigateByUrl('/my-contributions');
+    });
   }
   public addDomain(domain :any) {
     this.loading.next(true);

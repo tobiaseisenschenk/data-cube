@@ -48,7 +48,7 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
 
   constructor(public confirmDeleteDialog :MdDialog, private _logger :Logger,
               private _authenticationService :AuthenticationService,
-              private _uxDataService :UXDataService, private _router :Router, private _cdRef :ChangeDetectorRef) {}
+              private _uxDataService :UXDataService, private _router :Router) {}
 
   ngOnInit() {
     this.subscribeMyProjects();
