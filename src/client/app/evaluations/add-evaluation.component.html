@@ -115,7 +115,14 @@
       <md-option *ngFor="let option of susValues" [value]="option">{{ option }}</md-option>
     </md-select>
 
-    <!-- Average SUS Score -->
+    <!-- Guess Impact on Redesign -->
+    <md-select [formControl]="impactOnRedesignInput"
+               placeholder="Impact on Redesign"
+               class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+    </md-select>
+
+    <!-- Motivation for the performed Test / Evaluation -->
     <md-select [formControl]="testMotivationInput"
                placeholder="Motivation for Test"
                class="min-width-15rem margin-1rem">

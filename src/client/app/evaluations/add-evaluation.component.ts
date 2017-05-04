@@ -29,6 +29,7 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
   public seqInput :AbstractControl;
   public subEffectivenessInput :AbstractControl;
   public susInput :AbstractControl;
+  public impactOnRedesignInput :AbstractControl;
   public testMotivationInput :AbstractControl;
 
   // Data Collections - public
@@ -75,6 +76,7 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
       'seqInput': ['', Validators.compose([])],
       'subEffectivenessInput': ['', Validators.compose([])],
       'susInput': ['', Validators.compose([])],
+      'impactOnRedesignInput': ['', Validators.compose([])],
       'testMotivationInput': ['', Validators.compose([Validators.required])],
     });
 
@@ -90,13 +92,16 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     this.seqInput = this.addEvaluationForm.controls['seqInput'];
     this.subEffectivenessInput = this.addEvaluationForm.controls['subEffectivenessInput'];
     this.susInput = this.addEvaluationForm.controls['susInput'];
+    this.impactOnRedesignInput = this.addEvaluationForm.controls['impactOnRedesignInput'];
     this.testMotivationInput = this.addEvaluationForm.controls['testMotivationInput'];
 
     this.numberArray = Array.from(Array(60).keys());
     this.degreeOptions = [
+      'Very Low',
       'Low',
       'Medium',
-      'High'
+      'High',
+      'Very High'
     ];
     this.selectedEvalMethods = [];
     this.susValues = Array.from(Array(101).keys()).slice(1);
@@ -177,6 +182,7 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     if (!!this.seqInput.value) newEvaluation.seq = this.seqInput.value.toFixed(2);
     newEvaluation.sub_effectiveness = this.subEffectivenessInput.value;
     newEvaluation.sus = this.susInput.value;
+    newEvaluation.impact_on_redesign = this.impactOnRedesignInput.value;
     newEvaluation.test_motivation = this.testMotivationInput.value;
     this._uxDataService.addEvaluation(newEvaluation);
   }

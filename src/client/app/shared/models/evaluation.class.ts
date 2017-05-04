@@ -120,6 +120,14 @@ export class Evaluation {
     this._test_motivation = value;
   }
 
+  get impact_on_redesign(): string {
+    return this._impact_on_redesign;
+  }
+
+  set impact_on_redesign(value: string) {
+    this._impact_on_redesign = value;
+  }
+
   get date_shared(): Date {
     return this._date_shared;
   }
@@ -163,6 +171,7 @@ export class Evaluation {
   private _seq :number;
   private _sub_effectiveness :string;
   private _sus :number;
+  private _impact_on_redesign: string;
   private _test_motivation :string;
 
   constructor(obj :any) {
@@ -183,6 +192,7 @@ export class Evaluation {
     this._seq = obj.seq ? obj.seq : undefined;
     this._sub_effectiveness = obj.sub_effectiveness ? obj.sub_effectiveness : undefined;
     this._sus = obj.sus ? obj.sus : undefined;
+    this._impact_on_redesign = obj.impact_on_redesign ? obj.impact_on_redesign : undefined;
     this._test_motivation = obj.test_motivation ? obj.test_motivation : undefined;
   }
 
@@ -204,6 +214,7 @@ export class Evaluation {
       'seq': this._seq ? this._seq : null,
       'sub_effectiveness': this._sub_effectiveness ? this._sub_effectiveness : null,
       'sus': this._sus ? this._sus : null,
+      'impact_on_redesign': this._impact_on_redesign ? this._impact_on_redesign : null,
       'test_motivation': this._test_motivation
     };
   }

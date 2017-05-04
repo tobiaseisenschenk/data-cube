@@ -100,9 +100,11 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     this.languageInput = this.addProjectForm.controls['languageInput'];
 
     this.degreeOptions = [
+      'Very Low',
       'Low',
       'Medium',
-      'High'
+      'High',
+      'Very High'
     ];
     this.devProcessMaturityOptions = [
     {'id': 1, 'name': 'Initial'},
