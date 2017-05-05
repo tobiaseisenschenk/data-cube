@@ -74,12 +74,18 @@
   justify-content: flex-start;
 }
 
-.content-vertical-centered {
+.content-vertical-center {
   display: flex;
   flex-direction: column;
   align-content: center;
   align-items: center;
   justify-content: center;
+}
+
+.content-vertical-center-spread {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .align-items-center {
@@ -439,8 +445,12 @@
   font-weight: 300;
 }
 
-.font-weight-500 {
-  font-weight: 500;
+.font-weight-600 {
+  font-weight: 600;
+}
+
+.font-weight-700 {
+  font-weight: 700;
 }
 
 .no-text-decoration {

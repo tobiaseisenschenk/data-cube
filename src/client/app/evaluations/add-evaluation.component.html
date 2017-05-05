@@ -1,4 +1,4 @@
-<div class="component-content content-vertical-centered">
+<div class="component-content content-vertical-center">
   <md-card *ngIf="!isProjectSelected()" class="half-width">
     <md-card-title><h4>For which Project is this Evaluation?</h4></md-card-title>
     <md-card-content>Every Evaluation needs to be associated to a Project context.</md-card-content>
@@ -7,7 +7,7 @@
       <button md-raised-button color="primary" [routerLink]="['/add-project']">For a new Project</button>
     </md-card-actions>
   </md-card>
-  <form *ngIf="isProjectSelected()" class="content-vertical-centered" [formGroup]="addEvaluationForm">
+  <form *ngIf="isProjectSelected()" class="content-vertical-center" [formGroup]="addEvaluationForm">
     <!-- Evaluator Experience -->
     <md-select [formControl]="evalExpInput"
                placeholder="Years of Evaluator Experience"

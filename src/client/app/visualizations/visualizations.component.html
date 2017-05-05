@@ -1,9 +1,44 @@
 <div class="component-content">
-  <h2>works</h2>
-  <canvas baseChart
-          [datasets]="radarChartData"
-          [labels]="radarChartLabels"
-          [chartType]="chartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
+  <md-tab-group>
+    <md-tab label="One">
+      <!--<h3>Reported Usage per Evaluation Method</h3>-->
+      <div class="content-vertical-center-spread full-width margin-top-2rem wrap">
+        <div class="content-vertical-left-aligned max-width-20rem padding-1rem">
+          <md-select placeholder="Filter 0"
+                     class="min-width-15rem margin-1rem">
+            <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+          </md-select>
+          <md-select placeholder="Filter 1"
+                     class="min-width-15rem margin-1rem">
+            <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+          </md-select>
+          <md-select placeholder="Filter 2"
+                     class="min-width-15rem margin-1rem">
+            <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+          </md-select>
+          <md-select placeholder="Filter 3"
+                     class="min-width-15rem margin-1rem">
+            <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+          </md-select>
+        </div>
+        <div style="width: 35rem" class="padding-1rem">
+          <canvas *ngIf="showChart"
+                  baseChart
+                  height="300"
+                  [datasets]="radarChartData"
+                  [labels]="radarChartLabels"
+                  [options]="radarChartOptions"
+                  [chartType]="chartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+
+    </md-tab>
+    <md-tab label="Two">
+      <h1>Some more tab content</h1>
+      <p>...</p>
+    </md-tab>
+  </md-tab-group>
+
 </div>
