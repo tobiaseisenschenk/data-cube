@@ -6,11 +6,13 @@ import { PipesModule } from '../shared/pipes/pipes.module';
 import { VisualizationsComponent } from './visulizations.component';
 import { VisualizationsRoutingModule } from './visualizations-routing.module';
 import { ChartsModule } from 'ng2-charts';
+import { ToNumericValuePipe } from '../shared/pipes/toNumericValuePipe';
 
 @NgModule({
   imports: [CommonModule, VisualizationsRoutingModule, FormsModule, ReactiveFormsModule, MaterialModule,
     PipesModule, ChartsModule],
   declarations: [VisualizationsComponent],
+  providers: [ToNumericValuePipe],
   exports: [VisualizationsComponent]
 })
 export class VisualizationsModule { }

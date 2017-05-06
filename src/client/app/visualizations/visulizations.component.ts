@@ -5,6 +5,7 @@ import 'rxjs/add/observable/combineLatest';
 import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
 import { Evaluation } from '../shared/models/evaluation.class';
+import { ToNumericValuePipe } from '../shared/pipes/toNumericValuePipe';
 
 /**
  * This class represents the lazy loaded VisualizationsComponent.
@@ -28,6 +29,10 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
   public radarChartLabels :string[];
   public radarChartData :any = [];
   public radarChartOptions :any = [];
+  public showBarChart :boolean = false;
+  public barChartOptions :any = [];
+  public barChartLabels :string[];
+  public barChartData :any = [];
 
   // Data Collections
   public allEvaluationMethods :Array<any> = [];
@@ -42,7 +47,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
   private dataSubscription :any;
 
   constructor(private _logger :Logger,
-              private _uxDataService :UXDataService) {}
+              private _uxDataService :UXDataService, private _toNumericValue :ToNumericValuePipe) {}
 
   ngOnInit() {
     this.subscribeUXData();
@@ -55,6 +60,10 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
           beginAtZero: true
         }
       }
+    };
+    this.barChartOptions = {
+      scaleShowVerticalLines: false,
+      responsive: true
     };
     this.degreeOptions = [
       'Very Low',
@@ -69,12 +78,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
     this.dataSubscription.unsubscribe();
   }
   /* UI Functions */
-  public chartClicked(e:any):void {
-    this._logger.debug(e);
-  }
-  public chartHovered(e:any):void {
-    this._logger.debug(e);
-  }
+
   /* Helper Functions / Data Modification */
   public createRadarChartData() {
     this.radarChartLabels = this.allEvaluationMethods.map((method :any) => method.name);
@@ -110,6 +114,65 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
     this._logger.debug('[VisualizationsComponent] created ChartData: ', this.radarChartData);
     this.showRadarChart = true;
   }
+  public createBarChartData() {
+    let filteredProjects = this.allProjects.filter((project :Project) => {
+      let passFilter :boolean;
+      passFilter = (!this.devMethodFilter || project.dev_method === this.devMethodFilter.id);
+      passFilter = passFilter && (!this.domainFilter || project.domain === this.domainFilter.id);
+      passFilter = passFilter && (!this.productComplexityFilter ||
+        project.product_complexity === this.productComplexityFilter);
+      passFilter = passFilter && (!this.userExpertiseFilter ||
+        project.user_expertise === this.userExpertiseFilter);
+      passFilter = passFilter && (!this.timeFilter || project.time === this.timeFilter);
+      return passFilter;
+    });
+    /*let dataset :Array<number> = [];
+    this.allEvaluationMethods.forEach((method :any) => {
+      let count :number = 0;
+      this.allEvaluations.forEach((evaluation :Evaluation) => {
+        // check if evaluation uses the method in question
+        if (evaluation.eval_method.includes(method.id)) {
+          // check if the evaluation also passes evaluation specific filters
+          if (!this.testMotivationFilter ||
+            !!this.testMotivationFilter && this.testMotivationFilter === evaluation.test_motivation) {
+            // check if evaluation is also used by any project, which has passed pre-applied filters above
+            if(filteredProjects.find(project => project.id === evaluation.project_id) !== undefined) count++;
+          }
+        }
+      });
+      dataset.push(count);
+    });*/
+    let datasetX :Array<any> = []; // { methods: [1,2,5], meanImpact: 4 }
+    this.allEvaluations.forEach((evaluation :Evaluation) => {
+      // check if evaluations method mix is already in the dataset
+      let index = datasetX.findIndex(data => this.arrayHasSameElements(data.methods, evaluation.eval_method));
+      if (index !== -1) {
+        datasetX[index].meanImpact =
+          (datasetX[index].meanImpact + this._toNumericValue.transform(evaluation.impact_on_redesign)) /2;
+      } else {
+        let obj :any = {
+          'methods': evaluation.eval_method,
+          'meanImpact':this._toNumericValue.transform(evaluation.impact_on_redesign)
+        };
+        datasetX.push(obj);
+      }
+    });
+    let meanImpactData :Array<number> = datasetX.map(x => x.meanImpact);
+    this.barChartData = [{ data: meanImpactData, label: 'Mean Impact'}];
+    this.barChartLabels = datasetX.map((x :any) => x.methods);
+    this._logger.debug('[VisualizationsComponent] created Labels: ', this.barChartLabels);
+    this._logger.debug('[VisualizationsComponent] created BarChartData: ', this.barChartData);
+    this.showBarChart = true;
+  }
+  private arrayHasSameElements(array1 :Array<number>, array2 :Array<number>) :boolean {
+    array1 = array1.sort();
+    array2 = array2.sort();
+    let maxLength :number = Math.max.apply(Math, [array1.length, array2.length]);
+    for (let i = 0; i < maxLength; i++) {
+      if (array1[i] !== array2[i]) return false;
+    }
+    return true;
+  }
 
   /* Subscriptions */
   private subscribeUXData() {
@@ -127,6 +190,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       this.allDomains = res[4];
       this._logger.debug('[VisualizationsComponent] received UXData: ', res[3]);
       this.createRadarChartData();
+      this.createBarChartData();
     });
   }
 

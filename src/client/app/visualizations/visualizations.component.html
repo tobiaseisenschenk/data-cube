@@ -1,7 +1,7 @@
 <div class="component-content">
   <md-tab-group>
     <md-tab label="Reported Usage per Evaluation Method">
-      <div class="content-vertical-center-spread full-width margin-top-2rem wrap">
+      <div class="content-vertical-start-spread full-width margin-top-2rem wrap">
         <div class="content-vertical-left-aligned max-width-20rem padding-1rem">
           <h4>Filter Evaluation Data:</h4>
 
@@ -83,16 +83,97 @@
                   [datasets]="radarChartData"
                   [labels]="radarChartLabels"
                   [options]="radarChartOptions"
-                  [chartType]="'radar'"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)"></canvas>
+                  [chartType]="'radar'"></canvas>
         </div>
       </div>
 
     </md-tab>
-    <md-tab label="Two">
-      <h1>Some more tab content</h1>
-      <p>...</p>
+    <md-tab label="Impact on Redesign">
+      <div class="content-vertical-start-spread full-width margin-top-2rem wrap">
+        <div class="content-vertical-left-aligned max-width-20rem padding-1rem">
+          <h4>Filter Evaluation Data:</h4>
+
+          <div class="content-vertical-center-spread">
+            <button md-mini-fab class="md-mini-fab-minimal"
+                    (click)="testMotivationFilter = undefined; createBarChartData()"><md-icon>clear</md-icon></button>
+            <md-select placeholder="Test Motivation"
+                       (change)="createBarChartData()"
+                       [(ngModel)]="testMotivationFilter"
+                       class="min-width-15rem margin-1rem">
+              <md-option *ngFor="let option of testMotivations" [value]="option">{{ option }}</md-option>
+            </md-select>
+          </div>
+          <div class="content-vertical-center-spread">
+            <button md-mini-fab class="md-mini-fab-minimal"
+                    (click)="devMethodFilter = undefined; createBarChartData()"><md-icon>clear</md-icon></button>
+            <md-select placeholder="Development Method"
+                       (change)="createBarChartData()"
+                       [(ngModel)]="devMethodFilter"
+                       class="min-width-15rem margin-1rem">
+              <md-option *ngFor="let option of allDevMethods" [value]="option">{{ option?.name }}</md-option>
+            </md-select>
+          </div>
+          <div class="content-vertical-center-spread">
+            <button md-mini-fab class="md-mini-fab-minimal"
+                    (click)="domainFilter = undefined; createBarChartData()"><md-icon>clear</md-icon></button>
+            <md-select placeholder="Domain"
+                       (change)="createBarChartData()"
+                       [(ngModel)]="domainFilter"
+                       class="min-width-15rem margin-1rem">
+              <md-option *ngFor="let option of allDomains" [value]="option">{{ option?.name }}</md-option>
+            </md-select>
+          </div>
+          <div class="content-vertical-center-spread">
+            <button md-mini-fab class="md-mini-fab-minimal"
+                    (click)="productComplexityFilter = undefined; createBarChartData()"><md-icon>clear</md-icon></button>
+            <md-select placeholder="Product Complexity"
+                       (change)="createBarChartData()"
+                       [(ngModel)]="productComplexityFilter"
+                       class="min-width-15rem margin-1rem">
+              <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+            </md-select>
+          </div>
+          <div class="content-vertical-center-spread">
+            <button md-mini-fab class="md-mini-fab-minimal"
+                    (click)="userExpertiseFilter = undefined; createBarChartData()"><md-icon>clear</md-icon></button>
+            <md-select placeholder="User Expertise"
+                       (change)="createBarChartData()"
+                       [(ngModel)]="userExpertiseFilter"
+                       class="min-width-15rem margin-1rem">
+              <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+            </md-select>
+          </div>
+          <div class="content-vertical-center-spread">
+            <button md-mini-fab class="md-mini-fab-minimal"
+                    (click)="timeFilter = undefined; createBarChartData()"><md-icon>clear</md-icon></button>
+            <md-select [(ngModel)]="timeFilter"
+                       placeholder="Time for Project"
+                       (change)="createBarChartData()"
+                       class="min-width-15rem margin-1rem">
+              <md-option [value]="'0-5'">0-5 months</md-option>
+              <md-option [value]="'6-10'">6-10 months</md-option>
+              <md-option [value]="'11-15'">11-15 months</md-option>
+              <md-option [value]="'16-20'">16-20 months</md-option>
+              <md-option [value]="'21-25'">21-25 months</md-option>
+              <md-option [value]="'26-30'">26-30 months</md-option>
+              <md-option [value]="'31-35'">31-35 months</md-option>
+              <md-option [value]="'36-40'">36-40 months</md-option>
+              <md-option [value]="'41-45'">41-45 months</md-option>
+              <md-option [value]="'46-50'">46-50 months</md-option>
+              <md-option [value]="'> 50'">> 50 months</md-option>
+            </md-select>
+          </div>
+        </div>
+        <div style="width: 35rem" class="padding-1rem">
+          <canvas *ngIf="showBarChart"
+                  baseChart
+                  height="300"
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [chartType]="'bar'"></canvas>
+        </div>
+      </div>
     </md-tab>
   </md-tab-group>
 
