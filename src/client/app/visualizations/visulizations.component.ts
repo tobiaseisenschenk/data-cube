@@ -17,9 +17,14 @@ import { Evaluation } from '../shared/models/evaluation.class';
 })
 export class VisualizationsComponent implements OnInit, OnDestroy {
   // Input Fields
+  public testMotivationFilter :string;
+  public devMethodFilter :any;
+  public domainFilter :any;
+  public productComplexityFilter :string;
+  public userExpertiseFilter :string;
+  public timeFilter :string;
   // UI Bindings
-  public showChart :boolean = false;
-  public chartType :string = 'radar';
+  public showRadarChart :boolean = false;
   public radarChartLabels :string[];
   public radarChartData :any = [];
   public radarChartOptions :any = [];
@@ -27,21 +32,20 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
   // Data Collections
   public allEvaluationMethods :Array<any> = [];
   public degreeOptions :Array<string>;
+  public testMotivations :Array<string>;
+  public allDevMethods :Array<any>;
+  public allDomains :Array<any>;
   private allEvaluations :Array<Evaluation> = [];
+  private allProjects :Array<Project> = [];
 
   // Subscriptions
   private dataSubscription :any;
 
   constructor(private _logger :Logger,
-              private _uxDataService :UXDataService, private renderer :Renderer) {}
+              private _uxDataService :UXDataService) {}
 
   ngOnInit() {
     this.subscribeUXData();
-    //this.radarChartLabels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
-    /*this.radarChartData = [
-      {data: [65, 59, 90, 81, 56, 55, 50], label: 'Series A'},
-      {data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B'}
-    ];*/
     this.radarChartOptions = {
       scale: {
         responsive: true,
@@ -59,6 +63,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       'High',
       'Very High'
     ];
+    this.testMotivations = ['Formative', 'Summative', 'Comparative', 'Informative'];
   }
   ngOnDestroy() {
     this.dataSubscription.unsubscribe();
@@ -71,32 +76,57 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
     this._logger.debug(e);
   }
   /* Helper Functions / Data Modification */
-  private createChartData() {
+  public createRadarChartData() {
     this.radarChartLabels = this.allEvaluationMethods.map((method :any) => method.name);
+    let filteredProjects = this.allProjects.filter((project :Project) => {
+      let passFilter :boolean;
+      passFilter = (!this.devMethodFilter || project.dev_method === this.devMethodFilter.id);
+      passFilter = passFilter && (!this.domainFilter || project.domain === this.domainFilter.id);
+      passFilter = passFilter && (!this.productComplexityFilter ||
+                                  project.product_complexity === this.productComplexityFilter);
+      passFilter = passFilter && (!this.userExpertiseFilter ||
+                                  project.user_expertise === this.userExpertiseFilter);
+      passFilter = passFilter && (!this.timeFilter || project.time === this.timeFilter);
+      return passFilter;
+    });
     let dataset :Array<number> = [];
     this.allEvaluationMethods.forEach((method :any) => {
       let count :number = 0;
       this.allEvaluations.forEach((evaluation :Evaluation) => {
-        if (evaluation.eval_method.includes(method.id)) count++;
+        // check if evaluation uses the method in question
+        if (evaluation.eval_method.includes(method.id)) {
+          // check if the evaluation also passes evaluation specific filters
+          if (!this.testMotivationFilter ||
+              !!this.testMotivationFilter && this.testMotivationFilter === evaluation.test_motivation) {
+            // check if evaluation is also used by any project, which has passed pre-applied filters above
+            if(filteredProjects.find(project => project.id === evaluation.project_id) !== undefined) count++;
+          }
+        }
       });
       dataset.push(count);
     });
     this.radarChartData = [{ data: dataset, label: 'Evaluation Methods'}];
     this._logger.debug('[VisualizationsComponent] created Labels: ', this.radarChartLabels);
     this._logger.debug('[VisualizationsComponent] created ChartData: ', this.radarChartData);
-    this.showChart = true;
+    this.showRadarChart = true;
   }
 
   /* Subscriptions */
   private subscribeUXData() {
     this.dataSubscription = Observable.combineLatest(
       this._uxDataService.evaluations,
-      this._uxDataService.evaluationMethods
+      this._uxDataService.evaluationMethods,
+      this._uxDataService.projects,
+      this._uxDataService.dev_methods,
+      this._uxDataService.domains
     ).subscribe((res :Array<any>) => {
       this.allEvaluations = res[0].map((snapshot :any) => new Evaluation(snapshot.val()));
       this.allEvaluationMethods = res[1];
-      this._logger.debug('[VisualizationsComponent] received UXData: ', this.allEvaluations, this.allEvaluationMethods);
-      this.createChartData();
+      this.allProjects = res[2].map((snapshot :any) => new Project(snapshot.val()));
+      this.allDevMethods = res[3];
+      this.allDomains = res[4];
+      this._logger.debug('[VisualizationsComponent] received UXData: ', res[3]);
+      this.createRadarChartData();
     });
   }
 
