@@ -19,7 +19,7 @@ export class AuthenticationService {
     this._af.auth.subscribe((auth :any) => {
       this._logger.debug('[AuthenticationService] New Authentication Object', auth);
       this.currentUser.next(auth);
-      this.accountMetaData = this._af.database.object('/users/' + auth.uid);
+      if (!!auth) this.accountMetaData = this._af.database.object('/users/' + auth.uid);
     });
   }
   login(email :string, password :string) {
