@@ -184,7 +184,9 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     newEvaluation.sus = this.susInput.value;
     newEvaluation.impact_on_redesign = this.impactOnRedesignInput.value;
     newEvaluation.test_motivation = this.testMotivationInput.value;
-    this._uxDataService.addEvaluation(newEvaluation);
+    this._uxDataService.addEvaluation(newEvaluation).then((resolve) => {
+     this._authenticationService.updateContributions(newEvaluation);
+    });
   }
   /* Subscriptions */
   private subscribeCurrentUser() {

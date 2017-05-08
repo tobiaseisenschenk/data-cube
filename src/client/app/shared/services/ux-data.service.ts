@@ -35,8 +35,7 @@ export class UXDataService {
   }
   public addProject(project :Project) {
     this._logger.debug('[UXDataService] adding project: ', project);
-    this.projects.push(project.toJson());
-    this._router.navigateByUrl('/my-contributions');
+    return this.projects.push(project.toJson());
   }
   public deleteProject(project :Project) {
     this.projects.remove(project.firebaseRef).then(() => {

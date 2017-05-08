@@ -5,6 +5,7 @@ import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, Validators 
 import { Observable } from 'rxjs/Observable';
 import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
+import { Router } from '@angular/router';
 
 /**
  * This class represents the lazy loaded AddProjectComponent.
@@ -57,7 +58,9 @@ export class AddProjectComponent implements OnInit, OnDestroy {
   constructor(private _logger :Logger,
               private _authenticationService :AuthenticationService,
               private _uxDataService :UXDataService,
-              private _formbuilder: FormBuilder, private _cdRef :ChangeDetectorRef) {}
+              private _formbuilder: FormBuilder,
+              private _cdRef :ChangeDetectorRef,
+              private _router :Router) {}
 
   ngOnInit() {
     this.subscribeDevMethods();
@@ -296,7 +299,12 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     this.selectedCountries.forEach((country) => {
       newProjectObj.user_location.push(country.id);
     });
-    this._uxDataService.addProject(newProjectObj);
+    this._uxDataService.addProject(newProjectObj).then((resolve) => {
+      this._authenticationService.updateContributions(newProjectObj);
+      this._router.navigateByUrl('/my-contributions');
+    }, (reject) => {
+      this._logger.debug('[AddProjectComponent] Adding project failed', reject);
+    });
   }
   // check if domain already exists, return its id and add to db
   private checkDomainInput() :number {
