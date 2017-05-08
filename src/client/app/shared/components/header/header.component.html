@@ -1,27 +1,34 @@
 <md-toolbar color="primary" class="header-style box-shadow-light-below">
-  <span class="font-weight-600">UX</span><span>DataCube</span>
-  <a [routerLink]="['/add-project']"
-     class="margin-left-auto no-text-decoration padding-right-1rem color-text-white"><span>
-    Add Project
-  </span></a>
-  <a [routerLink]="['/add-evaluation']"
-     class="no-text-decoration padding-right-1rem color-text-white"><span>
-    Add Evaluation
-  </span></a>
-  <a [routerLink]="['/my-contributions']"
-     class="no-text-decoration padding-right-1rem color-text-white"><span>
-    My Contributions
-  </span></a>
-  <a [routerLink]="['/visualizations']"
-     class="no-text-decoration padding-right-1rem color-text-white"><span>
-    Visualizations
-  </span></a>
-  <a [routerLink]="['/about']"
-     class="no-text-decoration padding-right-1rem color-text-white"><span>
-    About
-  </span></a>
-  <a [routerLink]="['/login']"
-     class="no-text-decoration padding-right-1rem color-text-white"><span>
-    {{currentUser?.auth.email}}
-  </span></a>
+  <a [routerLink]="['']" class="no-text-decoration color-text-white">
+    <span class="font-weight-600">UX</span><span>DataCube</span>
+  </a>
+
+  <nav md-tab-nav-bar class="margin-left-auto" style="border-bottom: none">
+    <a md-tab-link [routerLink]="['/add-project']" routerLinkActive #addProject="routerLinkActive"
+       [ngClass]="{ 'activeRoute' : addProject.isActive}"
+       *ngIf="!!currentUser"
+       class="no-text-decoration padding-right-1rem"><span>Add Project</span>
+    </a>
+    <a md-tab-link [routerLink]="['/add-evaluation']" routerLinkActive #addEval="routerLinkActive"
+       [ngClass]="{ 'activeRoute' : addEval.isActive}"
+       *ngIf="!!currentUser"
+       class="no-text-decoration padding-right-1rem"><span>Add Evaluation</span>
+    </a>
+    <a md-tab-link [routerLink]="['/my-contributions']" routerLinkActive #myContr="routerLinkActive"
+       [ngClass]="{ 'activeRoute' : myContr.isActive}"
+       *ngIf="!!currentUser"
+       class="no-text-decoration padding-right-1rem"><span>My Contributions</span>
+    </a>
+    <a md-tab-link [routerLink]="['/visualizations']" routerLinkActive #visuals="routerLinkActive"
+       [ngClass]="{ 'activeRoute' : visuals.isActive}"
+       *ngIf="!!currentUser"
+       class="no-text-decoration padding-right-1rem"><span>Visualizations</span></a>
+    <a md-tab-link [routerLink]="['/login']" routerLinkActive #login="routerLinkActive"
+       [ngClass]="{ 'activeRoute' : login.isActive}"
+       class="no-text-decoration padding-right-1rem">
+      <span>{{currentUser?.auth.email}}</span>
+      <span *ngIf="!currentUser">Login</span>
+    </a>
+  </nav>
 </md-toolbar>
+<router-outlet></router-outlet>

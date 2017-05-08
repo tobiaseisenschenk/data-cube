@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { AngularFireModule, AuthMethods, AuthProviders } from 'angularfire2';
@@ -41,8 +40,9 @@ const firebaseAuthConfig = {
 @NgModule({
   imports: [AddProjectModule, AddEvaluationModule, BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig), ChartsModule,
-    DialogModule, MdDialogModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, LoginModule,
-    SharedModule.forRoot(), MaterialRootModule, MyContributionsModule, PipesModule, RouterModule, VisualizationsModule],
+    DialogModule, MdDialogModule, HttpModule, HomeModule, LoginModule,
+    SharedModule.forRoot(), MaterialRootModule, MyContributionsModule, PipesModule, RouterModule, VisualizationsModule,
+    AppRoutingModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,
