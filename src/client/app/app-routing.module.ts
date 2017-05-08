@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LoginGuard } from './shared/services/login-guard.service';
 
 @NgModule({
   imports: [
@@ -9,6 +10,7 @@ import { RouterModule } from '@angular/router';
        */
     ])
   ],
+  providers: [LoginGuard],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

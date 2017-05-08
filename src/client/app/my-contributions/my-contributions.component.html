@@ -1,4 +1,13 @@
 <div class="component-content">
+  <md-card *ngIf="myProjects?.length === 0" class="width-30rem margin-1rem">
+    <md-card-title><h3>It seems like you did not add any projects yet!</h3></md-card-title>
+    <md-card-actions>
+      <button md-raised-button color="primary" [routerLink]="['/add-project']">
+      <i class="material-icons md-18">add</i>
+      Add Project
+      </button>
+    </md-card-actions>
+  </md-card>
   <!-- List of Projects -->
   <div *ngIf="!selectedProject && !selectedEvaluation" class="display-flex wrap">
     <md-card *ngFor="let project of myProjects" class="width-30rem margin-1rem">

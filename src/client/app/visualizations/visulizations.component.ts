@@ -149,7 +149,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       passFilter = passFilter && (!this.timeFilter || project.time === this.timeFilter);
       return passFilter;
     });
-    let datasetX :Array<any> = []; // Objects in this Array look like: { methods: [1,2,5], meanImpact: 4 }
+    let datasetX :Array<any> = []; // Objects in Array look like: { methods: [1,2,5], meanImpact: 4, impacts: [1, 4] }
     for(let evaluation of this.allEvaluations) {
       // only consider evaluations, which have impact on redesign specified and testMotivation matches
       if (!!evaluation.impact_on_redesign &&
@@ -162,10 +162,12 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
           if (index !== -1) {
             datasetX[index].meanImpact =
               (datasetX[index].meanImpact + this._toNumericValue.transform(evaluation.impact_on_redesign)) /2;
+            datasetX[index].impacts.push(this._toNumericValue.transform(evaluation.impact_on_redesign))
           } else {
             let obj :any = {
               'methods': evaluation.eval_method,
-              'meanImpact':this._toNumericValue.transform(evaluation.impact_on_redesign)
+              'meanImpact':this._toNumericValue.transform(evaluation.impact_on_redesign),
+              'impacts': [this._toNumericValue.transform(evaluation.impact_on_redesign)]
             };
             datasetX.push(obj);
           }
@@ -173,7 +175,10 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       }
     }
     let meanImpactData :Array<number> = datasetX.map(x => x.meanImpact);
-    this.barChartData = [{ data: meanImpactData, label: 'Mean Impact'}];
+    let medianImpactData :Array<number> = datasetX.map(x => this.getMedian(x.impacts));
+    this.barChartData = [
+      { data: meanImpactData, label: 'Mean Impact'},
+      { data: medianImpactData, label: 'Median Impact'}];
     this.barChartLabels = datasetX.map((x :any) => this._getNamePipe.transform(this.allEvaluationMethods, x.methods));
     this._logger.debug('[VisualizationsComponent] created BarChartData: ', this.barChartData);
     this._logger.debug('[VisualizationsComponent] created Labels: ', this.barChartLabels);
@@ -187,6 +192,14 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       if (array1[i] !== array2[i]) return false;
     }
     return true;
+  }
+  private getMedian(array :Array<number>) {
+    array.sort();
+    let half = Math.floor(array.length/2);
+    if(array.length % 2)
+      return array[half];
+    else
+      return (array[half-1] + array[half]) / 2.0;
   }
 
   /* Subscriptions */
