@@ -10,5 +10,4 @@ export class ToNumericValuePipe implements PipeTransform {
     let degreeOptions = ['Very Low', 'Low', 'Medium', 'High', 'Very High'];
     return degreeOptions.indexOf(value) + 1;
   }
-
 }

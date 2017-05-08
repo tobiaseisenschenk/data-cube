@@ -6,6 +6,8 @@ import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
 import { Evaluation } from '../shared/models/evaluation.class';
 import { ToNumericValuePipe } from '../shared/pipes/toNumericValuePipe';
+import { ToStringValuePipe } from '../shared/pipes/toStringValuePipe';
+import { GetNamePipe } from '../shared/pipes/getNamePipe';
 
 /**
  * This class represents the lazy loaded VisualizationsComponent.
@@ -31,7 +33,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
   public radarChartOptions :any = [];
   public showBarChart :boolean = false;
   public barChartOptions :any = [];
-  public barChartLabels :string[];
+  public barChartLabels :Array<any>;
   public barChartData :any = [];
 
   // Data Collections
@@ -47,10 +49,31 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
   private dataSubscription :any;
 
   constructor(private _logger :Logger,
-              private _uxDataService :UXDataService, private _toNumericValue :ToNumericValuePipe) {}
-
-  ngOnInit() {
-    this.subscribeUXData();
+              private _uxDataService :UXDataService,
+              private _toNumericValue :ToNumericValuePipe,
+              private _toStringValue :ToStringValuePipe, private _getNamePipe :GetNamePipe) {
+    this.barChartOptions = {
+      scaleShowVerticalLines: false,
+      responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            callback: (value :any) => {
+              // only show label for round values
+              if (parseInt(value) === value) return _toStringValue.transform(value);
+              else return '';
+            }
+          }
+        }]
+      },
+      tooltips: {
+        callbacks: {
+          label: (tooltipItem :any, data :any) => {
+            return _toStringValue.transform(tooltipItem.yLabel);
+          }
+        }
+      }
+    };
     this.radarChartOptions = {
       scale: {
         responsive: true,
@@ -61,10 +84,6 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
         }
       }
     };
-    this.barChartOptions = {
-      scaleShowVerticalLines: false,
-      responsive: true
-    };
     this.degreeOptions = [
       'Very Low',
       'Low',
@@ -73,6 +92,10 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       'Very High'
     ];
     this.testMotivations = ['Formative', 'Summative', 'Comparative', 'Informative'];
+  }
+
+  ngOnInit() {
+    this.subscribeUXData();
   }
   ngOnDestroy() {
     this.dataSubscription.unsubscribe();
@@ -126,42 +149,34 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       passFilter = passFilter && (!this.timeFilter || project.time === this.timeFilter);
       return passFilter;
     });
-    /*let dataset :Array<number> = [];
-    this.allEvaluationMethods.forEach((method :any) => {
-      let count :number = 0;
-      this.allEvaluations.forEach((evaluation :Evaluation) => {
-        // check if evaluation uses the method in question
-        if (evaluation.eval_method.includes(method.id)) {
-          // check if the evaluation also passes evaluation specific filters
-          if (!this.testMotivationFilter ||
-            !!this.testMotivationFilter && this.testMotivationFilter === evaluation.test_motivation) {
-            // check if evaluation is also used by any project, which has passed pre-applied filters above
-            if(filteredProjects.find(project => project.id === evaluation.project_id) !== undefined) count++;
+    let datasetX :Array<any> = []; // Objects in this Array look like: { methods: [1,2,5], meanImpact: 4 }
+    for(let evaluation of this.allEvaluations) {
+      // only consider evaluations, which have impact on redesign specified and testMotivation matches
+      if (!!evaluation.impact_on_redesign &&
+        (evaluation.test_motivation === this.testMotivationFilter || !this.testMotivationFilter)) {
+        // only consider evaluations assiciated to a project, which passed the filters
+        if (filteredProjects.find(project => project.id === evaluation.project_id) !== undefined) {
+          // check if evaluations method mix is already in the dataset
+          let index = datasetX.findIndex(data => this.arrayHasSameElements(data.methods, evaluation.eval_method));
+          // method mix is already in dataset -> compute mean and update element
+          if (index !== -1) {
+            datasetX[index].meanImpact =
+              (datasetX[index].meanImpact + this._toNumericValue.transform(evaluation.impact_on_redesign)) /2;
+          } else {
+            let obj :any = {
+              'methods': evaluation.eval_method,
+              'meanImpact':this._toNumericValue.transform(evaluation.impact_on_redesign)
+            };
+            datasetX.push(obj);
           }
         }
-      });
-      dataset.push(count);
-    });*/
-    let datasetX :Array<any> = []; // { methods: [1,2,5], meanImpact: 4 }
-    this.allEvaluations.forEach((evaluation :Evaluation) => {
-      // check if evaluations method mix is already in the dataset
-      let index = datasetX.findIndex(data => this.arrayHasSameElements(data.methods, evaluation.eval_method));
-      if (index !== -1) {
-        datasetX[index].meanImpact =
-          (datasetX[index].meanImpact + this._toNumericValue.transform(evaluation.impact_on_redesign)) /2;
-      } else {
-        let obj :any = {
-          'methods': evaluation.eval_method,
-          'meanImpact':this._toNumericValue.transform(evaluation.impact_on_redesign)
-        };
-        datasetX.push(obj);
       }
-    });
+    }
     let meanImpactData :Array<number> = datasetX.map(x => x.meanImpact);
     this.barChartData = [{ data: meanImpactData, label: 'Mean Impact'}];
-    this.barChartLabels = datasetX.map((x :any) => x.methods);
-    this._logger.debug('[VisualizationsComponent] created Labels: ', this.barChartLabels);
+    this.barChartLabels = datasetX.map((x :any) => this._getNamePipe.transform(this.allEvaluationMethods, x.methods));
     this._logger.debug('[VisualizationsComponent] created BarChartData: ', this.barChartData);
+    this._logger.debug('[VisualizationsComponent] created Labels: ', this.barChartLabels);
     this.showBarChart = true;
   }
   private arrayHasSameElements(array1 :Array<number>, array2 :Array<number>) :boolean {
