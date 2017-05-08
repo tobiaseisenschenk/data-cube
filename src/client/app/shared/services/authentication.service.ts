@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Logger } from 'angular2-logger/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Router } from '@angular/router';

@@ -80,6 +80,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
         maintainAspectRatio: false,
         reverse: false,
         ticks: {
+          stepSize: 1,
           beginAtZero: true
         }
       }
