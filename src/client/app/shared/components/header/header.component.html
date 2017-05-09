@@ -26,7 +26,7 @@
     <a md-tab-link [routerLink]="['/login']" routerLinkActive #login="routerLinkActive"
        [ngClass]="{ 'activeRoute' : login.isActive}"
        class="no-text-decoration padding-right-1rem">
-      <span>{{currentUser?.auth.email}}</span>
+      <span *ngIf="!!currentUser" (click)="logout()">Logout</span>
       <span *ngIf="!currentUser">Login</span>
     </a>
   </nav>

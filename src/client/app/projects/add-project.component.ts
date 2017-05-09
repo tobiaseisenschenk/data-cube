@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import { UXDataService } from '../shared/services/ux-data.service';
 import { Project } from '../shared/models/project.class';
 import { Router } from '@angular/router';
