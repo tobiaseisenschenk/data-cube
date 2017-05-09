@@ -22,6 +22,7 @@ import { DialogModule } from './shared/components/dialogs/dialog.module';
 import { AddEvaluationModule } from './evaluations/add-evaluation.module';
 import { ChartsModule } from 'ng2-charts';
 import { VisualizationsModule } from './visualizations/visualizations.module';
+import { ExportModule } from './export/export.module';
 
 
 const firebaseConfig = {
@@ -39,7 +40,7 @@ const firebaseAuthConfig = {
 
 @NgModule({
   imports: [AddProjectModule, AddEvaluationModule, BrowserModule,
-    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig), ChartsModule,
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig), ChartsModule, ExportModule,
     DialogModule, MdDialogModule, HttpModule, HomeModule, LoginModule,
     SharedModule.forRoot(), MaterialRootModule, MyContributionsModule, PipesModule, RouterModule, VisualizationsModule,
     AppRoutingModule],

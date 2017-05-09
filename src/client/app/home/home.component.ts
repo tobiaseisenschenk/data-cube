@@ -10,9 +10,6 @@ import { Logger } from 'angular2-logger/core';
   selector: 'sd-home',
   templateUrl: 'home.component.html'
 })
-export class HomeComponent implements OnInit {
-  public countries :any;
-  constructor(private _uXDataService :UXDataService, private _logger :Logger) {}
-  ngOnInit() {
-  }
+export class HomeComponent {
+  constructor(private _logger :Logger) {}
 }

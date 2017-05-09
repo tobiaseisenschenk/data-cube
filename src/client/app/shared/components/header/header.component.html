@@ -23,6 +23,10 @@
        [ngClass]="{ 'activeRoute' : visuals.isActive}"
        *ngIf="!!currentUser"
        class="no-text-decoration padding-right-1rem"><span>Visualizations</span></a>
+    <a md-tab-link [routerLink]="['/export']" routerLinkActive #export="routerLinkActive"
+       [ngClass]="{ 'activeRoute' : export.isActive}"
+       *ngIf="!!currentUser"
+       class="no-text-decoration padding-right-1rem"><span>Export</span></a>
     <a md-tab-link [routerLink]="['/login']" routerLinkActive #login="routerLinkActive"
        [ngClass]="{ 'activeRoute' : login.isActive}"
        class="no-text-decoration padding-right-1rem">

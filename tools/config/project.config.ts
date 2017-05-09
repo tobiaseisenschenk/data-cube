@@ -100,6 +100,15 @@ export class ProjectConfig extends SeedConfig {
         defaultExtension: 'js'
       }
     });
+    // Angular2-csv
+    additionalPackages.push({
+      name: 'angular2-csv',
+      path: `${this.NPM_BASE}/angular2-csv/Angular2-csv.js`,
+      packageMeta: {
+        main: 'Angular2-csv.js',
+        defaultExtension: 'js'
+      }
+    });
     this.addPackagesBundles(additionalPackages);
 
     /* Add proxy middleware */
