@@ -35,6 +35,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
   public barChartOptions :any = [];
   public barChartLabels :Array<any>;
   public barChartData :any = [];
+  public chartColors :Array<any>;
 
   // Data Collections
   public allEvaluationMethods :Array<any> = [];
@@ -85,6 +86,23 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
         }
       }
     };
+    this.chartColors = [
+      { // first color
+        backgroundColor: 'rgba(174, 255, 181, 0.4)',
+        borderColor: 'rgba(149, 231, 164, 0.2)',
+        pointBackgroundColor: 'rgba(225,10,24,0.5)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+      },
+      { // second color
+        backgroundColor: 'rgba(201, 189, 255, 0.4)',
+        borderColor: 'rgba(149, 134, 192, 0.5)',
+        pointBackgroundColor: 'rgba(225,10,24,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+      }];
     this.degreeOptions = [
       'Very Low',
       'Low',
@@ -133,7 +151,7 @@ export class VisualizationsComponent implements OnInit, OnDestroy {
       });
       dataset.push(count);
     });
-    this.radarChartData = [{ data: dataset, label: 'Evaluation Methods'}];
+    this.radarChartData = [{ data: dataset, label: 'Evaluation Methods' }];
     this._logger.debug('[VisualizationsComponent] created Labels: ', this.radarChartLabels);
     this._logger.debug('[VisualizationsComponent] created ChartData: ', this.radarChartData);
     this.showRadarChart = true;

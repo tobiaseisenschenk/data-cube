@@ -7,9 +7,73 @@
 // Set Color Palette for Data-Cube App
 @import '../../../../node_modules/@angular/material/core/theming/all-theme';
 @include mat-core();
+$md-uxdatacube-primary: (
+  50 : #e6f9e9,
+  100 : $color-primary-extra-light,
+  200 : #95e7a4,
+  300 : $color-primary-very-light,
+  400 : $color-primary-light,
+  500 : $color-primary,
+  600 : $color-primary-dark,
+  700 : #20c338,
+  800 : $color-primary-very-dark,
+  900 : $color-primary-extra-dark,
+  A100 : #e1ffe4,
+  A200 : #aeffb5,
+  A400 : #7bff86,
+  A700 : #62ff6e,
+  contrast: (
+    50 : $black-87-opacity,
+    100 : $black-87-opacity,
+    200 : $black-87-opacity,
+    300 : $black-87-opacity,
+    400 : $black-87-opacity,
+    500 : $color-white,
+    600 : $color-white,
+    700 : $color-white,
+    800 : $color-white,
+    900 : $color-white,
+    A100 : $black-87-opacity,
+    A200 : $black-87-opacity,
+    A400 : $black-87-opacity,
+    A700 : $color-white,
+  )
+);
+$md-uxdatacube-accent: (
+  50 : #edeaf4,
+  100 : #d1cbe4,
+  200 : #b3a9d2,
+  300 : #9586c0,
+  400 : #7e6cb3,
+  500 : #6752a5,
+  600 : #5f4b9d,
+  700 : #544193,
+  800 : #4a388a,
+  900 : #392879,
+  A100 : #c9bdff,
+  A200 : #a08aff,
+  A400 : #7657ff,
+  A700 : #623dff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
 
-$data-cube-primary: mat-palette($mat-light-blue);
-$data-cube-accent: mat-palette($mat-cyan);
+$data-cube-primary: mat-palette($md-uxdatacube-primary);
+$data-cube-accent: mat-palette($md-uxdatacube-accent);
 $data-cube-warn: mat-palette($mat-red);
 $data-cube-theme: mat-light-theme($data-cube-primary, $data-cube-accent, $data-cube-warn);
 

@@ -1,4 +1,190 @@
 <div class="component-content">
-  <h2>Exports</h2>
-  <button (click)="download()">Download</button>
+  <md-card>
+    <md-card-title>Step 1:</md-card-title>
+    <md-card-subtitle>Select Dataset for Export</md-card-subtitle>
+    <md-select [(ngModel)]="dataSelectionInput">
+      <md-option [value]="'Evaluations'">Evaluations</md-option>
+      <md-option [value]="'Projects'">Projects</md-option>
+    </md-select>
+  </md-card>
+  <md-card class="margin-top-1rem">
+    <md-card-title>Step 2:</md-card-title>
+    <md-card-subtitle>Apply Filters</md-card-subtitle>
+    <table *ngIf="dataSelectionInput === 'Projects'">
+      <tr>
+        <td class="text-decoration-underline">
+          <md-checkbox (change)="selectAllProjectData()"
+                       [(ngModel)]="allProjectData">
+            Select All Project Data
+          </md-checkbox>
+        </td>
+        <td class="text-decoration-underline">
+          <md-checkbox (change)="selectAllMarketData()"
+                       [(ngModel)]="allMarketData">
+            Select All Market Data
+          </md-checkbox>
+        </td>
+        <td class="text-decoration-underline">
+          <md-checkbox (change)="selectAllUserData()"
+                       [(ngModel)]="allUserData">
+            Select All User Data
+          </md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="budgetInput">Project Budget</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="marketDescrInput">Market Descriptions</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="userExpertiseInput">User Expertise</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="timeInput">Time for Project</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="domainInput">Project Domain</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="userDiversityInput">User Diversity</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="devMethodInput">Development Methodology</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="userLocationInput">Countries of Users</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="userAvgAgeInput">Average User Age</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="productComplexityInput">Product Complexity</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="marketDiversityInput">Market Diversity</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="userLanguagesInput">Languages of Users</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="teamSizeInput">Team Size</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="dateSharedInput">Report Date</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="devProcessMaturityInput">Maturity of Development Process</md-checkbox>
+        </td>
+      </tr>
+    </table>
+    <table *ngIf="dataSelectionInput === 'Evaluations'">
+      <tr>
+        <td class="text-decoration-underline">
+          <md-checkbox (change)="selectAllEvaluatorData()"
+                       [(ngModel)]="allEvaluatorData">
+            Select All Evaluator Data
+          </md-checkbox>
+        </td>
+        <td class="text-decoration-underline">
+          <md-checkbox (change)="selectAllBenchmarkData()"
+                       [(ngModel)]="allBenchmarkData">
+            Select All Benchmark Data
+          </md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="EvaldateSharedInput">Report Date</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="evalMethodInput">Evaluation Method</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="evalExpInput">Evaluator Experience</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="seqInput">Single Ease Question</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="numEvalInput">Number of Evaluators</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="subEffectivenessInput">Single Ease Question</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="evalCollabInput">Collaboration of Evaluators</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="susInput">System Usability Scale</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="domainKnowledgeInput">Domain Knowledge</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="impactOnRedesignInput">Impact on Redesign</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="interactKnowledgeInput">Interaction Knowledge</md-checkbox>
+        </td>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="testMotivationInput">Test Motivation</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="productKnowledgeInput">Product Knowledge</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="taskKnowledgeInput">Task Knowledge</md-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <td class="sub-element">
+          <md-checkbox [(ngModel)]="userKnowledgeInput">User Knowledge</md-checkbox>
+        </td>
+      </tr>
+    </table>
+
+  </md-card>
+  <md-card class="margin-top-1rem">
+    <md-card-title>Step 3:</md-card-title>
+    <md-card-subtitle>Download CSV-File</md-card-subtitle>
+    <md-input-container>
+      <input mdInput type="text" placeholder="Filename" [(ngModel)]="filename" (keyup.enter)="download()" required>
+    </md-input-container>
+    <button md-raised-button
+            class="margin-left-1rem"
+            color="primary"
+            (click)="download()"
+            [disabled]="filename.length === 0">
+      <i class="material-icons md-18">cloud_download</i>
+      Download
+    </button>
+  </md-card>
 </div>

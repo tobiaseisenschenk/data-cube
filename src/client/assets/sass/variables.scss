@@ -11,15 +11,16 @@ $font-weight-default: 300 !default;
 
 // Colors
 $color-white: #FFFFFF !default;
-$color-primary: #999AC6 !default;
-$color-primary-extra-light: #E8EBE4 !default;
-$color-primary-very-light: #D2D5DD !default;
-$color-primary-light: #B8BACF !default;
-$color-primary-dark: #77789B !default;
-$color-primary-very-dark: #798071 !default;
-$color-text-default: #131810 !default;
+$color-primary-extra-light: #bff1c8 !default;
+$color-primary-very-light: #6bdd7f !default;
+$color-primary-light: #4bd663 !default;
+$color-primary: #2bcf48 !default;
+$color-primary-dark: #26ca41 !default;
+$color-primary-very-dark: #1abd30 !default;
+$color-primary-extra-dark: #10b221 !default;
+$color-text-default: rgba(black, 0.87) !default;
 $color-text-inactive: rgba(119, 119, 119, 0.67) !default;
-$color-text-error: #d63b25 !default;
+$color-text-error: #f44336 !default;
 $color-material-light-grey: #E0E0E0 !default;
 
 // Z-Index
