@@ -71,6 +71,7 @@ export class ExportComponent implements OnInit, OnDestroy {
   private _allDomains :Array<any>;
   private _allCountries :Array<any>;
   private _allLanguages :Array<any>;
+  private _allEvalMethods :Array<any>;
   private _subscriptions :any;
   constructor(private _uXDataService :UXDataService, private _logger :Logger, private _datePipe :DatePipe,
               private _getNamePipe :GetNamePipe) {}
@@ -123,13 +124,14 @@ export class ExportComponent implements OnInit, OnDestroy {
       if (this.productKnowledgeInput) exportObj.Product_Knowledge = evalu.product_knowledge.toString();
       if (this.taskKnowledgeInput) exportObj.Task_Knowledge = evalu.task_knowledge.toString();
       if (this.userKnowledgeInput) exportObj.User_Knowledge = evalu.user_knowledge.toString();
-      if (this.evalMethodInput) exportObj.Evaluation_Methods = evalu.eval_method.toString();
+      if (this.evalMethodInput) exportObj.Evaluation_Methods =
+        this._getNamePipe.transform(this._allEvalMethods, evalu.eval_method).toString();
       if (this.seqInput) exportObj.SEQ =
         evalu.seq ? evalu.seq.toString() : '';
       if (this.subEffectivenessInput) exportObj.Subjective_Effectiveness =
-        evalu.sub_effectiveness ? evalu.sub_effectiveness.toString() : '';
+        evalu.sub_effectiveness ? evalu.sub_effectiveness.toString() : 'leerSUB';
       if (this.susInput) exportObj.SUS =
-        evalu.sus ? evalu.sus.toString() : '';
+        evalu.sus ? evalu.sus.toString() : 'leerSUS';
       if (this.impactOnRedesignInput) exportObj.Impact_On_Redesign =
         evalu.impact_on_redesign ? evalu.impact_on_redesign.toString() : '';
       if (this.testMotivationInput) exportObj.Test_Motivation =
@@ -200,7 +202,8 @@ export class ExportComponent implements OnInit, OnDestroy {
       this._uXDataService.market_descr,
       this._uXDataService.domains,
       this._uXDataService.countries,
-      this._uXDataService.languages
+      this._uXDataService.languages,
+      this._uXDataService.evaluationMethods
     ).subscribe((res :Array<any>) => {
       this.allProjects = res[0].map((snapshot :any) => new Project(snapshot.val()));
       this.allEvaluations = res[1].map((snapshot :any) => new Evaluation(snapshot.val()));
@@ -209,7 +212,8 @@ export class ExportComponent implements OnInit, OnDestroy {
       this._allDomains = res[4];
       this._allCountries = res[5];
       this._allLanguages = res[6];
-      this._logger.debug('[ExportComponent] received UX Data', this._allLanguages, this._allCountries);
+      this._allEvalMethods = res[7];
+      this._logger.debug('[ExportComponent] received UX Data');
     });
   }
 }
