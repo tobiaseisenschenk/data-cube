@@ -1,4 +1,4 @@
-<div class="component-content">
+<div class="component-content content-center">
   <md-card *ngIf="myProjects?.length === 0" class="width-30rem margin-1rem">
     <md-card-title><h3>It seems like you did not add any projects yet!</h3></md-card-title>
     <md-card-actions>
@@ -9,7 +9,7 @@
     </md-card-actions>
   </md-card>
   <!-- List of Projects -->
-  <div *ngIf="!selectedProject && !selectedEvaluation" class="display-flex wrap">
+  <div *ngIf="!selectedProject && !selectedEvaluation" class="content-center wrap">
     <md-card *ngFor="let project of myProjects" class="width-30rem margin-1rem">
       <md-card-title><h3>Domain: {{ project.domainName }}</h3></md-card-title>
       <md-card-subtitle><h4>Added on: {{ project.date_shared | date }}</h4></md-card-subtitle>
@@ -39,7 +39,7 @@
   </div>
 
   <!-- Detail View for Selected Project -->
-  <md-card *ngIf="!!selectedProject && !selectedEvaluation">
+  <md-card *ngIf="!!selectedProject && !selectedEvaluation" style="max-width: 68rem">
     <md-card-title><h3>Domain: {{ selectedProject.domainName }}</h3></md-card-title>
     <md-card-subtitle><h4>Added on: {{ selectedProject.date_shared | date }}</h4></md-card-subtitle>
     <md-card-content class="display-flex wrap">

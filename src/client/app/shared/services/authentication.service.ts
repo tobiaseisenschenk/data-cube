@@ -23,7 +23,7 @@ export class AuthenticationService {
   }
   login(email :string, password :string) {
     let creds: any = { email: email, password: password };
-    this._af.auth.login(creds).then((resolve) => {
+    return this._af.auth.login(creds).then((resolve) => {
       this._logger.debug('[AuthenticationService] Authentication successful! Redirecting...');
       if (!!this.redirectUrl) {
         this._router.navigateByUrl(this.redirectUrl);

@@ -4,6 +4,8 @@
     <form id="loginForm" [formGroup]="loginForm">
       <md-input-container>
         <input mdInput [formControlName]="'emailInput'" placeholder="email" type="email">
+        <!-- TODO: newer AngularMaterial versions should support color Input without custom class -->
+        <md-hint class="color-text-error" *ngIf="displayLoginError">Credentials do not match</md-hint>
       </md-input-container>
       <md-input-container>
         <input mdInput [formControlName]="'passwordInput'" placeholder="password" type="password">

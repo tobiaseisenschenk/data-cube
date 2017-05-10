@@ -1,5 +1,5 @@
-<div class="component-content">
-  <md-card>
+<div class="component-content content-vertical-center">
+  <md-card class="width-43rem">
     <md-card-title>Step 1:</md-card-title>
     <md-card-subtitle>Select Dataset for Export</md-card-subtitle>
     <md-select [(ngModel)]="dataSelectionInput">
@@ -7,7 +7,7 @@
       <md-option [value]="'Projects'">Projects</md-option>
     </md-select>
   </md-card>
-  <md-card class="margin-top-1rem">
+  <md-card class="margin-top-1rem width-43rem">
     <md-card-title>Step 2:</md-card-title>
     <md-card-subtitle>Apply Filters</md-card-subtitle>
     <table *ngIf="dataSelectionInput === 'Projects'">
@@ -172,7 +172,7 @@
     </table>
 
   </md-card>
-  <md-card class="margin-top-1rem">
+  <md-card class="margin-top-1rem width-43rem">
     <md-card-title>Step 3:</md-card-title>
     <md-card-subtitle>Download CSV-File</md-card-subtitle>
     <md-input-container>

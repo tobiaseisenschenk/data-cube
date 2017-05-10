@@ -20,6 +20,11 @@
   padding: 3rem 3rem 0 3rem;
 }
 
+.content-center {
+  display: flex;
+  justify-content: center;
+}
+
 .vertical-align-center {
   margin-top: auto;
   margin-bottom: auto;
@@ -383,6 +388,10 @@
 
 .width-30rem {
   width: 30rem;
+}
+
+.width-43rem {
+  width: 43rem;
 }
 
 .max-width-1rem {

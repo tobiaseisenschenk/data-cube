@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   public loginForm :FormGroup;
   public registerForm :FormGroup;
   public logEmailInput :AbstractControl;
+  public displayLoginError :boolean = false;
   public logPasswordInput :AbstractControl;
   public regEmailInput :AbstractControl;
   public regPasswordInput :AbstractControl;
@@ -46,7 +47,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this._authenticationService.login(this.logEmailInput.value, this.logPasswordInput.value);
+    this._authenticationService.login(this.logEmailInput.value, this.logPasswordInput.value).then((error :any) => {
+      this.displayLoginError = true;
+    }, () => this.displayLoginError = false);
   }
 
   register() {
