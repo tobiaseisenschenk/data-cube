@@ -108,13 +108,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
       'High',
       'Very High'
     ];
-    this.devProcessMaturityOptions = [
-    {'id': 1, 'name': 'Initial'},
-    {'id': 2, 'name': 'Repeatable'},
-    {'id': 3, 'name': 'Defined'},
-    {'id': 4, 'name': 'Capable'},
-    {'id': 5, 'name': 'Efficient'}
-    ];
+    this.devProcessMaturityOptions = UXDataService.devProcessMaturityOptions;
     this.selectedDescriptions = [];
     this.selectedLanguages = [];
     this.selectedCountries = [];
@@ -334,7 +328,7 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     } else {
       return null;
     }
-  };
+  }
   /* Subscriptions */
   private subscribeDevMethods() {
     this.devMethodsSubscription = this._uxDataService.dev_methods.subscribe((dev_methods :any) => {

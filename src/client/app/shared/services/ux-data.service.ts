@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UXDataService {
+  public static devProcessMaturityOptions :Array<any>;
 
   public loading :BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public countries :FirebaseListObservable<any>;
@@ -22,7 +23,6 @@ export class UXDataService {
   public projectIdSelectedForEvaluation :BehaviorSubject<number> = new BehaviorSubject(null);
   public evaluationMethods :FirebaseListObservable<any>;
 
-
   constructor(private _af: AngularFire, private _logger :Logger, private _router :Router) {
     this.countries = this._af.database.list('/countries');
     this.dev_methods = this._af.database.object('/dev_methods');
@@ -32,6 +32,14 @@ export class UXDataService {
     this.projects = this._af.database.list('/projects', { preserveSnapshot: true });
     this.evaluations = this._af.database.list('/evaluations', { preserveSnapshot: true });
     this.evaluationMethods = this._af.database.list('/eval_methods');
+    // Data Collections
+    UXDataService.devProcessMaturityOptions = [
+      {'id': 1, 'name': 'Initial'},
+      {'id': 2, 'name': 'Repeatable'},
+      {'id': 3, 'name': 'Defined'},
+      {'id': 4, 'name': 'Capable'},
+      {'id': 5, 'name': 'Efficient'}
+    ];
   }
   public addProject(project :Project) {
     this._logger.debug('[UXDataService] adding project: ', project);

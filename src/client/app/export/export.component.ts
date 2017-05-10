@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Project } from '../shared/models/project.class';
 import { Evaluation } from '../shared/models/evaluation.class';
 import { DatePipe } from '@angular/common';
+import { GetNamePipe } from '../shared/pipes/getNamePipe';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -65,9 +66,14 @@ export class ExportComponent implements OnInit, OnDestroy {
   // Data Collections
   public allProjects :Array<Project>;
   public allEvaluations :Array<Evaluation>;
-  private allDevMethods :Array<any>;
+  private _allDevMethods :Array<any>;
+  private _allMarketDescr :Array<any>;
+  private _allDomains :Array<any>;
+  private _allCountries :Array<any>;
+  private _allLanguages :Array<any>;
   private _subscriptions :any;
-  constructor(private _uXDataService :UXDataService, private _logger :Logger, private _datePipe :DatePipe) {}
+  constructor(private _uXDataService :UXDataService, private _logger :Logger, private _datePipe :DatePipe,
+              private _getNamePipe :GetNamePipe) {}
   ngOnInit() {
     this.subscribeUXData();
   }
@@ -80,19 +86,25 @@ export class ExportComponent implements OnInit, OnDestroy {
       let exportObj :any = {};
       if (this.budgetInput) exportObj.Project_Budget = project.budget.toString();
       if (this.timeInput) exportObj.Project_Time = project.time.toString();
-      if (this.devMethodInput) exportObj.Development_Methodology = project.dev_method.toString();
+      if (this.devMethodInput) exportObj.Development_Methodology =
+        this._getNamePipe.transform(this._allDevMethods, [project.dev_method]);
       if (this.productComplexityInput) exportObj.Product_Complexity = project.product_complexity.toString();
       if (this.teamSizeInput) exportObj.Team_Size = project.team_size.toString();
       if (this.dateSharedInput) exportObj.Report_Date = this._datePipe.transform(project.date_shared).toString();
-      if (this.devProcessMaturityInput) exportObj.Development_Process_Maturity = project.dev_process_maturity.toString();
-      if (this.marketDescrInput) exportObj.Market_Descriptions = project.market_descr.toString();
-      if (this.domainInput) exportObj.Domain = project.domain.toString();
-      if (this.userLocationInput) exportObj.User_Country = project.user_location.toString();
+      if (this.devProcessMaturityInput) exportObj.Development_Process_Maturity =
+        UXDataService.devProcessMaturityOptions[project.dev_process_maturity -1].name;
+      if (this.marketDescrInput) exportObj.Market_Descriptions =
+        this._getNamePipe.transform(this._allMarketDescr, project.market_descr).toString();
+      if (this.domainInput) exportObj.Domain =
+        this._getNamePipe.transform(this._allDomains, [project.domain]);
+      if (this.userLocationInput) exportObj.User_Country =
+        this._getNamePipe.transform(this._allCountries, project.user_location).toString();
       if (this.marketDiversityInput) exportObj.Market_Diversity = project.market_diversity.toString();
       if (this.userExpertiseInput) exportObj.User_Expertise = project.user_expertise.toString();
       if (this.userDiversityInput) exportObj.User_Diversity = project.user_diversity.toString();
       if (this.userAvgAgeInput) exportObj.Average_User_Age = project.user_avg_age.toString();
-      if (this.userLanguagesInput) exportObj.User_Languages = project.user_languages.toString();
+      if (this.userLanguagesInput) exportObj.User_Languages =
+        this._getNamePipe.transform(this._allLanguages, project.user_languages).toString();
       return exportObj;
     });
   }
@@ -184,12 +196,20 @@ export class ExportComponent implements OnInit, OnDestroy {
     this._subscriptions = Observable.combineLatest(
       this._uXDataService.projects,
       this._uXDataService.evaluations,
-      this._uXDataService.dev_methods
+      this._uXDataService.dev_methods,
+      this._uXDataService.market_descr,
+      this._uXDataService.domains,
+      this._uXDataService.countries,
+      this._uXDataService.languages
     ).subscribe((res :Array<any>) => {
       this.allProjects = res[0].map((snapshot :any) => new Project(snapshot.val()));
       this.allEvaluations = res[1].map((snapshot :any) => new Evaluation(snapshot.val()));
-      this.allDevMethods = res[3];
-      this._logger.debug('[ExportComponent] received UX Data', this.allEvaluations);
+      this._allDevMethods = res[2];
+      this._allMarketDescr = res[3];
+      this._allDomains = res[4];
+      this._allCountries = res[5];
+      this._allLanguages = res[6];
+      this._logger.debug('[ExportComponent] received UX Data', this._allLanguages, this._allCountries);
     });
   }
 }

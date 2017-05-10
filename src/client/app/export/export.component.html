@@ -176,9 +176,10 @@
     <md-card-title>Step 3:</md-card-title>
     <md-card-subtitle>Download CSV-File</md-card-subtitle>
     <md-input-container>
-      <input mdInput type="text" placeholder="Filename" [(ngModel)]="filename" (keyup.enter)="download()" required>
+      <input mdInput type="text" placeholder="Filename" [(ngModel)]="filename" (keyup.enter)="download()">
     </md-input-container>
     <button md-raised-button
+            #downloadBtn
             class="margin-left-1rem"
             color="primary"
             (click)="download()"

@@ -16,7 +16,6 @@ import { GetNamePipe } from '../shared/pipes/getNamePipe';
   moduleId: module.id,
   selector: 'visualizations-component',
   templateUrl: 'visualizations.component.html'
-  //styleUrls: ['visualizations.components.css']
 })
 export class VisualizationsComponent implements OnInit, OnDestroy {
   // Input Fields
