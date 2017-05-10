@@ -96,13 +96,7 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     this.testMotivationInput = this.addEvaluationForm.controls['testMotivationInput'];
 
     this.numberArray = Array.from(Array(60).keys());
-    this.degreeOptions = [
-      'Very Low',
-      'Low',
-      'Medium',
-      'High',
-      'Very High'
-    ];
+    this.degreeOptions = UXDataService.degreeOptions;
     this.selectedEvalMethods = [];
     this.susValues = Array.from(Array(101).keys()).slice(1);
     this.testMotivations = ['Formative', 'Summative', 'Comparative', 'Informative'];

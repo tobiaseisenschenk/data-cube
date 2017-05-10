@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class UXDataService {
   public static devProcessMaturityOptions :Array<any>;
+  public static degreeOptions :Array<string>;
 
   public loading :BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public countries :FirebaseListObservable<any>;
@@ -39,6 +40,13 @@ export class UXDataService {
       {'id': 3, 'name': 'Defined'},
       {'id': 4, 'name': 'Capable'},
       {'id': 5, 'name': 'Efficient'}
+    ];
+    UXDataService.degreeOptions = [
+      'Very Low',
+      'Low',
+      'Medium',
+      'High',
+      'Very High'
     ];
   }
   public addProject(project :Project) {

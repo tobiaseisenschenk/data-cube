@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { Observable } from 'rxjs/Observable';
@@ -58,13 +58,7 @@ export class MyContributionsComponent implements OnInit, OnDestroy {
     this.subscribeDevMethods();
     this.subscribeEvaluations();
     this.subscribeEvalMethods();
-    this.devProcessMaturityOptions = [
-      {'id': 1, 'name': 'Initial'},
-      {'id': 2, 'name': 'Repeatable'},
-      {'id': 3, 'name': 'Defined'},
-      {'id': 4, 'name': 'Capable'},
-      {'id': 5, 'name': 'Efficient'}
-    ];
+    this.devProcessMaturityOptions = UXDataService.devProcessMaturityOptions;
   }
   ngOnDestroy() {
     this.myProjectsSubscription.unsubscribe();
