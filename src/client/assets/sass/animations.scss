@@ -1,0 +1,78 @@
+@import 'variables';
+
+.splash-screen {
+  background-color: #95e7a4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-white;
+  #logo {
+    margin-right: 1rem;
+    animation: jumping 2s infinite;
+    animation-timing-function: linear;
+    animation-delay: -2s;
+    -webkit-animation-delay: -2s;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+  }
+}
+
+@keyframes jumping {
+  0% {
+    transform: translateY(0);
+  }
+  5% {
+    transform: translateY(-0.3rem);
+  }
+  10% {
+    transform: translateY(-0.8rem);
+  }
+  13% {
+    transform: translateY(-0.8rem);
+  }
+  15% {
+    transform: translateY(-0.5rem);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-0.5rem);
+  }
+  33% {
+    transform: translateY(-0.5rem);
+  }
+  40% {
+    transform: translateY(-0.4rem);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  65% {
+    transform: translateY(-0.3rem);
+  }
+  70% {
+    transform: translateY(-0.2rem);
+  }
+  76% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-0.2rem);
+  }
+  83% {
+    transform: translateY(-0.2rem);
+  }
+  90% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
