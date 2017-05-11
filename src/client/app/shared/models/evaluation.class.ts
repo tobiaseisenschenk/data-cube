@@ -80,6 +80,14 @@ export class Evaluation {
     this._user_knowledge = value;
   }
 
+  get version(): string {
+    return this._version;
+  }
+
+  set version(value: string) {
+    this._version = value;
+  }
+
   get eval_method(): Array<number> {
     return this._eval_method;
   }
@@ -167,6 +175,7 @@ export class Evaluation {
   private _task_knowledge :string;
   private _user_knowledge :string;
   // Benchmark Attributes
+  private _version :string;
   private _eval_method: Array<number>;
   private _seq :number;
   private _sub_effectiveness :string;
@@ -188,6 +197,7 @@ export class Evaluation {
     this._product_knowledge = obj.product_knowledge ? obj.product_knowledge : undefined;
     this._task_knowledge = obj.task_knowledge ? obj.task_knowledge : undefined;
     this._user_knowledge = obj.user_knowledge ? obj.user_knowledge : undefined;
+    this._version = obj.version ? obj.version :undefined;
     this._eval_method = obj.eval_method ? obj.eval_method : undefined;
     this._seq = obj.seq ? obj.seq : undefined;
     this._sub_effectiveness = obj.sub_effectiveness ? obj.sub_effectiveness : undefined;
@@ -210,6 +220,7 @@ export class Evaluation {
       'product_knowledge': this._product_knowledge,
       'task_knowledge': this._task_knowledge,
       'user_knowledge': this._user_knowledge,
+      'version': this._version ? this._version : null,
       'eval_method': this._eval_method,
       'seq': this._seq ? this._seq : null,
       'sub_effectiveness': this._sub_effectiveness ? this._sub_effectiveness : null,

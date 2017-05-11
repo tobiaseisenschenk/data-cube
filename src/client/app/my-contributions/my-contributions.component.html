@@ -267,6 +267,14 @@
               </span>
               </td>
             </tr>
+            <tr *ngIf="!!selectedEvaluation.version">
+              <td>
+                <span>Version</span>
+              </td>
+              <td>
+                <span class="color-text-primary-very-dark">{{ selectedEvaluation.version }}</span>
+              </td>
+            </tr>
             <tr *ngIf="!!selectedEvaluation.seq">
               <td>
                 <span>Single Ease Question (SEQ)</span>

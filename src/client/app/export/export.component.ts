@@ -57,6 +57,7 @@ export class ExportComponent implements OnInit, OnDestroy {
   public productKnowledgeInput :boolean;
   public taskKnowledgeInput :boolean;
   public userKnowledgeInput :boolean;
+  public versionInput :boolean;
   public evalMethodInput :boolean;
   public seqInput :boolean;
   public subEffectivenessInput :boolean;
@@ -126,6 +127,7 @@ export class ExportComponent implements OnInit, OnDestroy {
       if (this.productKnowledgeInput) exportObj.Product_Knowledge = evalu.product_knowledge.toString();
       if (this.taskKnowledgeInput) exportObj.Task_Knowledge = evalu.task_knowledge.toString();
       if (this.userKnowledgeInput) exportObj.User_Knowledge = evalu.user_knowledge.toString();
+      if (this.versionInput) exportObj.Version = evalu.version ? evalu.version : '';
       if (this.evalMethodInput) exportObj.Evaluation_Methods =
         this._getNamePipe.transform(this._allEvalMethods, evalu.eval_method).toString();
       if (this.seqInput) exportObj.SEQ =
@@ -188,6 +190,7 @@ export class ExportComponent implements OnInit, OnDestroy {
     this.userKnowledgeInput = this.allEvaluatorData;
   }
   selectAllBenchmarkData() {
+    this.versionInput = this.allBenchmarkData;
     this.evalMethodInput = this.allBenchmarkData;
     this.seqInput = this.allBenchmarkData;
     this.subEffectivenessInput = this.allBenchmarkData;

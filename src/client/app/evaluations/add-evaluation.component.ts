@@ -25,6 +25,8 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
   public productKnowledgeInput :AbstractControl;
   public userKnowledgeInput :AbstractControl;
   public taskKnowledgeInput :AbstractControl;
+  public versionPrefixInput :AbstractControl;
+  public versionInput :AbstractControl;
   public evalMethodInput :AbstractControl;
   public seqInput :AbstractControl;
   public subEffectivenessInput :AbstractControl;
@@ -72,7 +74,9 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
       'productKnowledgeInput': ['', Validators.compose([Validators.required])],
       'userKnowledgeInput': ['', Validators.compose([Validators.required])],
       'taskKnowledgeInput': ['', Validators.compose([Validators.required])],
-      'evalMethodInput': ['', Validators.compose([])],
+      'versionPrefixInput': ['', Validators.compose([Validators.required])],
+      'versionInput': ['', Validators.compose([Validators.required])],
+      'evalMethodInput': ['', Validators.compose([Validators.required])],
       'seqInput': ['', Validators.compose([])],
       'subEffectivenessInput': ['', Validators.compose([])],
       'susInput': ['', Validators.compose([])],
@@ -88,6 +92,8 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     this.productKnowledgeInput = this.addEvaluationForm.controls['productKnowledgeInput'];
     this.userKnowledgeInput = this.addEvaluationForm.controls['userKnowledgeInput'];
     this.taskKnowledgeInput = this.addEvaluationForm.controls['taskKnowledgeInput'];
+    this.versionPrefixInput = this.addEvaluationForm.controls['versionPrefixInput'];
+    this.versionInput = this.addEvaluationForm.controls['versionInput'];
     this.evalMethodInput = this.addEvaluationForm.controls['evalMethodInput'];
     this.seqInput = this.addEvaluationForm.controls['seqInput'];
     this.subEffectivenessInput = this.addEvaluationForm.controls['subEffectivenessInput'];
@@ -169,6 +175,7 @@ export class AddEvaluationComponent implements OnInit, OnDestroy {
     newEvaluation.product_knowledge = this.productKnowledgeInput.value;
     newEvaluation.task_knowledge = this.taskKnowledgeInput.value;
     newEvaluation.user_knowledge = this.userKnowledgeInput.value;
+    newEvaluation.version = this.versionPrefixInput.value + '_' + this.versionInput.value;
     newEvaluation.eval_method = [];
     this.selectedEvalMethods.forEach((evalMethod :any) => {
       newEvaluation.eval_method.push(evalMethod.id);

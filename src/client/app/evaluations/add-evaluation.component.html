@@ -117,6 +117,28 @@
       </span>
     </div>
 
+    <!-- Version -->
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="versionPrefixInput"
+                 placeholder="Prefix"
+                 class="margin-1rem">
+        <md-option [value]="'Pre-Alpha'">Pre-Alpha</md-option>
+        <md-option [value]="'Alpha'">Alpha</md-option>
+        <md-option [value]="'Beta'">Beta</md-option>
+        <md-option [value]="'Release Candidate'">Release Candidate</md-option>
+        <md-option [value]="'Production'">Production</md-option>
+      </md-select>
+      <md-select [formControl]="versionInput"
+                 placeholder="Version"
+                 class="margin-1rem">
+        <md-option *ngFor="let version of susValues" [value]="version">v{{version}}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please select the major-version and release-prefix of the product at the
+            time of this evaluation.">
+        ?
+      </span>
+    </div>
 
     <!-- Evaluation Methods -->
     <div class="display-flex align-items-baseline">
@@ -215,7 +237,6 @@
       </span>
     </div>
 
-
     <!-- Motivation for the performed Test / Evaluation -->
     <div class="display-flex align-items-baseline">
       <md-select [formControl]="testMotivationInput"
@@ -228,7 +249,6 @@
         ?
       </span>
     </div>
-
 
     <!-- Buttons -->
     <div class="content-horizontal-center margin-top-1rem margin-bottom-2rem">
