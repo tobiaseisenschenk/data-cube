@@ -99,6 +99,10 @@
   justify-content: space-around;
 }
 
+.align-items-baseline {
+  align-items: baseline;
+}
+
 .align-items-center {
   align-items: center;
 }
@@ -528,4 +532,18 @@
   box-shadow: none !important;
   background-color: transparent !important;
   color: lightgray !important;
+}
+
+.question-tooltip {
+  color: $color-material-light-grey;
+  border: 0.1rem solid $color-material-light-grey;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  &:hover {
+    cursor: help;
+    color: $color-text-inactive;
+    border-color: $color-text-inactive;
+  }
 }

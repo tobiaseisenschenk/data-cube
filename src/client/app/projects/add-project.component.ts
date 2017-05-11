@@ -127,23 +127,25 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     let descrExists :boolean = false;
     if (typeof this.marketDescrInput.value === 'string') {
       this.selectedDescriptions.forEach((descr :any) => {
-        if (descr.name.includes(this.marketDescrInput.value)) {
+        if (descr.name.toLowerCase().includes(this.marketDescrInput.value.toLowerCase())) {
           descrExists = true;
         }
       });
       if (!descrExists) {
         this.marketDescr.forEach((descr :any) => {
-          if (descr.name.includes(this.marketDescrInput.value)) {
-            this._logger.debug('[AddProjectComponent] market description already exists!');
-            this.selectedDescriptions.push(descr);
-            descrExists = true;
-            this.marketDescrInput.reset();
+          if (!!this.marketDescrInput.value) {
+            if (descr.name.toLowerCase().includes(this.marketDescrInput.value.toLowerCase())) {
+              this._logger.debug('[AddProjectComponent] market description already exists!');
+              this.selectedDescriptions.push(descr);
+              descrExists = true;
+              this.marketDescrInput.reset();
+            }
           }
         });
       }
       if (!descrExists) {
         this._logger.debug('[AddProjectComponent] adding new market description...');
-        let newDescr = { 'id': this.marketDescr.length + 1, 'name': this.marketDescrInput.value };
+        let newDescr = { 'id': this.marketDescr.length + 1, 'name': this.marketDescrInput.value.toLowerCase() };
         this.selectedDescriptions.push(newDescr);
         this._uxDataService.addMarketDescr(newDescr);
         this.marketDescrInput.reset();
@@ -171,23 +173,25 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     let lanExists :boolean = false;
     if (typeof this.languageInput.value === 'string') {
       this.selectedLanguages.forEach((lang :any) => {
-        if (lang.name.includes(this.languageInput.value)) {
+        if (lang.name.toLowerCase().includes(this.languageInput.value.toLowerCase())) {
           lanExists = true;
         }
       });
       if (!lanExists) {
         this.languages.forEach((lan :any) => {
-          if (lan.name.includes(this.languageInput.value)) {
-            this._logger.debug('[AddProjectComponent] language already exists!');
-            this.selectedLanguages.push(lan);
-            lanExists = true;
-            this.languageInput.reset();
+          if (!!this.languageInput.value) {
+            if (lan.name.toLowerCase().includes(this.languageInput.value.toLowerCase())) {
+              this._logger.debug('[AddProjectComponent] language already exists!');
+              this.selectedLanguages.push(lan);
+              lanExists = true;
+              this.languageInput.reset();
+            }
           }
         });
       }
       if (!lanExists) {
         this._logger.debug('[AddProjectComponent] adding new language...');
-        let newLanguage = { 'id': this.languages.length + 1, 'name': this.languageInput.value };
+        let newLanguage = { 'id': this.languages.length + 1, 'name': this.languageInput.value.toLowerCase() };
         this.selectedLanguages.push(newLanguage);
         this._uxDataService.addLanguage(newLanguage);
         this.languageInput.reset();
@@ -215,23 +219,25 @@ export class AddProjectComponent implements OnInit, OnDestroy {
     let countryExists :boolean = false;
     if (typeof this.countryInput.value === 'string') {
       this.selectedCountries.forEach((coun :any) => {
-        if (coun.name.includes(this.countryInput.value)) {
+        if (coun.name.toLowerCase().includes(this.countryInput.value.toLowerCase())) {
           countryExists = true;
         }
       });
       if (!countryExists) {
         this.countries.forEach((coun :any) => {
-          if (coun.name.includes(this.countryInput.value)) {
-            this._logger.debug('[AddProjectComponent] country already exists!');
-            this.selectedCountries.push(coun);
-            countryExists = true;
-            this.countryInput.reset();
+          if (!!this.countryInput.value) {
+            if (coun.name.toLowerCase().includes(this.countryInput.value.toLowerCase())) {
+              this._logger.debug('[AddProjectComponent] country already exists!');
+              this.selectedCountries.push(coun);
+              countryExists = true;
+              this.countryInput.reset();
+            }
           }
         });
       }
       if (!countryExists) {
         this._logger.debug('[AddProjectComponent] we discovered a new country ;-)');
-        let newCountry = { 'id': this.countries.length + 1, 'name': this.countryInput.value };
+        let newCountry = { 'id': this.countries.length + 1, 'name': this.countryInput.value.toLowerCase() };
         this.selectedCountries.push(newCountry);
         this._uxDataService.addCountry(newCountry);
         this.countryInput.reset();

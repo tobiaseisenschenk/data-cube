@@ -85,6 +85,7 @@ export class ExportComponent implements OnInit, OnDestroy {
     this._logger.debug('[ExportComponent] filtering UX Data for download...');
     return this.allProjects.map((project :Project) => {
       let exportObj :any = {};
+      exportObj.Project_ID = project.id.toString();
       if (this.budgetInput) exportObj.Project_Budget = project.budget.toString();
       if (this.timeInput) exportObj.Project_Time = project.time.toString();
       if (this.devMethodInput) exportObj.Development_Methodology =
@@ -113,6 +114,7 @@ export class ExportComponent implements OnInit, OnDestroy {
     this._logger.debug('[ExportComponent] filtering UX Data for download...');
     return this.allEvaluations.map((evalu :Evaluation) => {
       let exportObj :any = {};
+      exportObj.Project_ID = evalu.project_id.toString();
       if (this.EvaldateSharedInput) exportObj.Report_Date = this._datePipe.transform(evalu.date_shared).toString();
       if (this.evalExpInput) exportObj.Evaluator_Experience =
         evalu.eval_exp ? evalu.eval_exp.toString() : '';

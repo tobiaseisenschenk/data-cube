@@ -2,75 +2,117 @@
       [formGroup]="addProjectForm"
       class="component-content content-vertical-center">
   <!-- Development Methodology -->
-  <md-input-container class="min-width-15rem margin-1rem">
-    <input mdInput
-           [formControl]="devMethodInput"
-           placeholder="Development Methodology"
-           [mdAutocomplete]="devMethodAuto">
-    <md-hint class="color-text-error"
-             *ngIf="devMethodInput.dirty && devMethodInput.invalid">
-      Please provide any value from the List
-    </md-hint>
-  </md-input-container>
-  <md-autocomplete #devMethodAuto="mdAutocomplete" [displayWith]="displayNameProp">
-    <md-option *ngFor="let option of devMethods | genericStringFilter:devMethodInput.value" [value]="option">
-      {{ option.name }}
-    </md-option>
-  </md-autocomplete>
+  <div class="display-flex align-items-baseline">
+    <md-input-container class="min-width-15rem margin-1rem">
+      <input mdInput
+             [formControl]="devMethodInput"
+             placeholder="Development Methodology"
+             [mdAutocomplete]="devMethodAuto">
+      <md-hint class="color-text-error"
+               *ngIf="devMethodInput.dirty && devMethodInput.invalid">
+        Please provide any value from the List
+      </md-hint>
+    </md-input-container>
+    <md-autocomplete #devMethodAuto="mdAutocomplete" [displayWith]="displayNameProp">
+      <md-option *ngFor="let option of devMethods | genericStringFilter:devMethodInput.value" [value]="option">
+        {{ option.name }}
+      </md-option>
+    </md-autocomplete>
+    <span class="question-tooltip"
+          mdTooltip="Enter the development methodology the team followed to build the product.">
+      ?
+    </span>
+  </div>
+
 
   <!-- Market Diversity -->
-  <md-select [formControl]="marketDiversityInput" placeholder="Market Diversity" class="min-width-15rem margin-1rem">
-    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="marketDiversityInput" placeholder="Market Diversity" class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Your best guess on the diversity of the Market you are operating in.
+          Think about number of competitors and how your product is different from theirs.">
+      ?
+    </span>
+  </div>
+
 
   <!-- Project Budget -->
-  <md-select [formControl]="budgetInput" placeholder="Budget" class="min-width-15rem margin-1rem">
-    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="budgetInput" placeholder="Budget" class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Select a rough category for the total Budget of the software project in question.">
+      ?
+    </span>
+  </div>
+
 
   <!-- Project Domain -->
-  <md-input-container class="min-width-15rem margin-1rem">
-    <input mdInput
-           [formControl]="domainInput"
-           placeholder="Domain"
-           [mdAutocomplete]="domainAuto">
-    <md-hint class="color-text-error"
-             *ngIf="domainInput.dirty && domainInput.invalid">
-      This field can not be blank
-    </md-hint>
-  </md-input-container>
-  <md-autocomplete #domainAuto="mdAutocomplete" [displayWith]="displayNameProp">
-    <md-option *ngFor="let option of domains | genericStringFilter:domainInput.value" [value]="option">
-      {{ option.name }}
-    </md-option>
-  </md-autocomplete>
+
+  <div class="display-flex align-items-baseline">
+    <md-input-container class="min-width-15rem margin-1rem">
+      <input mdInput
+             [formControl]="domainInput"
+             placeholder="Domain"
+             [mdAutocomplete]="domainAuto">
+      <md-hint class="color-text-error"
+               *ngIf="domainInput.dirty && domainInput.invalid">
+        This field can not be blank
+      </md-hint>
+    </md-input-container>
+    <md-autocomplete #domainAuto="mdAutocomplete" [displayWith]="displayNameProp">
+      <md-option *ngFor="let option of domains | genericStringFilter:domainInput.value" [value]="option">
+        {{ option.name }}
+      </md-option>
+    </md-autocomplete>
+    <span class="question-tooltip"
+          mdTooltip="Select the most fitting domain description or create a new one if none of the existing ones fit.">
+      ?
+    </span>
+  </div>
 
   <!-- Development Process Maturity -->
-  <md-select [formControl]="devProcessMaturityInput"
-             placeholder="Dev. Process Maturity"
-             class="min-width-15rem margin-1rem">
-    <md-option *ngFor="let option of devProcessMaturityOptions" [value]="option.id">{{ option.name }}</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="devProcessMaturityInput"
+               placeholder="Dev. Process Maturity"
+               class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of devProcessMaturityOptions" [value]="option.id">{{ option.name }}</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="In order to get an estimate of how mature the development process is we use a 5-point scale rating.
+          called the 'Capability Maturity Model'.">
+      ?
+    </span>
+  </div>
 
   <!-- Market Description -->
-  <md-input-container class="min-width-15rem margin-1rem">
-    <input mdInput
-           [formControl]="marketDescrInput"
-           placeholder="Market Description"
-           [mdAutocomplete]="marketDescrAuto"
-           (keyup.enter)="checkMarketDescrInput()">
-    <md-hint class="color-text-error"
-             *ngIf="marketDescrInput.dirty && marketDescrInput.invalid">
-      This field can not be blank
-    </md-hint>
-  </md-input-container>
-  <md-autocomplete #marketDescrAuto="mdAutocomplete">
-    <md-option *ngFor="let option of marketDescr | genericStringFilter:marketDescrInput.value"
-               [value]="option"
-               (onSelect)="selectDescr(option); marketDescrInput.reset()">
-      {{ option.name }}
-    </md-option>
-  </md-autocomplete>
+  <div class="display-flex align-items-baseline">
+    <md-input-container class="min-width-15rem margin-1rem">
+      <input mdInput
+             [formControl]="marketDescrInput"
+             placeholder="Market Description"
+             [mdAutocomplete]="marketDescrAuto"
+             (keyup.enter)="checkMarketDescrInput()">
+      <md-hint class="color-text-error"
+               *ngIf="marketDescrInput.dirty && marketDescrInput.invalid">
+        This field can not be blank
+      </md-hint>
+    </md-input-container>
+    <md-autocomplete #marketDescrAuto="mdAutocomplete">
+      <md-option *ngFor="let option of marketDescr | genericStringFilter:marketDescrInput.value"
+                 [value]="option"
+                 (onSelect)="selectDescr(option); marketDescrInput.reset()">
+        {{ option.name }}
+      </md-option>
+    </md-autocomplete>
+    <span class="question-tooltip"
+          mdTooltip="Please add any adjectives, which descripe the market the project in question is operating in.">
+      ?
+    </span>
+  </div>
   <md-chip-list class="margin-bottom-2rem">
     <md-chip *ngFor="let descr of selectedDescriptions"
              (click)="deselectDescr(descr)"
@@ -80,87 +122,134 @@
   </md-chip-list>
 
   <!-- Product Complexity -->
-  <md-select [formControl]="productComplexityInput"
-             placeholder="Product Complexity"
-             class="min-width-15rem margin-1rem">
-    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="productComplexityInput"
+               placeholder="Product Complexity"
+               class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Please give your best estimate on the complexity of the product in development.">
+      ?
+    </span>
+  </div>
+
 
   <!-- Team Size -->
-  <md-select [formControl]="teamSizeInput"
-             placeholder="Team Size"
-             class="min-width-15rem margin-1rem">
-    <md-option [value]="'0-5'">0-5</md-option>
-    <md-option [value]="'6-10'">6-10</md-option>
-    <md-option [value]="'11-20'">11-20</md-option>
-    <md-option [value]="'21-40'">21-40</md-option>
-    <md-option [value]="'41-100'">41-100</md-option>
-    <md-option [value]="'101-200'">101-200</md-option>
-    <md-option [value]="'201-400'">201-400</md-option>
-    <md-option [value]="'> 400'">> 400</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="teamSizeInput"
+               placeholder="Team Size"
+               class="min-width-15rem margin-1rem">
+      <md-option [value]="'0-5'">0-5</md-option>
+      <md-option [value]="'6-10'">6-10</md-option>
+      <md-option [value]="'11-20'">11-20</md-option>
+      <md-option [value]="'21-40'">21-40</md-option>
+      <md-option [value]="'41-100'">41-100</md-option>
+      <md-option [value]="'101-200'">101-200</md-option>
+      <md-option [value]="'201-400'">201-400</md-option>
+      <md-option [value]="'> 400'">> 400</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Select the number of people working on the development of the product.">
+        ?
+    </span>
+  </div>
+
 
   <!-- Time on Project -->
-  <md-select [formControl]="timeInput"
-             placeholder="Time for Project"
-             class="min-width-15rem margin-1rem">
-    <md-option [value]="'0-5'">0-5 months</md-option>
-    <md-option [value]="'6-10'">6-10 months</md-option>
-    <md-option [value]="'11-15'">11-15 months</md-option>
-    <md-option [value]="'16-20'">16-20 months</md-option>
-    <md-option [value]="'21-25'">21-25 months</md-option>
-    <md-option [value]="'26-30'">26-30 months</md-option>
-    <md-option [value]="'31-35'">31-35 months</md-option>
-    <md-option [value]="'36-40'">36-40 months</md-option>
-    <md-option [value]="'41-45'">41-45 months</md-option>
-    <md-option [value]="'46-50'">46-50 months</md-option>
-    <md-option [value]="'> 50'">> 50 months</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="timeInput"
+               placeholder="Time for Project"
+               class="min-width-15rem margin-1rem">
+      <md-option [value]="'0-5'">0-5 months</md-option>
+      <md-option [value]="'6-10'">6-10 months</md-option>
+      <md-option [value]="'11-15'">11-15 months</md-option>
+      <md-option [value]="'16-20'">16-20 months</md-option>
+      <md-option [value]="'21-25'">21-25 months</md-option>
+      <md-option [value]="'26-30'">26-30 months</md-option>
+      <md-option [value]="'31-35'">31-35 months</md-option>
+      <md-option [value]="'36-40'">36-40 months</md-option>
+      <md-option [value]="'41-45'">41-45 months</md-option>
+      <md-option [value]="'46-50'">46-50 months</md-option>
+      <md-option [value]="'> 50'">> 50 months</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Select the timeframe for the project in months.">
+      ?
+    </span>
+  </div>
+
 
   <!-- Average User Age -->
-  <md-select [formControl]="userAgeInput"
-             placeholder="Average User Age"
-             class="min-width-15rem margin-1rem">
-    <md-option [value]="'0-5'">0-14 years</md-option>
-    <md-option [value]="'15-18'">15-18 years</md-option>
-    <md-option [value]="'19-25'">19-25 years</md-option>
-    <md-option [value]="'26-35'">26-35 years</md-option>
-    <md-option [value]="'36-45'">36-45 years</md-option>
-    <md-option [value]="'46-55'">46-55 years</md-option>
-    <md-option [value]="'56-65'">56-65 years</md-option>
-    <md-option [value]="'66-75'">66-75 years</md-option>
-    <md-option [value]="'> 76'">> 76 years</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="userAgeInput"
+               placeholder="Average User Age"
+               class="min-width-15rem margin-1rem">
+      <md-option [value]="'0-5'">0-14 years</md-option>
+      <md-option [value]="'15-18'">15-18 years</md-option>
+      <md-option [value]="'19-25'">19-25 years</md-option>
+      <md-option [value]="'26-35'">26-35 years</md-option>
+      <md-option [value]="'36-45'">36-45 years</md-option>
+      <md-option [value]="'46-55'">46-55 years</md-option>
+      <md-option [value]="'56-65'">56-65 years</md-option>
+      <md-option [value]="'66-75'">66-75 years</md-option>
+      <md-option [value]="'> 76'">> 76 years</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Select the average age of the user of the product in development.">
+      ?
+    </span>
+  </div>
+
 
   <!-- User Diversity -->
-  <md-select [formControl]="userDiversityInput"
-             placeholder="User Diversity"
-             class="min-width-15rem margin-1rem">
-    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="userDiversityInput"
+               placeholder="User Diversity"
+               class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Please select the degree of diversity within your user population.">
+        ?
+    </span>
+  </div>
+
 
   <!-- User Expertise -->
-  <md-select [formControl]="userExpertiseInput"
-             placeholder="User Expertise"
-             class="min-width-15rem margin-1rem">
-    <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-  </md-select>
+  <div class="display-flex align-items-baseline">
+    <md-select [formControl]="userExpertiseInput"
+               placeholder="User Expertise"
+               class="min-width-15rem margin-1rem">
+      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+    </md-select>
+    <span class="question-tooltip"
+          mdTooltip="Select the degree of expertise most users have while interacting with the product.">
+      ?
+    </span>
+  </div>
 
   <!-- User Languages -->
-  <md-input-container class="min-width-15rem margin-1rem">
-    <input mdInput
-           [formControl]="languageInput"
-           placeholder="User Languages"
-           [mdAutocomplete]="userLanguagesAuto"
-           (keyup.enter)="checkLanguageInput()">
-  </md-input-container>
-  <md-autocomplete #userLanguagesAuto="mdAutocomplete">
-    <md-option *ngFor="let option of languages | genericStringFilter:languageInput.value"
-               [value]="option"
-               (onSelect)="selectLanguage(option); languageInput.reset(); languageInput.markAsPristine()">
-      {{ option.name }}
-    </md-option>
-  </md-autocomplete>
+  <div class="display-flex align-items-baseline">
+    <md-input-container class="min-width-15rem margin-1rem">
+      <input mdInput
+             [formControl]="languageInput"
+             placeholder="User Languages"
+             [mdAutocomplete]="userLanguagesAuto"
+             (keyup.enter)="checkLanguageInput()">
+    </md-input-container>
+    <md-autocomplete #userLanguagesAuto="mdAutocomplete">
+      <md-option *ngFor="let option of languages | genericStringFilter:languageInput.value"
+                 [value]="option"
+                 (onSelect)="selectLanguage(option); languageInput.reset(); languageInput.markAsPristine()">
+        {{ option.name }}
+      </md-option>
+    </md-autocomplete>
+    <span class="question-tooltip"
+          mdTooltip="Type in and select all Languages users of the product are speaking.">
+        ?
+    </span>
+  </div>
   <md-chip-list class="margin-bottom-2rem">
     <md-chip *ngFor="let language of selectedLanguages"
              (click)="deselectLanguage(language)"
@@ -170,20 +259,26 @@
   </md-chip-list>
 
   <!-- User Location -->
-  <md-input-container class="min-width-15rem margin-1rem">
-    <input mdInput
-           [formControl]="countryInput"
-           placeholder="User Countries"
-           [mdAutocomplete]="userCountriesAuto"
-           (keyup.enter)="checkCountryInput()">
-  </md-input-container>
-  <md-autocomplete #userCountriesAuto="mdAutocomplete">
-    <md-option *ngFor="let option of countries | genericStringFilter:countryInput.value"
-               [value]="option"
-               (onSelect)="selectCountry(option); countryInput.reset()">
-      {{ option.name }}
-    </md-option>
-  </md-autocomplete>
+  <div class="display-flex align-items-baseline">
+    <md-input-container class="min-width-15rem margin-1rem">
+      <input mdInput
+             [formControl]="countryInput"
+             placeholder="User Countries"
+             [mdAutocomplete]="userCountriesAuto"
+             (keyup.enter)="checkCountryInput()">
+    </md-input-container>
+    <md-autocomplete #userCountriesAuto="mdAutocomplete">
+      <md-option *ngFor="let option of countries | genericStringFilter:countryInput.value"
+                 [value]="option"
+                 (onSelect)="selectCountry(option); countryInput.reset()">
+        {{ option.name }}
+      </md-option>
+    </md-autocomplete>
+    <span class="question-tooltip"
+          mdTooltip="Type in and select all countries the product should be used in.">
+        ?
+    </span>
+  </div>
   <md-chip-list class="margin-bottom-2rem">
     <md-chip *ngFor="let country of selectedCountries"
              (click)="deselectCountry(country)"
