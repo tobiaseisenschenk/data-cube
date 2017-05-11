@@ -9,73 +9,136 @@
   </md-card>
   <form *ngIf="isProjectSelected()" class="content-vertical-center" [formGroup]="addEvaluationForm">
     <!-- Evaluator Experience -->
-    <md-select [formControl]="evalExpInput"
-               placeholder="Years of Evaluator Experience"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let age of numberArray" [value]="age">{{ age }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="evalExpInput"
+                 placeholder="Years of Evaluator Experience"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let age of numberArray" [value]="age">{{ age }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please specify the experience as a usability professional or researcher of the most
+            experienced evaluator in the team in years.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Number of Evaluators -->
-    <md-select [formControl]="numEvalInput" placeholder="Number of Evaluators" class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of numberArray | slice:1" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="numEvalInput" placeholder="Number of Evaluators" class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of numberArray | slice:1" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Select the number of evaluators within your UX-Team.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluator Collaboration -->
-    <md-select [formControl]="evalCollabInput"
-               placeholder="Evaluator Collaboration"
-               class="min-width-15rem margin-1rem"
-               *ngIf="numEvalInput.value > 1">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline" *ngIf="numEvalInput.value > 1">
+      <md-select [formControl]="evalCollabInput"
+                 placeholder="Evaluator Collaboration"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please estimate how close the involved evaluators worked together?">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluator's Domain Knowledge -->
-    <md-select [formControl]="domainKnowledgeInput" placeholder="Domain Knowledge" class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="domainKnowledgeInput" placeholder="Domain Knowledge" class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Give an estimate of the knowledge the evaluation team has about the domain.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluator's Interaction Knowledge -->
-    <md-select [formControl]="interactionKnowledgeInput"
-               placeholder="Interaction Knowledge"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="interactionKnowledgeInput"
+                 placeholder="Interaction Knowledge"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please self report the evaluation team's knowledge of interaction design principles.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluator's Product Knowledge -->
-    <md-select [formControl]="productKnowledgeInput"
-               placeholder="Product Knowledge"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="productKnowledgeInput"
+                 placeholder="Product Knowledge"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please specify the degree of knowledge the evaluation team has about the product under
+            development.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluator's User Knowledge -->
-    <md-select [formControl]="userKnowledgeInput"
-               placeholder="User Knowledge"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="userKnowledgeInput"
+                 placeholder="User Knowledge"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Estimate the evaluation team's knowledge about the product's users.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluator's Task Knowledge -->
-    <md-select [formControl]="taskKnowledgeInput"
-               placeholder="Task Knowledge"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="taskKnowledgeInput"
+                 placeholder="Task Knowledge"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please give an estimate of the evalution team's knowledge about user-tasks or user stories.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Evaluation Methods -->
-    <md-input-container class="min-width-15rem margin-1rem">
-      <input mdInput
-             [formControl]="evalMethodInput"
-             placeholder="Evaluation Methods"
-             [mdAutocomplete]="evalMethodAuto"
-             (keyup.enter)="checkEvalMethodInput()">
-    </md-input-container>
-    <md-autocomplete #evalMethodAuto="mdAutocomplete">
-      <md-option *ngFor="let option of allEvalMethods | genericStringFilter:evalMethodInput.value"
-                 [value]="option"
-                 (onSelect)="selectEvalMethod(option); evalMethodInput.reset()">
-        {{ option.name }}
-      </md-option>
-    </md-autocomplete>
+    <div class="display-flex align-items-baseline">
+      <md-input-container class="min-width-15rem margin-1rem">
+        <input mdInput
+               [formControl]="evalMethodInput"
+               placeholder="Evaluation Methods"
+               [mdAutocomplete]="evalMethodAuto"
+               (keyup.enter)="checkEvalMethodInput()">
+      </md-input-container>
+      <md-autocomplete #evalMethodAuto="mdAutocomplete">
+        <md-option *ngFor="let option of allEvalMethods | genericStringFilter:evalMethodInput.value"
+                   [value]="option"
+                   (onSelect)="selectEvalMethod(option); evalMethodInput.reset()">
+          {{ option.name }}
+        </md-option>
+      </md-autocomplete>
+      <span class="question-tooltip"
+            mdTooltip="Add all Usability Evaluation Methods your team used, to give recommendations about the product.">
+        ?
+      </span>
+    </div>
     <md-chip-list class="margin-bottom-2rem">
       <md-chip *ngFor="let method of selectedEvalMethods"
                (click)="deselectEvalMethod(method)"
@@ -88,46 +151,84 @@
     <span class="color-text-inactive font-weight-300">
       Average result of the Single Ease Question (SEQ)
     </span>
-    <div>
-      <span class="color-text-inactive font-weight-300 margin-right-1rem">very difficult</span>
-      <md-slider
-        color="primary"
-        [max]="7"
-        [min]="0"
-        [step]="0.1"
-        [thumb-label]="true"
-        [formControl]="seqInput">
-      </md-slider>
-      <span class="color-text-inactive font-weight-300 margin-left-1rem">very easy</span>
+    <div class="display-flex align-items-baseline">
+      <div>
+        <span class="color-text-inactive font-weight-300 margin-right-1rem">very difficult</span>
+        <md-slider
+          color="primary"
+          [max]="7"
+          [min]="0"
+          [step]="0.1"
+          [thumb-label]="true"
+          [formControl]="seqInput">
+        </md-slider>
+        <span class="color-text-inactive font-weight-300 margin-left-1rem">very easy</span>
+      </div>
+      <span class="question-tooltip margin-left-1rem"
+            mdTooltip="If your evaluation team used the 'Single Ease Question', while doing user testing,
+            please enter the average result.">
+        ?
+      </span>
     </div>
 
     <!-- Subjective Effectiveness for completing tasks -->
-    <md-select [formControl]="subEffectivenessInput"
-               placeholder="Subjective Effectiveness"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="subEffectivenessInput"
+                 placeholder="Subjective Effectiveness"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="If your team collected data about the efficiency of completing user tasks, please give an
+            estimate. One question to ask woul be: 'How reasonable was the time spent on task x?'">
+        ?
+      </span>
+    </div>
+
 
     <!-- Average SUS Score -->
-    <md-select [formControl]="susInput"
-               placeholder="Average SUS Score"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of susValues" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="susInput"
+                 placeholder="Average SUS Score"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of susValues" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="If your evaluation team used the 'System Usability Scale', what was the average score of
+            the product before the most recent usability evaluation results were implemented.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Guess Impact on Redesign -->
-    <md-select [formControl]="impactOnRedesignInput"
-               placeholder="Impact on Redesign"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="impactOnRedesignInput"
+                 placeholder="Impact on Redesign"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of degreeOptions" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Please give your best estimate on how much impact the results of this usability evaluation
+            will or have had on the product.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Motivation for the performed Test / Evaluation -->
-    <md-select [formControl]="testMotivationInput"
-               placeholder="Motivation for Test"
-               class="min-width-15rem margin-1rem">
-      <md-option *ngFor="let option of testMotivations" [value]="option">{{ option }}</md-option>
-    </md-select>
+    <div class="display-flex align-items-baseline">
+      <md-select [formControl]="testMotivationInput"
+                 placeholder="Motivation for Test"
+                 class="min-width-15rem margin-1rem">
+        <md-option *ngFor="let option of testMotivations" [value]="option">{{ option }}</md-option>
+      </md-select>
+      <span class="question-tooltip"
+            mdTooltip="Select the motivation for this usability evaluation.">
+        ?
+      </span>
+    </div>
+
 
     <!-- Buttons -->
     <div class="content-horizontal-center margin-top-1rem margin-bottom-2rem">
