@@ -25,19 +25,19 @@ export class LoginComponent implements OnInit {
 
   constructor(private _logger :Logger, private _authenticationService :AuthenticationService, private _fb:FormBuilder) {
     this.loginForm = _fb.group({
-      'emailInput': ['', Validators.compose([Validators.required,
+      'logEmailInput': ['', Validators.compose([Validators.required,
         Validators.pattern('.+@.+\..+')])],
-      'passwordInput': ['', Validators.compose([Validators.required])]
+      'logPasswordInput': ['', Validators.compose([Validators.required])]
     });
-    this.logEmailInput = this.loginForm.controls['emailInput'];
-    this.logPasswordInput = this.loginForm.controls['passwordInput'];
+    this.logEmailInput = this.loginForm.controls['logEmailInput'];
+    this.logPasswordInput = this.loginForm.controls['logPasswordInput'];
     this.registerForm = _fb.group({
-      'emailInput': ['', Validators.compose([Validators.required])],
-      'passwordInput': ['', Validators.compose([Validators.required,
-        Validators.pattern('.+@.+\..+')])]
+      'regEmailInput': ['', Validators.compose([Validators.required,
+        Validators.pattern('.+@.+\..+')])],
+      'regPasswordInput': ['', Validators.compose([Validators.required])]
     });
-    this.regEmailInput = this.registerForm.controls['emailInput'];
-    this.regPasswordInput = this.registerForm.controls['passwordInput'];
+    this.regEmailInput = this.registerForm.controls['regEmailInput'];
+    this.regPasswordInput = this.registerForm.controls['regPasswordInput'];
   }
 
   ngOnInit() {

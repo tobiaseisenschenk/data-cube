@@ -3,12 +3,12 @@
     <md-card-title>Simply Login</md-card-title>
     <form id="loginForm" [formGroup]="loginForm">
       <md-input-container>
-        <input mdInput [formControlName]="'emailInput'" placeholder="email" type="email">
+        <input mdInput [formControlName]="'logEmailInput'" placeholder="email" type="email">
         <!-- TODO: newer AngularMaterial versions should support color Input without custom class -->
         <md-hint class="color-text-error" *ngIf="displayLoginError">Credentials do not match</md-hint>
       </md-input-container>
       <md-input-container>
-        <input mdInput [formControlName]="'passwordInput'" placeholder="password" type="password">
+        <input mdInput [formControlName]="'logPasswordInput'" placeholder="password" type="password">
       </md-input-container>
       <button md-button type="submit" (click)="login()" [disabled]="!loginForm.valid">Login</button>
     </form>
@@ -18,10 +18,10 @@
     <md-card-title>Create a new Account</md-card-title>
     <form id="registerForm" [formGroup]="registerForm">
       <md-input-container>
-        <input mdInput [formControlName]="'emailInput'" placeholder="email" type="email">
+        <input mdInput [formControlName]="'regEmailInput'" placeholder="email" type="email">
       </md-input-container>
       <md-input-container>
-        <input mdInput [formControlName]="'passwordInput'" placeholder="password" type="password">
+        <input mdInput [formControlName]="'regPasswordInput'" placeholder="password" type="password">
       </md-input-container>
       <button md-button type="submit" (click)="register()" [disabled]="!registerForm.valid">Register</button>
     </form>
