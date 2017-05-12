@@ -39,6 +39,10 @@ export class AuthenticationService {
       this._logger.debug('[AuthenticationService] Registration successful!');
       let userObj :any = { 'addedProject': false, 'addedEvaluation': false };
       this._af.database.object('/users').$ref.child(resolve.uid).set(userObj);
+      if (!!this.redirectUrl) {
+        this._router.navigateByUrl(this.redirectUrl);
+        this.redirectUrl = undefined;
+      } else this._router.navigateByUrl('/my-contributions');
     }, (reject) => {
       this._logger.debug('[AuthenticationService] Registration failed', reject);
     });
