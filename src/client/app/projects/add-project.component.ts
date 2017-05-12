@@ -82,8 +82,8 @@ export class AddProjectComponent implements OnInit, OnDestroy {
       'userAgeInput': ['', Validators.compose([Validators.required])],
       'userDiversityInput': ['', Validators.compose([Validators.required])],
       'userExpertiseInput': ['', Validators.compose([Validators.required])],
-      'countryInput': ['', Validators.compose([Validators.required])],
-      'languageInput': ['', Validators.compose([Validators.required])],
+      'countryInput': ['', Validators.compose([])],
+      'languageInput': ['', Validators.compose([])],
     });
 
     this.devMethodInput = this.addProjectForm.controls['devMethodInput'];

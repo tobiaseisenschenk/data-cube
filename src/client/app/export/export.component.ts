@@ -101,13 +101,15 @@ export class ExportComponent implements OnInit, OnDestroy {
       if (this.domainInput) exportObj.Domain =
         this._getNamePipe.transform(this._allDomains, [project.domain]);
       if (this.userLocationInput) exportObj.User_Country =
-        this._getNamePipe.transform(this._allCountries, project.user_location).toString();
+        project.user_location ?
+        this._getNamePipe.transform(this._allCountries, project.user_location).toString() : '';
       if (this.marketDiversityInput) exportObj.Market_Diversity = project.market_diversity.toString();
       if (this.userExpertiseInput) exportObj.User_Expertise = project.user_expertise.toString();
       if (this.userDiversityInput) exportObj.User_Diversity = project.user_diversity.toString();
       if (this.userAvgAgeInput) exportObj.Average_User_Age = project.user_avg_age.toString();
       if (this.userLanguagesInput) exportObj.User_Languages =
-        this._getNamePipe.transform(this._allLanguages, project.user_languages).toString();
+        project.user_languages ?
+        this._getNamePipe.transform(this._allLanguages, project.user_languages).toString() : '';
       return exportObj;
     });
   }
